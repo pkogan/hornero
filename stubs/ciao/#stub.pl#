@@ -1,0 +1,4 @@
+	server(Host),
+        port(Port),
+        connect_to_socket(Host, Port, Stream),
+	display(Stream,'where_cazador_is'),nl(Stream).

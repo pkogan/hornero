@@ -1,0 +1,6 @@
+D:\Eureka\Proyectos\TorneoHornero\EjemploDeUso\obj\Debug\ResolveAssemblyReference.cache
+D:\Eureka\Proyectos\TorneoHornero\EjemploDeUso\bin\EjemploDeUso.dll
+D:\Eureka\Proyectos\TorneoHornero\EjemploDeUso\bin\EjemploDeUso.pdb
+D:\Eureka\Proyectos\TorneoHornero\EjemploDeUso\bin\Newtonsoft.Json.dll
+D:\Eureka\Proyectos\TorneoHornero\EjemploDeUso\obj\Debug\EjemploDeUso.dll
+D:\Eureka\Proyectos\TorneoHornero\EjemploDeUso\obj\Debug\EjemploDeUso.pdb
