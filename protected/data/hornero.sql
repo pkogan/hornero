@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 24-06-2014 a las 23:14:35
+-- Tiempo de generación: 25-06-2014 a las 01:51:47
 -- Versión del servidor: 5.5.35-0ubuntu0.12.04.2
--- Versión de PHP: 5.5.11-2+deb.sury.org~precise+2
+-- Versión de PHP: 5.5.13-2+deb.sury.org~precise+1
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -41,6 +41,47 @@ INSERT INTO `Complejidad` (`idComplejidad`, `Complejidad`) VALUES
 (2, 'Media'),
 (3, 'Alta');
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `Cuenta`
+--
+
+CREATE TABLE IF NOT EXISTS `Cuenta` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `idTorneo` int(11) DEFAULT NULL,
+  `Nombre` text NOT NULL,
+  `Archivo` varchar(255) DEFAULT NULL,
+  `Inicio` datetime DEFAULT NULL,
+  `Fin` datetime DEFAULT NULL,
+  `Tiempo` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idTorneo` (`idTorneo`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+--
+-- Volcado de datos para la tabla `Cuenta`
+--
+
+INSERT INTO `Cuenta` (`id`, `idTorneo`, `Nombre`, `Archivo`, `Inicio`, `Fin`, `Tiempo`) VALUES
+(1, 0, 'Ejercicio 1: Ingresar números hasta leer el 0. Generar e imprimir los cuadrados de cada número ingresado.\r\n<br/>Ejemplo: Si los números son 5, 2, 7, 1, 4, 0, el algoritmo debe imprimir: 25  4  49  1  16	\r\n', '', '2014-06-05 11:26:47', '2014-06-05 11:41:47', 15),
+(2, 0, 'Ejercicio 2: Ingresar un número N y un valor k, generar e imprimir N<sup>k</sup>\r\n<br/>Ejemplos:\r\n<br/>Si N=4 y k=3, el algoritmo debe imprimir:  64\r\n<br/>Si N=2 y k=7, el algoritmo debe imprimir:  128', '', '2014-06-05 11:44:03', '2014-06-05 11:59:03', 15),
+(3, 0, 'Ejercicio 3:Ingresar un número N. En caso en que N sea par, generar e imprimir todos los números pares hasta N. En caso en que N sea impar, generar e imprimir todos los números impares hasta N.\r\n<br/>Ejemplos:\r\n<br/>Si N=15, el algoritmo debe imprimir:  1   3   5   7   9    11   13   15\r\n<br/>Si N=12, el algoritmo debe imprimir:  2   4   6   8   10   12', '', '2014-06-05 12:03:57', '2014-06-05 12:23:57', 20),
+(4, 0, 'Ejercicio 4: Ingresar un número N y un valor k (k menor a N), generar e imprimir todos los valores hasta N que sean divisibles por k.\r\n<br/>Ejemplos:	\r\n<br/>Si N=35 y k=5, el algoritmo debe imprimir:  5   10   15   20   25   30   35\r\n<br/>Si N=20 y k=3, el algoritmo debe imprimir:  3   6   9   12   15   18', '', '2014-06-05 12:27:28', '2014-06-05 12:47:28', 20),
+(5, 0, 'Ejercicio 5:\r\nIngresar un número N (entre 1 y 9), generar e imprimir el siguiente triángulo:\r\n<br/>1\r\n<br/>1 2\r\n<br/>1 2 3\r\n<br/>.\r\n<br/>.\r\n<br/>1 2 3  . . . N\r\n<br/>Ejemplo: 	Si N=5, el algoritmo debe imprimir:\r\n<br/>1\r\n<br/>1 2 \r\n<br/>1 2 3\r\n<br/>1 2 3 4\r\n<br/>1 2 3 4 5', '', '2014-05-29 17:20:32', '2014-05-29 17:30:32', 15),
+(6, 1, 'Ejercicio 6:\r\nIngresar los valores de la siguiente tabla, calcular e imprimir la suma por cada fila y la suma total.\r\n<br/>Tabla:	\r\n<br/>3 8 4\r\n<br/>9 1 7\r\n<br/>5 2 6\r\n<br/>Para esta tabla, el algoritmo debe imprimir:  15   17   13   45', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 15);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `Equipo`
+--
+
+CREATE TABLE IF NOT EXISTS `Equipo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Equipo` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Volcado de datos para la tabla `Equipo`
@@ -118,7 +159,7 @@ CREATE TABLE IF NOT EXISTS `Lenguaje` (
   `idLenguaje` int(11) NOT NULL AUTO_INCREMENT,
   `Lenguaje` varchar(255) NOT NULL,
   PRIMARY KEY (`idLenguaje`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
 
 --
 -- Volcado de datos para la tabla `Lenguaje`
@@ -130,7 +171,66 @@ INSERT INTO `Lenguaje` (`idLenguaje`, `Lenguaje`) VALUES
 (3, 'JavaScript'),
 (4, 'java'),
 (5, 'c#'),
-(6, 'VisualBasic');
+(6, 'VisualBasic'),
+(7, 'bash'),
+(8, 'Lisp'),
+(9, 'Ciao Prolog'),
+(10, 'perl'),
+(11, 'ruby'),
+(12, 'c/c++'),
+(13, 'Pascal');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `Parcial`
+--
+
+CREATE TABLE IF NOT EXISTS `Parcial` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `idCuenta` int(11) NOT NULL,
+  `idEquipo` int(11) NOT NULL,
+  `Tiempo` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idCuenta` (`idCuenta`),
+  KEY `idEquipo` (`idEquipo`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=31 ;
+
+--
+-- Volcado de datos para la tabla `Parcial`
+--
+
+INSERT INTO `Parcial` (`id`, `idCuenta`, `idEquipo`, `Tiempo`) VALUES
+(1, 1, 8, 655),
+(2, 1, 3, 518),
+(3, 1, 6, 481),
+(4, 1, 5, 445),
+(5, 1, 7, 372),
+(6, 1, 1, 352),
+(7, 1, 2, 296),
+(8, 1, 4, 47),
+(9, 2, 3, 470),
+(10, 2, 1, 367),
+(11, 2, 8, 346),
+(12, 2, 7, 280),
+(13, 2, 6, 107),
+(14, 2, 5, 10),
+(15, 3, 5, 816),
+(16, 3, 3, 710),
+(17, 3, 1, 679),
+(18, 3, 6, 613),
+(19, 3, 4, 539),
+(20, 3, 2, 449),
+(21, 3, 8, 429),
+(22, 3, 7, 387),
+(23, 4, 2, 705),
+(24, 4, 7, 659),
+(25, 4, 5, 645),
+(26, 4, 3, 640),
+(27, 4, 6, 596),
+(28, 4, 8, 546),
+(29, 4, 4, 531),
+(30, 4, 1, 510);
 
 -- --------------------------------------------------------
 
@@ -149,7 +249,7 @@ CREATE TABLE IF NOT EXISTS `Problema` (
   PRIMARY KEY (`idProblema`),
   KEY `idComplejidad` (`idComplejidad`),
   KEY `idTipo` (`idTipo`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT='Problema a Resolver' AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT='Problema a Resolver' AUTO_INCREMENT=7 ;
 
 --
 -- Volcado de datos para la tabla `Problema`
@@ -157,10 +257,11 @@ CREATE TABLE IF NOT EXISTS `Problema` (
 
 INSERT INTO `Problema` (`idProblema`, `idTipo`, `Nombre`, `Archivo`, `Enunciado`, `idComplejidad`, `TiempoEjecucionMax`) VALUES
 (1, 1, 'Suma de dos números', '7ae1a2c66f28ff205ea890d3e639bc5f.gif', 'Dados dos números enteros se debe devolver el resultado de la suma', 1, 2000),
-(2, 1, 'Máximo', NULL, 'Dados dos números devolver el máximos de ambos', 1, 2000),
+(2, 1, 'Máximo', NULL, 'Dados dos números devolver el máximo de ambos', 1, 2000),
 (3, 1, 'Área de Corona ', 'a48fee16262b89aef908eb37ad64adf1.jpeg', '¿Cuál es el área de una vereda en forma de corona circular, si el radio interior es r  y el radio exterior R?\r\nLa respuesta debe ser un número con dos decimales con punto ''.'' como separador decimal.', 1, 5000),
 (4, 1, 'Área de Corazón', NULL, 'Hallar el área del siguiente corazón: diametro D, y diagonal d', 1, 2000),
-(5, 3, 'Suma de múltiplos', NULL, 'Si listamos todos los números naturales menores que 10 que son múltiplos de 3 o 5 tenemos:\r\n3, 5, 6 y 9.  La suma de estos múltiplos es 23.\r\nSe requiere un programa que dado un número natulal N devuelva la suma de todos los múltiplos de 3 y 5 menores que N.', 2, 5000);
+(5, 3, 'Suma de múltiplos', NULL, 'Si listamos todos los números naturales menores que 10 que son múltiplos de 3 o 5 tenemos:\r\n3, 5, 6 y 9.  La suma de estos múltiplos es 23.\r\nSe requiere un programa que dado un número natulal N devuelva la suma de todos los múltiplos de 3 y 5 menores que N.', 2, 5000),
+(6, 2, 'Suma de los dígitos de un Factorial', NULL, 'n! = n × (n - 1) × ... × 3 × 2 × 1\r\n\r\nPor ejemplo, 10! = 10 × 9 × ... × 3 × 2 × 1 = 3628800,\r\ny si sumamos todos los dígitos del número 10! tenemos 3 + 6 + 2 + 8 + 8 + 0 + 0 = 27.\r\n\r\nSe requiere un programa que dado un número N devuelva la suma de los dígitos de N!.', 2, 5000);
 
 -- --------------------------------------------------------
 
@@ -187,8 +288,6 @@ CREATE TABLE IF NOT EXISTS `Resolucion` (
   KEY `idEstado` (`idEstado`),
   KEY `idProblema` (`idProblema`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT='Rosolución por parte de un usuario de una Solución de un Problema de un Torneo' AUTO_INCREMENT=1129 ;
-
-
 
 -- --------------------------------------------------------
 
@@ -224,7 +323,7 @@ CREATE TABLE IF NOT EXISTS `Solucion` (
   `Salida` varchar(2000) NOT NULL,
   PRIMARY KEY (`idSolucion`),
   KEY `idProblema` (`idProblema`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT='Solución de un Problema dados Parámetros de Entrada' AUTO_INCREMENT=803 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT='Solución de un Problema dados Parámetros de Entrada' AUTO_INCREMENT=903 ;
 
 --
 -- Volcado de datos para la tabla `Solucion`
@@ -832,7 +931,107 @@ INSERT INTO `Solucion` (`idSolucion`, `idProblema`, `ParametrosEntrada`, `Salida
 (799, 5, '5798', '8962934'),
 (800, 5, '8014', '17125383'),
 (801, 5, '2006', '1073343'),
-(802, 5, '2424', '1564934');
+(802, 5, '2424', '1564934'),
+(803, 6, '5829', '81459'),
+(804, 6, '7331', '104859'),
+(805, 6, '75', '432'),
+(806, 6, '3909', '51012'),
+(807, 6, '9573', '141993'),
+(808, 6, '4618', '61992'),
+(809, 6, '1912', '22329'),
+(810, 6, '6704', '94977'),
+(811, 6, '7326', '104832'),
+(812, 6, '3551', '45765'),
+(813, 6, '8624', '125370'),
+(814, 6, '4611', '61866'),
+(815, 6, '5589', '77004'),
+(816, 6, '6781', '96192'),
+(817, 6, '2600', '31887'),
+(818, 6, '4455', '59616'),
+(819, 6, '3008', '37962'),
+(820, 6, '2610', '31887'),
+(821, 6, '633', '5967'),
+(822, 6, '1304', '14463'),
+(823, 6, '7947', '114975'),
+(824, 6, '4337', '57258'),
+(825, 6, '2682', '33120'),
+(826, 6, '2855', '36081'),
+(827, 6, '3943', '51876'),
+(828, 6, '9241', '137007'),
+(829, 6, '2795', '34965'),
+(830, 6, '2167', '25803'),
+(831, 6, '7878', '114507'),
+(832, 6, '4295', '57240'),
+(833, 6, '8835', '129789'),
+(834, 6, '3706', '47772'),
+(835, 6, '1626', '18549'),
+(836, 6, '8886', '130950'),
+(837, 6, '7590', '109386'),
+(838, 6, '1198', '12816'),
+(839, 6, '3504', '45045'),
+(840, 6, '9478', '140157'),
+(841, 6, '7877', '113805'),
+(842, 6, '829', '8361'),
+(843, 6, '3029', '38151'),
+(844, 6, '6500', '91962'),
+(845, 6, '5415', '74673'),
+(846, 6, '8594', '127044'),
+(847, 6, '3281', '42165'),
+(848, 6, '7991', '116496'),
+(849, 6, '3048', '38259'),
+(850, 6, '6264', '87453'),
+(851, 6, '600', '5715'),
+(852, 6, '3657', '47331'),
+(853, 6, '7544', '108648'),
+(854, 6, '8523', '124659'),
+(855, 6, '7970', '115164'),
+(856, 6, '225', '1728'),
+(857, 6, '1378', '15183'),
+(858, 6, '1912', '22329'),
+(859, 6, '9441', '139248'),
+(860, 6, '4149', '54909'),
+(861, 6, '4055', '53874'),
+(862, 6, '7319', '105012'),
+(863, 6, '8420', '122895'),
+(864, 6, '2890', '36099'),
+(865, 6, '1024', '10845'),
+(866, 6, '45', '207'),
+(867, 6, '1775', '20763'),
+(868, 6, '8590', '124956'),
+(869, 6, '1218', '13347'),
+(870, 6, '5255', '71775'),
+(871, 6, '8068', '116667'),
+(872, 6, '9071', '133614'),
+(873, 6, '6059', '84231'),
+(874, 6, '1096', '11745'),
+(875, 6, '5571', '76707'),
+(876, 6, '1474', '16209'),
+(877, 6, '9666', '143433'),
+(878, 6, '8827', '129375'),
+(879, 6, '9440', '140247'),
+(880, 6, '2713', '33642'),
+(881, 6, '5091', '69354'),
+(882, 6, '40', '189'),
+(883, 6, '6346', '89064'),
+(884, 6, '2634', '32463'),
+(885, 6, '8539', '124596'),
+(886, 6, '4315', '57609'),
+(887, 6, '2834', '35523'),
+(888, 6, '9892', '146970'),
+(889, 6, '6203', '87066'),
+(890, 6, '2275', '27441'),
+(891, 6, '4041', '52623'),
+(892, 6, '257', '1953'),
+(893, 6, '9569', '141453'),
+(894, 6, '2460', '30186'),
+(895, 6, '3122', '39474'),
+(896, 6, '593', '5679'),
+(897, 6, '2480', '30294'),
+(898, 6, '4873', '66033'),
+(899, 6, '9158', '135234'),
+(900, 6, '3673', '48249'),
+(901, 6, '127', '873'),
+(902, 6, '7226', '103203');
 
 -- --------------------------------------------------------
 
@@ -847,8 +1046,25 @@ CREATE TABLE IF NOT EXISTS `Stub` (
   `Archivo` varchar(255) NOT NULL,
   PRIMARY KEY (`idStubs`),
   KEY `idLenguaje` (`idLenguaje`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
 
+--
+-- Volcado de datos para la tabla `Stub`
+--
+
+INSERT INTO `Stub` (`idStubs`, `idLenguaje`, `Descripcion`, `Archivo`) VALUES
+(2, 3, 'Stub de un archivo para ejecutar en consola de navegador. ', 'stub.js.zip'),
+(3, 7, 'Stub en bash testeado en ubutu 12.4 utilizando wrapper en c.\r\n', 'stubbash.zip'),
+(4, 5, 'Proyecto con una aplicación web realizada en visual studio 2008 para c# .net. ', 'puntonet.zip'),
+(5, 12, 'Stub en C para ejecutar desde consola. Testeado desde Ubuntu 12.4 compilador gcc ', 'stub.c.zip'),
+(6, 9, 'Stub en Ciao Prolog utilizando wrapper en c. testeado en Ubuntu 12.4.', 'stubciao.zip'),
+(7, 4, 'Stub en java. Modificar clase Main. ', 'stubjava.zip'),
+(8, 8, 'Stub en Lisp para ejecutar desde Emacs.  Testeado en Ubuntu 12.4.', 'stub.el.zip'),
+(9, 13, 'Stub en pascal utilizando wrapper compilado para windowsx86, testeado en Windows-XP y Windows-7. ', 'stubpascal.zip'),
+(10, 10, 'Stub en un solo archivo testeado en Ubuntu 12.4. Necesita librería REST::Client. Se instala con >sudo cpan REST::Client. ', 'stub.pl.zip'),
+(11, 1, 'Stub en php con libreria. Testeado en Ubuntu 12.4.', 'stub.php.zip'),
+(12, 2, 'Stub de python en un solo archivo para ejecutar desde consola.', 'stub.py.zip'),
+(13, 11, 'Stub de ruby en un solo archivo para ejecutar desde consola.  Testeado en Ubuntu 12.4.', 'stub.rb.zip');
 
 -- --------------------------------------------------------
 
@@ -916,7 +1132,7 @@ CREATE TABLE IF NOT EXISTS `Torneo` (
 --
 
 INSERT INTO `Torneo` (`idTorneo`, `Nombre`, `Descripcion`, `FechaInicio`, `FechaFin`, `idEstado`, `idTipo`) VALUES
-(1, 'Beta "La guerra de los Lenguajes"', 'Torneo de Prueba para testear los stubs de cada lenguaje. Los participantes serán los desarrolladores de cada stub.', '2014-06-25 18:00:00', '2014-06-26 23:00:00', 2, 1);
+(4, 'Beta "La guerra de los Lenguajes"', 'Torneo de Prueba para testear los stubs de cada lenguaje. Los participantes serán los desarrolladores de cada stub.', '2014-06-25 18:00:00', '2014-06-26 23:00:00', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -932,7 +1148,7 @@ CREATE TABLE IF NOT EXISTS `TorneoProblema` (
   PRIMARY KEY (`idTorneoProblema`),
   KEY `idProblema` (`idProblema`,`idTorneo`),
   KEY `idTorneo` (`idTorneo`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT='Problemas que estan incluidos en el torneo' AUTO_INCREMENT=16 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT='Problemas que estan incluidos en el torneo' AUTO_INCREMENT=17 ;
 
 --
 -- Volcado de datos para la tabla `TorneoProblema`
@@ -943,7 +1159,7 @@ INSERT INTO `TorneoProblema` (`idTorneoProblema`, `idProblema`, `idTorneo`, `Ord
 (10, 2, 4, 2),
 (11, 3, 4, 3),
 (14, 5, 4, 4),
-(15, 4, 4, 5);
+(16, 6, 4, 5);
 
 -- --------------------------------------------------------
 
@@ -962,8 +1178,6 @@ CREATE TABLE IF NOT EXISTS `TorneoUsuario` (
   KEY `idTorneo` (`idTorneo`,`idUsuario`),
   KEY `idUsuario` (`idUsuario`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT='Usuario Participantes del Torneo' AUTO_INCREMENT=33 ;
-
-
 
 -- --------------------------------------------------------
 
@@ -999,6 +1213,12 @@ INSERT INTO `Usuario` (`idUsuario`, `NombreUsuario`, `Descripcion`, `Clave`, `id
 -- Restricciones para tablas volcadas
 --
 
+--
+-- Filtros para la tabla `Parcial`
+--
+ALTER TABLE `Parcial`
+  ADD CONSTRAINT `Parcial_ibfk_1` FOREIGN KEY (`idCuenta`) REFERENCES `Cuenta` (`id`),
+  ADD CONSTRAINT `Parcial_ibfk_2` FOREIGN KEY (`idEquipo`) REFERENCES `Equipo` (`id`);
 
 --
 -- Filtros para la tabla `Problema`

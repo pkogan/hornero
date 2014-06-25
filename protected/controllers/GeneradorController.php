@@ -62,7 +62,7 @@ class GeneradorController extends Controller {
 //                $solucion->Salida=  round((pi()*$y*$y)-(pi()*$x*$x),2);
 //              
         //suma de múltiplos
-        for ($index = 0; $index < 100; $index++) {
+        /*for ($index = 0; $index < 100; $index++) {
             $x = rand(10, 10000);
             $solucion = new Solucion();
             $solucion->ParametrosEntrada = $x;
@@ -73,8 +73,24 @@ class GeneradorController extends Controller {
             if (!$solucion->insert()) {
                 throw new Exception('Error al insertar');
             }
+        }*/
+        for ($index = 0; $index < 100; $index++) {
+            $x = rand(25, 10000);
+            $solucion = new Solucion();
+            $solucion->ParametrosEntrada = $x;
+
+            $solucion->Salida = $this->sumaDigitosFactorial($x);
+
+            $solucion->idProblema = 6;
+            if (!$solucion->insert()) {
+                throw new Exception('Error al insertar');
+            }
         }
+        
+        
+        //echo '<br>'.$this->sumaDigitosFactorial(10);
         $this->render('index');
+       
     }
 
     private function sumaMultiplos($numero) {
@@ -85,6 +101,27 @@ class GeneradorController extends Controller {
         for ($index = 1; $index * 3 < $numero; $index++) {
             $suma+=$index * 3;
         }
+        return $suma;
+    }
+    
+    private function factorial($n){
+        $resultado=1;
+        for ($index = 2; $index <= $n; $index++) {
+            $resultado=gmp_mul($resultado,$index);
+        }
+        return $resultado;
+    }
+    private function sumaDigitosFactorial($numero) {
+        $suma = 0;
+        $factorial=$this->factorial($numero);
+        $str= gmp_strval($factorial);
+        echo $str;
+        //var_dump($str); exit();
+        for ($index = 0; $index < strlen($str); $index++) {
+             $digito=substr($str,$index,1);
+             $suma+=$digito;
+        }
+
         return $suma;
     }
 

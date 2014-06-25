@@ -39,8 +39,8 @@
                                 array('label'=>'Problemas', 'url'=>array('/problema'), 'visible'=>Yii::app()->user->checkAccess('Administrador')),
                                 array('label'=>'Usuarios', 'url'=>array('/usuario'), 'visible'=>Yii::app()->user->checkAccess('Administrador')),
                                 array('label'=>'Stubs', 'url'=>array('/stub'), 'visible'=>Yii::app()->user->checkAccess('Administrador')),
-                            array('label'=>'Equipos', 'url'=>array('/equipo'), 'visible'=>Yii::app()->user->checkAccess('Administrador')),
-                            array('label'=>'Torneo', 'url'=>array('/cuenta'), 'visible'=>Yii::app()->user->checkAccess('Administrador')),
+                            /*array('label'=>'Equipos', 'url'=>array('/equipo'), 'visible'=>Yii::app()->user->checkAccess('Administrador')),
+                            array('label'=>'Torneo', 'url'=>array('/cuenta'), 'visible'=>Yii::app()->user->checkAccess('Administrador')),*/
 				
 			array('label'=>'Ayuda', 'url'=>array('/ayuda/index')),
                         array('label'=>'Acerca de', 'url'=>array('/site/page', 'view'=>'about')),
