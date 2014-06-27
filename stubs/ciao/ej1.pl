@@ -18,8 +18,7 @@
 
 main(Argv) :-
 	suma(Argv,R),
-	write(R),
-	nl.
+	write(R).
 suma([],0).
 suma([Arg|Args],S) :-
 	suma(Args,R),

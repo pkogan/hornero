@@ -132,7 +132,7 @@ struct {
         { "c++", "./%s" },
         { "python", "python %s" },
         { "java", "java %s" },
-	{ "ciao", "/.%s"},
+	{ "ciao", "./%s"},
         { NULL, NULL}, // dejar ultimo registro NULL como centinela
 };
 
@@ -221,10 +221,10 @@ int main(int argc, char *argv[])
 
         // lanzar el comando
         ejecutar(comando, respuesta);
-        sprintf(respuesta2, "%d", atoi(respuesta));
+        //sprintf(respuesta2, "%d", atoi(respuesta));
 
-        fprintf(stderr, "RESPUESTA: >%s<\n", respuesta2);
-        enviarRespuesta(host,respuesta2);
+        fprintf(stderr, "RESPUESTA: >%s<\n", respuesta);
+        enviarRespuesta(host,respuesta);
 
         fprintf(stderr, "BUFFER: >%s<\n", buffer);
 	return 0;

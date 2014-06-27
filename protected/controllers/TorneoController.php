@@ -62,10 +62,18 @@ class TorneoController extends Controller {
             'pagination' => false));
         $problemas = new CArrayDataProvider($model->torneoProblemas, array('keyField' => 'idProblema',
             'pagination' => false));
+        
+        $resoluciones = new Resolucion('search');
+        $resoluciones->unsetAttributes();  // clear any default values
+        if (isset($_GET['Resolucion']))
+            $resoluciones->attributes = $_GET['Resolucion'];
+        $resoluciones->idTorneo = $id;
+
         $this->render('view', array(
             'model' => $model,
             'usuarios' => $usuarios,
             'problemas' => $problemas,
+            'resoluciones'=>$resoluciones,
         ));
     }
 

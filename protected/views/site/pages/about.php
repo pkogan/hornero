@@ -9,10 +9,9 @@ $this->breadcrumbs=array(
 <h1>About</h1>
 
 <p>Esta aplicación esta desarrollada en el marco des Proyecto de Extensión: <b>Entrenamiento en la programación de la computadora a partir de una aplicación para competencias</b></p>
-<p>Esquema del juego. Hay un servidor del juego en donde cada jugador es un cliente que se comunican vía web service.
-Para cada problema el cliente se comunica con el servidor quien le da los parámetros del problema a resolver y luego el cliente tiene llamar a otro webservice con el resultado.
-El jugador que resuelve mas problemas de forma correcta y en menos tiempo gana.
-</p>
+<p>Esquema del juego. Cada jugador se registra en el sitio y se inscribe a un torneo, sobre el cual
+    puede leer los enunciados.  Los ejercicios los resuelve cada jugador en su máquina y en su lenguaje de preferencia.  La comunicación para solicitud de parámetros y envío de
+respuesta es mediante servicios web REST.</p>
 <pre>Director: Lic. Ingrid D. Godoy
 Co-Director: Lic. Pablo Kogan
 Colaborador: Mg. Lidia M. López, Mg. C. Carina Fracchia
