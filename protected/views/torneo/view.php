@@ -127,4 +127,39 @@ $this->widget('zii.widgets.grid.CGridView', array(
     ),
 ));
 ?>
-<?php endif;
+<?php endif;?>
+
+<?php if (Yii::app()->user->checkAccess('Administrador')):?>
+<hr/>
+<h1>Resoluciones</h1>
+<?php
+$this->widget('zii.widgets.grid.CGridView', array(
+    'id' => 'grid-resoluciones',
+    'dataProvider'=>$resoluciones->search(),
+	'filter'=>$resoluciones,
+    'columns' => array(
+        //'idTwit',
+        array('header'=>'Problema',
+            'value'=>'$data->idProblema0->Nombre'),
+        array('name'=>'NombreEquipo',
+            'value'=>'$data->idUsuario0->NombreUsuario'),
+        /*array('name' => 'Equipo',
+            'value' => '$data->idUsuario0->NombreUsuario'
+        ),*/
+        'FechaSolicitud',
+        array('header' => 'Tiempo Respuesta',
+            'value' => '$data->FechaRespuestaOK'
+        ),
+        'idSolucion0.ParametrosEntrada',
+        'Respuesta',
+        array('header'=>'Respuesta Correcta',
+            'value'=>'$data->idSolucion0->Salida'),
+        array('name'=>'Estado',
+            'value'=>'$data->idEstado0->Estado'),
+        //'idEstado0.Estado'
+        
+    ),
+));
+?>
+
+<?php endif; ?>

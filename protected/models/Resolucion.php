@@ -24,6 +24,8 @@
  */
 class Resolucion extends CActiveRecord
 {
+        public $NombreEquipo;
+        public $Estado;
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -61,7 +63,7 @@ class Resolucion extends CActiveRecord
 			array('FechaRespuesta', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('idResolucion, idUsuario, idProblema, idSolucion, idTorneo, Token, FechaSolicitud, FechaRespuesta, Respuesta, idEstado', 'safe', 'on'=>'search'),
+			array('idResolucion, idUsuario, idProblema, idSolucion, idTorneo, Token, FechaSolicitud, FechaRespuesta, Respuesta, idEstado, NombreEquipo, Estado', 'safe', 'on'=>'search'),
                     
 		);
 	}
@@ -98,6 +100,7 @@ class Resolucion extends CActiveRecord
 			'FechaRespuesta' => 'Fecha Respuesta',
 			'Respuesta' => 'Respuesta',
 			'idEstado' => 'Id Estado',
+                        'nombreEquipo'=>'Equipo',
 		);
 	}
 
@@ -111,9 +114,9 @@ class Resolucion extends CActiveRecord
 		// should not be searched.
 
 		$criteria=new CDbCriteria;
-
+                $criteria->with=array('idUsuario0','idEstado0');
 		$criteria->compare('idResolucion',$this->idResolucion);
-		$criteria->compare('idUsuario',$this->idUsuario);
+		$criteria->compare('t.idUsuario',$this->idUsuario);
 		$criteria->compare('idProblema',$this->idProblema);
 		$criteria->compare('idSolucion',$this->idSolucion);
 		$criteria->compare('idTorneo',$this->idTorneo);
@@ -121,7 +124,9 @@ class Resolucion extends CActiveRecord
 		$criteria->compare('FechaSolicitud',$this->FechaSolicitud,true);
 		$criteria->compare('FechaRespuesta',$this->FechaRespuesta,true);
 		$criteria->compare('Respuesta',$this->Respuesta,true);
-		$criteria->compare('idEstado',$this->idEstado);
+		$criteria->compare('t.idEstado',$this->idEstado);
+                $criteria->compare('idUsuario0.NombreUsuario',$this->NombreEquipo,true);
+                $criteria->compare('idEstado0.Estado',$this->Estado,true);
                 
                 $criteria->order='FechaRespuesta';
 

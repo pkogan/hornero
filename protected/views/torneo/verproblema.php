@@ -44,6 +44,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
         ),
         'idSolucion0.ParametrosEntrada',
         'Respuesta',
+        array('header'=>'Respuesta Correcta',
+            'value'=>'$data->idSolucion0->Salida'),
         'idEstado0.Estado'
         
     ),

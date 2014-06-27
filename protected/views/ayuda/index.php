@@ -19,7 +19,7 @@ $this->breadcrumbs=array(
 </p>
 
 <p>
-    <b>Segundo</b>.  <?php echo CHtml::button("Incribierse en algún torneo",array(
+    <b>Segundo</b>.  <?php echo CHtml::button("Incribirse en algún torneo",array(
                           'submit'=>$this->createUrl('/torneo',array()),
 ));?>
         <?php if(!is_null($usuario) and count($usuario->torneoUsuarios)>0){
