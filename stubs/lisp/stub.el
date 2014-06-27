@@ -91,6 +91,14 @@ Debe contener un string con las respuestas separadas por comas. Puede ser custom
   (ho-obtener-enunciado)
   )
 
+(defun hornero-num-prob (num)
+  "Ejecutar todo como `hornero' pero pedir el número del problema (Se asignará a `ho-problema' el número dado)."
+  (interactive "n¿Número del problema?")
+
+  (setq ho-problema num)
+  (hornero)
+  
+  )
 					; ____________________
 
 
