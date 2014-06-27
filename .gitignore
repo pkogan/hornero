@@ -9,3 +9,6 @@ protected/archivos/problemas/*
 protected/archivos/stubs/*
 stubs/*.zip
 nbproject
+\#*
+.\#*
+*~
