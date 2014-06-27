@@ -264,7 +264,7 @@ Si el estado de respuesta STATUS no es 200 (o sea hay un error) se muestra el bu
 
 (defun ho-escribir-enunciado ()
   "Escribir el enunciado y los datos obtenidos desde el servidor en el buffer actual."
-  (insert "Nombre del Problema: \n")
+  (insert "\nNombre del Problema: \n")
   (insert ho-nombre-problema)
   (insert "Enunciado: \n")
   (insert ho-enunciado)
@@ -326,7 +326,7 @@ Procesar la respuesta y notificar al usuario si respondió bien o no."
 	(let ((resp (ho-json-procesar-resp ho-respuesta-datos)))
 	  (with-current-buffer (get-buffer-create ho-buffer-name)
 	    (goto-char (point-max))
-	    (insert (current-time-string))  
+	    (insert "\n" (current-time-string))  
 	    (insert "\nEl Hornero respondió lo siguiente:\n")
 	    (insert (car resp))
 	    (insert (cadr resp))
