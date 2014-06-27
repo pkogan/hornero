@@ -7,15 +7,15 @@ Aplicación Basada en YiiFramework
 
 INSTALACIÓN
 -----------
-###Descargar el framework de https://github.com/yiisoft/yii/releases/download/1.1.14/yii-1.1.14.f0fee9.tar.gz
 
-###Descomprimirlo y copiar la carpeta framwork a una carpeta pública del apache www/framework
-
-###Descargar los fuentes del presente repositorio en www/hornero.
+1. Descargar el framework de https://github.com/yiisoft/yii/releases/download/1.1.14/yii-1.1.14.f0fee9.tar.gz
+2. Descomprimirlo y copiar la carpeta framwork a una carpeta pública del apache www/framework
+3. Descargar los fuentes del presente repositorio en www/hornero.
 
 
 BASE DE DATOS
 -------------
+
 Crear una Base de datos en base al archivo que esta en la carpeta protected/data del proyecto.
  
 Editar el archivo `protected/config/main.php` 
