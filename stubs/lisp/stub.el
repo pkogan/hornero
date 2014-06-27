@@ -291,8 +291,13 @@ Si el estado de respuesta STATUS no es 200 (o sea hay un error) se muestra el bu
 
 (defun ho-enviar-resps (str-resps)
   "Enviar al hornero la respuesta STR-RESP."
+  (with-current-buffer (get-buffer-create ho-buffer-name)
+    (goto-char (point-max))
+    (insert "\n\nEnviando respuesta:" ho-respuesta)
+    )
   (let ((url-request-method "GET")
 	)
+
     (message "Enviando resultados... Espere un momento.")
     (url-retrieve (ho-url-respuesta) 'ho-resp-procesar-cb) ;; ¡Es asíncrono!
     )
