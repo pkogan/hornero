@@ -62,7 +62,11 @@ Debe editar las variables `ho-token' y `ho-problema' antes de empezar."
   :type '(string)
   )
 (defcustom ho-problema 1
-  "Número del problema a trabajar."
+  "Número del problema a trabajar.
+
+* Se puede escribir `setq' previo a la definición de la función en un archivo aparte y luego evaluar todo con `load-library' o `eval-buffer'... ó...
+* Se puede escribir la implementación de la función aparte, evaluarla y usar `hornero-num-prob' para indicar el número.
+"
   :group 'hornero
   :link '(url-link "http://hornero.fi.uncoma.edu.ar")
   :type '(integer)
@@ -277,7 +281,7 @@ Si el estado de respuesta STATUS no es 200 (o sea hay un error) se muestra el bu
       )
      " ")
     )
-  (insert "\n\n--------------------\n\n")
+  (insert "\n--------------------\n")
   )
 
 (defun ho-procesar-parametros ()
@@ -301,7 +305,7 @@ Si el estado de respuesta STATUS no es 200 (o sea hay un error) se muestra el bu
   "Enviar al hornero la respuesta STR-RESP."
   (with-current-buffer (get-buffer-create ho-buffer-name)
     (goto-char (point-max))
-    (insert "\n\nEnviando respuesta:" ho-respuesta)
+    (insert "\nEnviando respuesta:" ho-respuesta)
     )
   (let ((url-request-method "GET")
 	)
@@ -328,9 +332,9 @@ Procesar la respuesta y notificar al usuario si respondió bien o no."
 	    (goto-char (point-max))
 	    (insert "\n" (current-time-string))  
 	    (insert "\nEl Hornero respondió lo siguiente:\n")
-	    (insert (car resp))
-	    (insert (cadr resp))
-	    (insert "\n\n--------------------\n\n")
+	    (insert (number-to-string (car resp)) ": " )
+	    (insert (cadr resp) "\n")
+	    (insert "\n--------------------\n")
 	    (switch-to-buffer (current-buffer))
 	    )
 	  )
