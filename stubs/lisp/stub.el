@@ -62,7 +62,11 @@ Debe editar las variables `ho-token' y `ho-problema' antes de empezar."
   :type '(string)
   )
 (defcustom ho-problema 1
-  "Número del problema a trabajar."
+  "Número del problema a trabajar.
+
+* Se puede escribir `setq' previo a la definición de la función en un archivo aparte y luego evaluar todo con `load-library' o `eval-buffer'... ó...
+* Se puede escribir la implementación de la función aparte, evaluarla y usar `hornero-num-prob' para indicar el número.
+"
   :group 'hornero
   :link '(url-link "http://hornero.fi.uncoma.edu.ar")
   :type '(integer)
@@ -91,6 +95,14 @@ Debe contener un string con las respuestas separadas por comas. Puede ser custom
   (ho-obtener-enunciado)
   )
 
+(defun hornero-num-prob (num)
+  "Ejecutar todo como `hornero' pero pedir el número del problema (Se asignará a `ho-problema' el número dado)."
+  (interactive "n¿Número del problema?")
+
+  (setq ho-problema num)
+  (hornero)
+  
+  )
 					; ____________________
 
 
@@ -256,7 +268,7 @@ Si el estado de respuesta STATUS no es 200 (o sea hay un error) se muestra el bu
 
 (defun ho-escribir-enunciado ()
   "Escribir el enunciado y los datos obtenidos desde el servidor en el buffer actual."
-  (insert "Nombre del Problema: \n")
+  (insert "\nNombre del Problema: \n")
   (insert ho-nombre-problema)
   (insert "Enunciado: \n")
   (insert ho-enunciado)
@@ -269,7 +281,7 @@ Si el estado de respuesta STATUS no es 200 (o sea hay un error) se muestra el bu
       )
      " ")
     )
-  (insert "\n\n--------------------\n\n")
+  (insert "\n--------------------\n")
   )
 
 (defun ho-procesar-parametros ()
@@ -291,8 +303,13 @@ Si el estado de respuesta STATUS no es 200 (o sea hay un error) se muestra el bu
 
 (defun ho-enviar-resps (str-resps)
   "Enviar al hornero la respuesta STR-RESP."
+  (with-current-buffer (get-buffer-create ho-buffer-name)
+    (goto-char (point-max))
+    (insert "\nEnviando respuesta:" ho-respuesta)
+    )
   (let ((url-request-method "GET")
 	)
+
     (message "Enviando resultados... Espere un momento.")
     (url-retrieve (ho-url-respuesta) 'ho-resp-procesar-cb) ;; ¡Es asíncrono!
     )
@@ -313,11 +330,11 @@ Procesar la respuesta y notificar al usuario si respondió bien o no."
 	(let ((resp (ho-json-procesar-resp ho-respuesta-datos)))
 	  (with-current-buffer (get-buffer-create ho-buffer-name)
 	    (goto-char (point-max))
-	    (insert (current-time-string))  
+	    (insert "\n" (current-time-string))  
 	    (insert "\nEl Hornero respondió lo siguiente:\n")
-	    (insert (car resp))
-	    (insert (cadr resp))
-	    (insert "\n\n--------------------\n\n")
+	    (insert (number-to-string (car resp)) ": " )
+	    (insert (cadr resp) "\n")
+	    (insert "\n--------------------\n")
 	    (switch-to-buffer (current-buffer))
 	    )
 	  )
