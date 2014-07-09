@@ -63,8 +63,13 @@ class JuegoController extends Controller {
                 }
             }
         }
-        echo json_encode($respuesta);
-        exit;
+        header('Content-type: application/json');
+        $json=json_encode($respuesta);
+        header('Content-Length: '.  sizeof($json));
+        
+        echo $json;
+        $this->layout=FALSE;
+        //exit;
     }
 
     /**
@@ -78,7 +83,7 @@ class JuegoController extends Controller {
         //se busca el usuario y el toneo en base al token
         $Resolucion = Resolucion::model()->find('Token=:token', array(':token' => $tokenSolicitud));
         if (is_null($Resolucion)) {
-            $respuesta['error'] = 'No es un token válido';
+            $respuesta['error'] = utf8_decode('No es un token válido');
         } elseif ($Resolucion->idEstado != 1) {
             $respuesta['error'] = 'Esta solicitud ya ha sido respondida';
         } else {
@@ -148,8 +153,13 @@ class JuegoController extends Controller {
                 $respuesta['error'] = 'al actualizar';
             }
         }
-        echo json_encode($respuesta);
-        exit;
+        header('Content-type: application/json');
+        $json=json_encode($respuesta);
+        header('Content-Length: '.  sizeof($json));
+        echo $json;
+        $this->layout=FALSE;
+        //exit;
+        
     }
 
     // Uncomment the following methods and override them if needed
