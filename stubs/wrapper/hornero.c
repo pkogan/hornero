@@ -1,6 +1,6 @@
 //Comentar/Descomentar segun compilacion en Linux o en Windows ---
-//#define __LINUX__
-#define __WINDOWS__
+#define __LINUX__
+//#define __WINDOWS__
 
 #include <ctype.h>
 #include <stdlib.h>
@@ -25,7 +25,7 @@
 #include <stdio.h>
 
 /* para compilar en linux ejecutar desde consola
-> gcc hornero.c -o hornero -ljson-c
+> gcc hornero.c -o hornero
  luego ejecutar desde consola con 
 >./hornero <numProbl> <token> <lenguaje> <prog>
  */
@@ -77,7 +77,7 @@ void setupSocket(char* hostname) {
     struct hostent * host = gethostbyname(hostname);
     
     if ((host == NULL) || (host->h_addr == NULL)) {
-        printf("Error retrieving DNS information. %s",hostname);
+        printf("Error buscando información DNS. %s",hostname);
         exit(1);
     }
 
@@ -97,7 +97,7 @@ void setupSocket(char* hostname) {
 void connectToHost(char* hostname) {
     if (connect(sock, (struct sockaddr *) &client, sizeof (client)) < 0) {
         close(sock);
-        printf("Could not connect to %s", hostname);
+        printf("No se puede conectar al host %s", hostname);
         exit(1);
     }
 }
@@ -108,9 +108,9 @@ void enviarSolicitud(char* hostname, char* token, char* problema) {
     connectToHost(hostname);
     //sprintf(request, "GET /yii/hornero/index.php?r=juego/solicitud&token=%s&problema=%s HTTP/1.1\r\nHost: %s\r\n\r\n", token, problema, hostname);
     sprintf(request, "GET /index.php?r=juego/solicitud&token=%s&problema=%s HTTP/1.1\r\nHost: %s\r\n\r\n", token, problema, hostname);
-    //printf("se envia request: %s", request);
+    printf("\nSe envia request Solicitud: %s", request);
     if (send(sock, request, sizeof (request), 0) != (int) sizeof (request)) {
-        printf("Error sending request.");
+        printf("Error enviando request.");
         exit(1);
     }
     getBuffer();
@@ -124,7 +124,7 @@ void enviarRespuesta(char* hostname, char* respuesta) {
     //sprintf(request, "GET /yii/hornero/index.php?r=juego/respuesta&tokenSolicitud=%s&solucion=%s HTTP/1.1\r\nHost: %s\r\n\r\n", tokenSolicitud, respuesta, hostname);
     sprintf(request, "GET /index.php?r=juego/respuesta&tokenSolicitud=%s&solucion=%s HTTP/1.1\r\nHost: %s\r\n\r\n", tokenSolicitud, respuesta, hostname);
     //http://hornero.fi.uncoma.edu.ar/index.php?r=juego/respuesta&&tokenSolicitud=76d7cadd3df99e06ae8c4aa580ca6900&solucion=-5933
-    printf("\nse envia request: %s\n", request);
+    printf("\nSe envia request Respuesta: %s\n", request);
     if (send(sock, request, sizeof (request), 0) != (int) sizeof (request)) {
         printf("Error sending request.");
         exit(1);
@@ -155,24 +155,18 @@ void parser() {
     char *token, *cp;
     
     int i;
+    //apunta al comienzo del JSON salteando paquete http
     cp = buffer+155 ; //strdupa (buffer+155);
     
-    /*
-     chequear la busqueda como otra función porque tarda mucho
-     */
-    //while(cp!='{'||cp!='\0') cp++;
-    
-    //cp=strstr(buffer,"{");
     //token de FIN
     buffer[sizeBuffer++]='{';
     buffer[sizeBuffer++]='F';
     buffer[sizeBuffer++]='I';
     buffer[sizeBuffer++]='N';
     buffer[sizeBuffer++]='}';
-   
     
     token = strtok(cp, delimiters);
-    //printf("despues del primer token %s",token);
+    
     //printf("token:%s",token);
     while (strcmp(token, "parametrosEntrada") != 0 && strcmp(token, "error")!=0 && token!=NULL && strcmp(token, "FIN")!=0) {
         token = strtok(NULL, delimiters);
@@ -192,16 +186,7 @@ void parser() {
         }
         //printf("token:%s",token);	
     }
-    /*
-    for (i = 0; i < cantidadParametros && i < 20; i++) {
-        parametro[i] = strtok(NULL, delimiters);
-        //printf("parametro %d:%s", i + 1, parametro[i]);
-    }
-    */
     
-    //	parametro[0] = strtok (NULL, delimiters);
-    //	parametro[1] = strtok (NULL, delimiters);
-
 //    printf("parametro 1:%s",parametro[0]);
 //    printf("parametro 2:%s\n",parametro[1]);	
    
@@ -213,6 +198,51 @@ void parser() {
     }
     //printf("tokenSolicitud:%s\n", tokenSolicitud);
 }
+
+void parserRespuesta() {
+    const char delimiters[] = "\"{},:";
+    char *token, *cp;
+    
+    int i;
+    //apunta al comienzo del JSON salteando paquete http
+    cp = buffer+155 ; //strdupa (buffer+155);
+    
+    //token de FIN
+    buffer[sizeBuffer++]='{';
+    buffer[sizeBuffer++]='F';
+    buffer[sizeBuffer++]='I';
+    buffer[sizeBuffer++]='N';
+    buffer[sizeBuffer++]='}';
+    
+    token = strtok(cp, delimiters);
+    
+    //printf("token:%s",token);
+    while (strcmp(token, "mensaje") != 0 && strcmp(token, "error")!=0 && token!=NULL && strcmp(token, "FIN")!=0) {
+        token = strtok(NULL, delimiters);
+        //printf("token:%s",token);	
+    }
+    
+    if(strcmp(token, "error")==0){
+        printf("Error: %s\n",strtok(NULL, delimiters));
+        exit(1);
+    }
+    
+    if(strcmp(token, "mensaje") == 0 ){
+        token = strtok(NULL, delimiters);
+        printf("**********************\nRespuesta:%s\n**********************\n",token);
+        //printf("token:%s",token);	
+    }
+    
+   
+    
+    if(token==NULL||strcmp(token, "FIN")==0){
+        fatal("Error en paquete recibido\n");
+    }
+}
+
+
+
+
 
 // ------------------------------------------------------------
 //   Tocado a partir de aqui
@@ -292,7 +322,6 @@ int ejecutar(char *comando, char *resp)
         FILE *p;
         if((p = popen(comando, "r")) == NULL)
                 fatal("No se pudo ejecutar el programa");
-        //while(! feof(p)) // si la respuesta del prog fuera mayor que size del buffer
         //fread(resp, 1, 1024, p);
         //se queda solo con la última linea
         //como respuesta
@@ -377,7 +406,7 @@ int main(int argc, char *argv[])
         // enviarSolicitud -> escribe en buffer 
 	enviarSolicitud(host,tokenTorneo,probl);
         
-        fprintf(stderr, "BUFFER: >%s<\n", buffer);
+        //fprintf(stderr, "BUFFER: >%s<\n", buffer);
         
         // parser analiza buffer y carga global parametros[]
 	parser();
@@ -396,8 +425,10 @@ int main(int argc, char *argv[])
         
         enviarRespuesta(host,respuesta);
         
+        //fprintf(stderr, "BUFFER: >%s<\n", buffer);
+        parserRespuesta();
 
-        fprintf(stderr, "BUFFER: >%s<\n", buffer);
+        
         //analizar(buffer);
 	return 0;
 }

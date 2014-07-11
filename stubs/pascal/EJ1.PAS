@@ -17,20 +17,23 @@ el nombre del .exe pero el token dejar el mismo.
 
 }
 var respuesta,x,y,error:integer;
-
+procedure definirVariable(numero:integer;var x:integer);
 begin
-    Val(ParamStr(1),x,error);
+    Val(ParamStr(numero),x,error);
     if not(error=0) then
     begin
          writeln('Error en primer parametro');
          halt(1);
     end;
-    Val(ParamStr(2),y,error);
-    if not(error=0) then
-    begin
-         writeln('Error en segundo parametro');
-         halt(1);
-    end;
+
+end;
+
+
+begin
+    definirVariable(1,x);
+    definirVariable(2,y);
+
     respuesta:=x+y;
+
     write(respuesta);
 end.

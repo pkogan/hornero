@@ -13,7 +13,7 @@ class Hornero {
     /*
       Se piden los parametros al servidor hornero NO TOCAR!!!! */
     public $host = 'hornero.fi.uncoma.edu.ar';
-
+    //public $host = 'localhost/yii/hornero';
     public function __construct($problema,$token) {
         $this->problema = $problema;
         $this->token=$token;

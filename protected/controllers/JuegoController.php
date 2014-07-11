@@ -20,7 +20,7 @@ class JuegoController extends Controller {
         //se busca el usuario y el toneo en base al token
         $Usuario = TorneoUsuario::model()->find('token=:token', array(':token' => $token));
         if (is_null($Usuario)) {
-            $respuesta['error'] = 'No es un token válido';
+            $respuesta['error'] = 'NO ES UN TOKEN VALIDO';
         } else {
             /* @var $Usuario TorneoUsuario */
             $idTorneo = $Usuario->idTorneo;
@@ -31,12 +31,12 @@ class JuegoController extends Controller {
 
             if (is_null($Problema)) {
                 //si no existe el problema
-                $respuesta['error'] = 'No existe el problema para el torneo';
+                $respuesta['error'] = 'NO EXISTE EL PROBLEMA PARA EL TORNEO';
             } else {
                 //si existe busco la cantidad de soluciones que hay disponibles para ese problema
                 $cantidadSoluciones = $Problema->idProblema0->solucionCount;
                 if ($cantidadSoluciones == 0) {
-                    $respuesta['error'] = 'No tiene soluciones';
+                    $respuesta['error'] = 'NO TIENE SOLUCIONES';
                 } else {
                     $solucionRandom = rand(0, $cantidadSoluciones - 1);
                     $soluciones = $Problema->idProblema0->solucions;
@@ -58,12 +58,12 @@ class JuegoController extends Controller {
                         $respuesta['parametrosEntrada'] = $solucion->ParametrosEntrada;
                         $respuesta['token'] = $token;
                     } else {
-                        $respuesta['error'] = 'al agregar la resolucion';
+                        $respuesta['error'] = 'AL AGREGAR LA RESOLUCION';
                     }
                 }
             }
         }
-        header('Content-type: application/json');
+        header('Content-type: application/json; charset=utf-8');
         $json=json_encode($respuesta);
         header('Content-Length: '.  sizeof($json));
         
@@ -83,9 +83,9 @@ class JuegoController extends Controller {
         //se busca el usuario y el toneo en base al token
         $Resolucion = Resolucion::model()->find('Token=:token', array(':token' => $tokenSolicitud));
         if (is_null($Resolucion)) {
-            $respuesta['error'] = utf8_decode('No es un token válido');
+            $respuesta['error'] = 'NO ES UN TOKEN VALIDO';
         } elseif ($Resolucion->idEstado != 1) {
-            $respuesta['error'] = 'Esta solicitud ya ha sido respondida';
+            $respuesta['error'] = 'ESTA RESOLUCION YA ESTA RESPONDIDA';
         } else {
             /* @var $Resolucion Resolucion */
             $tiempo = $tiempoActual - $Resolucion->FechaSolicitud;
@@ -150,10 +150,10 @@ class JuegoController extends Controller {
                 $respuesta['tiempoRespuesta'] = $Resolucion->FechaRespuesta;
                 $respuesta['tiempo'] = $tiempo;
             } else {
-                $respuesta['error'] = 'al actualizar';
+                $respuesta['error'] = 'AL ACTUALIZAR';
             }
         }
-        header('Content-type: application/json');
+        header('Content-type: application/json; charset=utf-8');
         $json=json_encode($respuesta);
         header('Content-Length: '.  sizeof($json));
         echo $json;
