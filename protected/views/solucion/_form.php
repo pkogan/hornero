@@ -15,17 +15,6 @@
 
 	<?php echo $form->errorSummary($model); ?>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'idSolucion'); ?>
-		<?php echo $form->textField($model,'idSolucion'); ?>
-		<?php echo $form->error($model,'idSolucion'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'idProblema'); ?>
-		<?php echo $form->textField($model,'idProblema'); ?>
-		<?php echo $form->error($model,'idProblema'); ?>
-	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'ParametrosEntrada'); ?>

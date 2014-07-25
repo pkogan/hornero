@@ -41,7 +41,7 @@ class Solucion extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('idSolucion, idProblema, ParametrosEntrada, Salida', 'required'),
+			array('idProblema, ParametrosEntrada, Salida', 'required'),
 			array('idSolucion, idProblema', 'numerical', 'integerOnly'=>true),
 			array('ParametrosEntrada, Salida', 'length', 'max'=>2000),
 			// The following rule is used by search().

@@ -65,7 +65,7 @@ class JuegoController extends Controller {
         }
         header('Content-type: application/json; charset=utf-8');
         $json=json_encode($respuesta);
-        header('Content-Length: '.  sizeof($json));
+        //header('Content-Length: '.  sizeof($json));
         
         echo $json;
         $this->layout=FALSE;
@@ -155,7 +155,7 @@ class JuegoController extends Controller {
         }
         header('Content-type: application/json; charset=utf-8');
         $json=json_encode($respuesta);
-        header('Content-Length: '.  sizeof($json));
+        //header('Content-Length: '.  sizeof($json));
         echo $json;
         $this->layout=FALSE;
         //exit;

@@ -13,7 +13,7 @@ $this->menu=array(
 	array('label'=>'Update Problema', 'url'=>array('update', 'id'=>$model->idProblema)),
 	array('label'=>'Delete Problema', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->idProblema),'confirm'=>'Are you sure you want to delete this item?')),
 	array('label'=>'Manage Problema', 'url'=>array('admin')),
-        array('label'=>'Ver Soluciones','url'=>array('/solucion/admin','idProblema'=>$model->idProblema))
+        array('label'=>'Nueva Solucion','url'=>array('/solucion/create','idProblema'=>$model->idProblema))
 );
 ?>
 
@@ -43,8 +43,18 @@ $this->menu=array(
 		//'idProblema',
 		'ParametrosEntrada',
 		'Salida',
-		array(
+                array(
 			'class'=>'CButtonColumn',
+                        'template'=>'{update}{delete}',
+                        'buttons'=> array(
+                            'update' => array(
+                                'url'=>'Yii::app()->createUrl("/solucion/update",array("id"=>$data->idSolucion))'
+                            ),
+                            'delete' => array(
+                                'url'=>'Yii::app()->createUrl("/solucion/delete",array("id"=>$data->idSolucion))'
+                            )
+                        )
 		),
+		
 	),
 )); 

@@ -60,22 +60,25 @@ class SolucionController extends Controller
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
-	public function actionCreate()
+	public function actionCreate($idProblema)
 	{
 		$model=new Solucion;
-
+                $problema=  Problema::model()->findByPk($idProblema);
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
 		if(isset($_POST['Solucion']))
 		{
 			$model->attributes=$_POST['Solucion'];
+                        $model->idProblema=$idProblema;
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->idSolucion));
+				$this->redirect(array('/problema/view','id'=>$idProblema));
 		}
 
 		$this->render('create',array(
 			'model'=>$model,
+                        'problema'=>$problema
+                        
 		));
 	}
 
@@ -95,7 +98,7 @@ class SolucionController extends Controller
 		{
 			$model->attributes=$_POST['Solucion'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->idSolucion));
+				$this->redirect(array('/problema/view','id'=>$model->idProblema));
 		}
 
 		$this->render('update',array(
@@ -110,11 +113,13 @@ class SolucionController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		$this->loadModel($id)->delete();
+		$model=$this->loadModel($id);
+                $idProblema=$model->idProblema;
+                $model->delete();
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('/problema/view','id'=>$idProblema));
 	}
 
 	/**
