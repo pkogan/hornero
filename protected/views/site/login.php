@@ -43,9 +43,14 @@ $this->breadcrumbs=array(
 
 	<div class="row buttons">
 		<?php echo CHtml::submitButton('Login'); ?>
+                
 	</div>
     <p class="hint">
-                    Nota: Si todavía no se registró hacer click <?php echo CHtml::link("Aqui",array(
+        <?php echo CHtml::link("Olvidó su clave?",array(
+                          '/cambioClave/create'));?>
+</p>
+    <p class="hint">
+        <?php echo CHtml::link("Todavía no se registró?",array(
                           'usuario/registro'));?>.
 		</p>
 

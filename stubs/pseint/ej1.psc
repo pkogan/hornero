@@ -1,5 +1,7 @@
 //Para enviar las respuestas al hornero:
-//1- Guardar el archivo con la resolución en un lugar conocido.
+//1- Guardar el archivo con la resoluciÃ³n en la carpeta donde estÃ¡ instalado PSeInt.
+// comunmente en la carpeta C:/Archivos de Programa/PSeInt.
+// Los nombres de ejercicios no deben tener espacios
 //2- Ejecutar desde consola con wrapper hornero
 //*****************************************************
 //En Windows:
@@ -10,7 +12,9 @@
 //>hornero.exe "numeroProblema" "token" pseintwin "archivo.psc"
 //"numeroProblema" es el numero de problema a resolver del torneo
 //"token" es la clave que nos identifica como jugadores para ese torneo.
-//"archivo.psc" ruta a donde se guardó el archivo por ejemplo c:/ejercicios/ej1.psc
+//"archivo.psc" ruta a donde se guardÃ³ el archivo por ejemplo c:/ejercicios/ej1.psc
+//o solo el nÃ³mbre del archivo si se estÃ¡ trabajando en la misma carpeta
+
 
 //*****************************************************
 //En linux:
@@ -21,7 +25,7 @@
 //>.\hornero "numeroProblema" "token" pseint "archivo.psc"
 //"numeroProblema" es el numero de problema a resolver del torneo
 //"token" es la clave que nos identifica como jugadores para ese torneo.
-//"archivo.psc" ruta a donde se guardó el archivo por ejemplo /home/usuario/ejercicios/ej1.psc
+//"archivo.psc" ruta a donde se guardÃ³ el archivo por ejemplo /home/usuario/ejercicios/ej1.psc
 //**********************************************
 
 //Para obtener el token:
@@ -31,7 +35,7 @@
 //		- copiar el token que nos muestra la inscripcion.
 //
 //Para resolver los siguientes ejercicios generar otro programa ej2.psc
-//y ejecutarlos de igual forma que el anterior modificando el número de Problema,
+//y ejecutarlos de igual forma que el anterior modificando el nï¿½mero de Problema,
 //el nombre del .psc pero el token dejar el mismo.
 
 			

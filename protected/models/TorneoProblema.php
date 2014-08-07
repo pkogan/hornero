@@ -115,7 +115,8 @@ class TorneoProblema extends CActiveRecord
 		$criteria->compare('idProblema',$this->idProblema);
 		$criteria->compare('idTorneo',$this->idTorneo);
 		$criteria->compare('Orden',$this->Orden);
-
+                $criteria->order='Orden';
+                
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));

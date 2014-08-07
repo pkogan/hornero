@@ -75,13 +75,18 @@ class GeneradorController extends Controller {
             }
         }*/
         for ($index = 0; $index < 100; $index++) {
-            $x = rand(25, 10000);
+            $x=array();
+            $suma=0;
+            for($i=0;$i<5;$i++){
+                $x[$i] = rand(-10000, 10000);
+                $suma+=$x[$i];
+            }
             $solucion = new Solucion();
-            $solucion->ParametrosEntrada = $x;
+            $solucion->ParametrosEntrada = implode(',', $x);
 
-            $solucion->Salida = $this->sumaDigitosFactorial($x);
+            $solucion->Salida = $suma;
 
-            $solucion->idProblema = 6;
+            $solucion->idProblema = 9;
             if (!$solucion->insert()) {
                 throw new Exception('Error al insertar');
             }

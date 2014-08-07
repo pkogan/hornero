@@ -48,7 +48,7 @@ class Usuario extends CActiveRecord {
             array('NombreUsuario, idRol, Descripcion, Email, idLenguaje', 'required'),
 
             array('idRol, idLenguaje', 'numerical', 'integerOnly' => true),
-            array('NombreUsuario, Clave', 'length', 'max' => 100),
+            array('NombreUsuario, Clave', 'length', 'max' => 15, 'min' =>2),
             array('Email', 'length', 'max' => 255),
             array('Descripcion', 'length', 'max' => 255),
             array('Email','email'),

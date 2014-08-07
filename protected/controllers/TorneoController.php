@@ -60,14 +60,18 @@ class TorneoController extends Controller {
 
         $usuarios = new CArrayDataProvider($model->torneoUsuarios, array('keyField' => 'idUsuario',
             'pagination' => false));
-        $problemas = new CArrayDataProvider($model->torneoProblemas, array('keyField' => 'idProblema',
-            'pagination' => false));
+        /*$problemas = new CArrayDataProvider($model->torneoProblemas, array('keyField' => 'idProblema',
+            'pagination' => false ));*/
+        $torneoProblemas = new TorneoProblema('search');
+        $torneoProblemas->idTorneo=$id;
+        $problemas=  $torneoProblemas->search();
         
         $resoluciones = new Resolucion('search');
         $resoluciones->unsetAttributes();  // clear any default values
         if (isset($_GET['Resolucion']))
             $resoluciones->attributes = $_GET['Resolucion'];
         $resoluciones->idTorneo = $id;
+        
 
         $this->render('view', array(
             'model' => $model,

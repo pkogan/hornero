@@ -17,7 +17,7 @@
  * @property Lenguaje $idLenguaje0
  * @property Rol $idRol0
  */
-class Registro extends Usuario {
+class CambioClaveLogin extends Usuario {
 
     /**
      * Returns the static model of the specified AR class.
@@ -25,14 +25,18 @@ class Registro extends Usuario {
      * @return Usuario the static model class
      */
     public $ReClave;
+    public $ClaveActual;
     public $IniClave;
+    
+    
 
     
     public function rules() {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         $rules=  parent::rules();
-        $rules[]=array('Clave, ReClave', 'required', 'on'=>'insert');
+        $rules[]=array('Clave, ReClave, ClaveActual', 'required', 'on'=>'update');
+        $rules[]=array('ClaveActual', 'compare', 'compareAttribute' => 'IniClave');
         $rules[]=array('ReClave', 'compare', 'compareAttribute' => 'Clave');
         return $rules;
     }

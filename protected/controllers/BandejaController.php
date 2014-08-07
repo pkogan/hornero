@@ -12,7 +12,7 @@ class BandejaController extends Controller {
     public function accessRules() {
         return array(
             array('allow', // allow all users to perform 'index' and 'view' actions
-                'actions' => array('index', 'cuenta'),
+                'actions' => array('index', 'cuenta','clave'),
                 'users' => array('@'),
             ),
             array('deny', // deny all users
@@ -53,6 +53,29 @@ class BandejaController extends Controller {
         ));
     }
 
+        public function actionClave() {
+
+        //$this->redirect(array('/usuario/update', 'id' => Yii::app()->user->idUsuario));
+        
+        $model=  CambioClaveLogin::model('CambioClaveLogin')->findByPk(Yii::app()->user->idUsuario);
+        if(is_null($model)){
+            throw new Exception('No existe el usuario');
+        }
+        // Uncomment the following line if AJAX validation is needed
+        // $this->performAjaxValidation($model);
+        
+         if (isset($_POST['CambioClaveLogin'])) {
+            $model->attributes = $_POST['CambioClaveLogin'];
+            if ($model->save()){
+                    $this->redirect(array('/bandeja'));
+            }
+         }
+        
+        $this->render('clave', array(
+            'model' => $model,
+        ));
+    }
+    
     // Uncomment the following methods and override them if needed
     /*
       public function filters()

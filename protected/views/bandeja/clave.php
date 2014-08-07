@@ -4,7 +4,7 @@
 
 $this->breadcrumbs=array(
 	'Bandeja'=>array('index'),
-	'Actualizar Cuenta',
+	'Actualizar Clave',
 );
 
 $this->menu=array(
@@ -15,7 +15,6 @@ $this->menu=array(
 );
 ?>
 
-<h1>Actualizar Datos del Equipo <?php echo CHtml::encode($model->NombreUsuario); ?></h1>
+<h1>Actualizar Clave de Equipo <?php echo CHtml::encode($model->NombreUsuario); ?></h1>
 
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
-<?php  echo CHtml::link("Modificar Clave", array('/bandeja/clave', array()));
+<?php echo $this->renderPartial('_formclave', array('model'=>$model)); ?>
