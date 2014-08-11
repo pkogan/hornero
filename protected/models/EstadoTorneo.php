@@ -12,7 +12,11 @@
  */
 class EstadoTorneo extends CActiveRecord
 {
-	/**
+    const ANTESCOMIENZO =1;
+    const ENPROCESO = 2;
+    const TERMINADO = 3;
+
+    /**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
 	 * @return EstadoTorneo the static model class

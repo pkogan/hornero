@@ -24,8 +24,13 @@ $this->menu = array(
 
 <h1>Torneo #<?php echo CHtml::encode($model->Nombre); ?></h1>
 <?php if($inscripcion=$model->getUsuarioInscripcion()):?>
-<b>Token: <?php echo $inscripcion->Token;?></b>
-<?php endif;?>
+<b>Token: <?php echo $inscripcion->Token;?></b><br>
+<b>Su posicion es: <?php echo $inscripcion->getPosicion();?></b>
+<?php else:?>
+<?php echo CHtml::button("Inscribirse en el Torneo", array(
+                    'submit' => $this->createUrl('/torneo/inscripcion', array('idTorneo' => $model->idTorneo)),
+                    ));?>
+    <?php endif;?>
 <p><?php echo CHtml::encode($model->Descripcion);?></p>
 
 
@@ -71,20 +76,23 @@ $this->widget('zii.widgets.CDetailView', array(
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'usuarios',
     'summaryText'=>'<h1>Tabla de Posiciones</h1>',
-    'dataProvider' => $usuarios,
+    'dataProvider' => $usuarios->search(),
+    'filter'=>$usuarios,
     'columns' => array(
         //'idTwit',
         //'idUsuario0.NombreUsuario',
-        array('name'=>'Posición',
-            'value'=>'$row+1'),
-        array('name' => 'Equipo',
+        array('header'=>'Posición',
+            'value'=>'$data->getPosicion()'),
+        array('header' => 'Equipo',
+              'name'=>'equipo',
             'value' => '$data->idUsuario0->NombreUsuario'
         ),
-        array('name' => 'Lenguaje',
+        array('header' => 'Lenguaje',
             'value' => '$data->idUsuario0->idLenguaje0->Lenguaje'
         ),
-        'Puntos',
-        array('name' => 'Tiempo Ultimo Ejercicio',
+        array('header'=>'Puntos',
+            'value'=>'$data->Puntos'),
+        array('header' => 'Tiempo Ultimo Ejercicio',
             'value' => '$data->TiempoOK'
         ),
         
@@ -97,7 +105,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'problemas',
     'summaryText'=>'<h1>Problemas</h1>',
-    'dataProvider' => $problemas,
+    'dataProvider' => $problemas->search(),
     'columns' => array(
         //'idTwit',
         'Orden',

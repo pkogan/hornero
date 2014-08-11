@@ -35,15 +35,18 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'columns' => array(
         //'idTwit',
         //'idUsuario0.NombreUsuario',
-        array('name' => 'Equipo',
+        array('header' => 'Equipo',
             'value' => '$data->idUsuario0->NombreUsuario'
         ),
-        'FechaSolicitud',
+        array('header'=>'Fecha Solicitud',
+               'value'=>'$data->FechaSolicitudOK'),
+        //'FechaSolicitud',
         array('name' => 'Tiempo Respuesta',
             'value' => '$data->FechaRespuestaOK'
         ),
         'idSolucion0.ParametrosEntrada',
-        'Respuesta',
+        array('header'=>'Respuesta Enviada',
+            'value'=>'$data->Respuesta'),
         array('header'=>'Respuesta Correcta',
             'value'=>'$data->idSolucion0->Salida'),
         'idEstado0.Estado'

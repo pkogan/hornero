@@ -17,7 +17,7 @@
 		'validateOnSubmit'=>true)
 )); ?>
 
-	<p class="note">Ingrese su cuenta mail y recibirá un mail para cambiar la clave</p>
+	<p class="note">Ingrese su cuenta mail y recibirá un correo con las indicaciones para recuperar la clave</p>
 
 	<?php echo $form->errorSummary($model); ?>
 

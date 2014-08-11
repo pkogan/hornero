@@ -40,6 +40,12 @@ class Resolucion extends CActiveRecord
             $date = new DateTime($dateString);
             return $date->format('d/m/y H:i:s').'.'.($this->FechaRespuesta % 1000);
         }
+        public function getFechaSolicitudOK(){
+            $dateString = date('Ymd H:i:s', $this->FechaSolicitud/1000);
+            $date = new DateTime($dateString);
+            return $date->format('d/m/y H:i:s').'.'.($this->FechaSolicitud % 1000);
+        }
+
 	/**
 	 * @return string the associated database table name
 	 */
@@ -128,7 +134,7 @@ class Resolucion extends CActiveRecord
                 $criteria->compare('idUsuario0.NombreUsuario',$this->NombreEquipo,true);
                 $criteria->compare('idEstado0.Estado',$this->Estado,true);
                 
-                $criteria->order='FechaRespuesta';
+                $criteria->order='FechaSolicitud Desc';
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

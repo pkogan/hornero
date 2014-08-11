@@ -3,7 +3,6 @@
 /* @var $model Usuario */
 
 $this->breadcrumbs=array(
-	'Usuarios'=>array('index'),
 	'Registro',
 );
 

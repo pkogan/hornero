@@ -57,14 +57,25 @@ class TorneoController extends Controller {
 
         //$modelResolucion->idTorneo = $id;
 
-
-        $usuarios = new CArrayDataProvider($model->torneoUsuarios, array('keyField' => 'idUsuario',
+        
+        /*$usuarios = new CArrayDataProvider($model->torneoUsuarios, array('keyField' => 'idUsuario',
             'pagination' => false));
         /*$problemas = new CArrayDataProvider($model->torneoProblemas, array('keyField' => 'idProblema',
             'pagination' => false ));*/
-        $torneoProblemas = new TorneoProblema('search');
-        $torneoProblemas->idTorneo=$id;
-        $problemas=  $torneoProblemas->search();
+        $torneoUsuario= new TorneoUsuario('search');
+        $torneoUsuario->unsetAttributes();  // clear any default values
+        if (isset($_GET['TorneoUsuario']))
+            $torneoUsuario->attributes = $_GET['TorneoUsuario'];
+        $torneoUsuario->idTorneo=$id;
+        
+        
+        $torneoProblema = new TorneoProblema('search');
+        $torneoProblema->unsetAttributes();  // clear any default values
+        if (isset($_GET['TorneoProblema']))
+            $torneoProblema->attributes = $_GET['TorneoProblema'];
+        
+        $torneoProblema->idTorneo=$id;
+        
         
         $resoluciones = new Resolucion('search');
         $resoluciones->unsetAttributes();  // clear any default values
@@ -75,8 +86,8 @@ class TorneoController extends Controller {
 
         $this->render('view', array(
             'model' => $model,
-            'usuarios' => $usuarios,
-            'problemas' => $problemas,
+            'usuarios' => $torneoUsuario,
+            'problemas' => $torneoProblema,
             'resoluciones'=>$resoluciones,
         ));
     }
@@ -89,10 +100,10 @@ class TorneoController extends Controller {
          * @var $model TorneoProblema
          */
         if (is_null($model)) {
-            throw new Exception('El problema no existe asociado al Torneo');
+            throw new CHttpException('El problema no existe asociado al Torneo');
         }
         if($model->idTorneo0->idEstado==1&& !Yii::app()->user->checkAccess('Administrador')) {
-            throw new Exception('El Torneo no ha empezado');
+            throw new CHttpException('El Torneo no ha empezado');
         }
             
             
@@ -121,7 +132,7 @@ class TorneoController extends Controller {
                 $torneoproblema->idTorneo=$id;
                 $torneoproblema->Orden=$model->problemasCount+1;
                 if(!$torneoproblema->save())
-                    throw new Exception('error al asignar problema');
+                    throw new CHttpException('error al asignar problema');
             }
             $this->redirect(array('view', 'id' => $id));
         } else {
@@ -160,6 +171,11 @@ class TorneoController extends Controller {
     }
 
     public function actionInscripcion($idTorneo) {
+        $torneo=$this->loadModel($idTorneo);
+        if($torneo->idEstado==EstadoTorneo::TERMINADO){
+            throw new CHttpException('El torneo está terminado');
+        }
+ 
         $idUsuario = Yii::app()->user->idUsuario;
         $model = TorneoUsuario::model()->find('idTorneo=:idTorneo and idUsuario=:idUsuario', array(':idTorneo' => $idTorneo, ':idUsuario' => $idUsuario));
 
@@ -172,7 +188,7 @@ class TorneoController extends Controller {
              */
             $model->Token = md5(Yii::app()->user->name . microtime());
             if (!$model->save())
-                throw new Exception('no se pudo inscribir');
+                throw new CHttpException('no se pudo inscribir');
         }
         $this->redirect(array('view', 'id' => $idTorneo));
         // Uncomment the following line if AJAX validation is needed
@@ -180,12 +196,16 @@ class TorneoController extends Controller {
     }
     
     public function actionBorrarinscripcion($idTorneo) {
+        $torneo=$this->loadModel($idTorneo);
+        if($torneo->idEstado==EstadoTorneo::TERMINADO){
+            throw new CHttpException('El torneo está terminado');
+        }
         $idUsuario = Yii::app()->user->idUsuario;
         $model = TorneoUsuario::model()->find('idTorneo=:idTorneo and idUsuario=:idUsuario', array(':idTorneo' => $idTorneo, ':idUsuario' => $idUsuario));
         
         if (!is_null($model)) {
             if (!$model->delete())
-                throw new Exception('no se pudo borrar Inscripcion');
+                throw new CHttpException('no se pudo borrar Inscripcion');
             Resolucion::model()->deleteAll('idTorneo=:idTorneo and idUsuario=:idUsuario', array(':idTorneo' => $idTorneo, ':idUsuario' => $idUsuario));
         }
         $this->redirect(array('/bandeja'));
@@ -196,6 +216,11 @@ class TorneoController extends Controller {
     
 
     public function actionActualizartoken($idTorneo) {
+        $torneo=$this->loadModel($idTorneo);
+        if($torneo->idEstado==EstadoTorneo::TERMINADO){
+            throw new CHttpException('El torneo está terminado');
+        }
+ 
         $idUsuario = Yii::app()->user->idUsuario;
         $model = TorneoUsuario::model()->find('idTorneo=:idTorneo and idUsuario=:idUsuario', array(':idTorneo' => $idTorneo, ':idUsuario' => $idUsuario));
 
@@ -204,12 +229,16 @@ class TorneoController extends Controller {
             $model->idTorneo = $idTorneo;
             $model->idUsuario = $idUsuario;
             $model->Token = md5(Yii::app()->user->name . date('hh:ii:ss'));
+            
+            /**
+             * :todo ver posibles token repetidos
+             */
             if (!$model->save())
-                throw new Exception('no se pudo inscribir');
+                throw new CHttpException('no se pudo inscribir');
         }else {
             $model->Token = md5(Yii::app()->user->name . date('hh:ii:ss'));
             if (!$model->save())
-                throw new Exception('no se pudo actualizar');
+                throw new CHttpException('no se pudo actualizar');
         }
         $this->redirect(array('view', 'id' => $idTorneo));
         // Uncomment the following line if AJAX validation is needed
@@ -287,12 +316,12 @@ class TorneoController extends Controller {
      * If the data model is not found, an HTTP exception will be raised.
      * @param integer $id the ID of the model to be loaded
      * @return Torneo the loaded model
-     * @throws CHttpException
+     * @throws CHttpCHttpException
      */
     public function loadModel($id) {
         $model = Torneo::model()->findByPk($id);
         if ($model === null)
-            throw new CHttpException(404, 'The requested page does not exist.');
+            throw new CHttpException(404, 'No existe el torneo.');
         return $model;
     }
 

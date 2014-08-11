@@ -76,7 +76,7 @@ class CambioClaveController extends Controller {
              * @var $usuario Usuario
              * */
             if (is_null($usuario)) {
-                $model->validate();
+                $model->addError('email', 'No se encuentra registrado el mail.');
             } else {
                 $model->idUsuario = $usuario->idUsuario;
                 $model->token = md5(microtime() . $usuario->idUsuario);
@@ -89,11 +89,16 @@ class CambioClaveController extends Controller {
                         "Reply-To: " . Yii::app()->params['adminEmail'] . "\r\n" .
                         "MIME-Version: 1.0\r\n" .
                         "Content-type: text/plain; charset=UTF-8";
-
-                if (mail($model->email, $subject, 'Su usuario/equipo es: "'.$usuario->NombreUsuario.'" y su clave es: "' . $usuario->Clave.'".', $headers)) {
+                $envio=mail($model->email, $subject, 'Su usuario/equipo es: "'.$usuario->NombreUsuario
+                        .'" y su clave es: "' . $usuario->Clave.'".'
+                        . 'Ingresar a '.Yii::app()->baseUrl.Yii::app()->createUrl("/site/login"), $headers);
+                if ($envio) {
 
                     if ($model->save()) {
-                        $this->render('enviado', array(
+                        Yii::app()->user->setFlash('contact', 'Se ha enviado un mail a '.$model->email.
+                        '. Siga las instrucciones del mail para actualizar su clave.');
+                        $this->refresh();
+                        $this->render('create', array(
                             'model' => $model,
                         ));
                     }
