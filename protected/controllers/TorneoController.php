@@ -33,7 +33,7 @@ class TorneoController extends Controller {
                 'actions' => array('inscripcion', 'actualizartoken', 'verproblema','borrarinscripcion'),
                 'users' => array('@')),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update', 'asignarproblema'),
+                'actions' => array('create', 'update', 'asignarproblema','asignarequipos','borrarequipo'),
                 'roles' => array('Administrador'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -52,7 +52,13 @@ class TorneoController extends Controller {
      */
     public function actionView($id) {
         $model = $this->loadModel($id);
-
+        
+        /*
+         * si no es administrador y es un torneo cerrado y no está inscripto no pasa
+         */
+        if(!Yii::app()->user->checkAccess('Administrador')&&$model->idTipo==TipoTorneo::CERRADO && !$model->getUsuarioInscripcion()){
+            throw new CHttpException('Es un torneo Cerrado ');
+        }
 
 
         //$modelResolucion->idTorneo = $id;
@@ -99,10 +105,20 @@ class TorneoController extends Controller {
         /*
          * @var $model TorneoProblema
          */
+       
+
+        
+        
         if (is_null($model)) {
             throw new CHttpException('El problema no existe asociado al Torneo');
         }
-        if($model->idTorneo0->idEstado==1&& !Yii::app()->user->checkAccess('Administrador')) {
+        /*
+         * si no es administrador y es un torneo cerrado y no está inscripto no pasa
+         */
+        if(!Yii::app()->user->checkAccess('Administrador')&&$model->idTorneo0->idTipo==TipoTorneo::CERRADO && !$model->idTorneo0->getUsuarioInscripcion()){
+            throw new CHttpException('Es un torneo Cerrado ');
+        }
+        if($model->idTorneo0->idEstado==EstadoTorneo::ANTESCOMIENZO && !Yii::app()->user->checkAccess('Administrador')) {
             throw new CHttpException('El Torneo no ha empezado');
         }
             
@@ -148,6 +164,41 @@ class TorneoController extends Controller {
         }
     }
 
+
+        public function actionAsignarequipos($id) {
+        $model=  $this->loadModel($id);
+        if (isset($_GET['idUsuario'])) {
+            //se asigna y se redirige al view
+            $idUsuario=$_GET['idUsuario'];
+            $modelUsuario=  Usuario::model()->findByPk($idUsuario);
+            if(is_null($modelUsuario)){
+                throw new CHttpException('El usuario no existe');
+            }
+            $torneousuario=  TorneoUsuario::model()->find('idTorneo=:idTorneo and idUsuario=:idUsuario', array('idTorneo' => $id, 'idUsuario' => $idUsuario));
+            if(is_null($torneousuario)){
+                
+                $torneousuario=new TorneoUsuario();
+                $torneousuario->idUsuario=$idUsuario;
+                $torneousuario->idTorneo=$id;
+                $torneousuario->Token = md5($modelUsuario->NombreUsuario. microtime());
+                if(!$torneousuario->save())
+                    throw new CHttpException('error al asignar problema');
+            }
+            $this->redirect(array('view', 'id' => $id));
+        } else {
+            $modelUsuarios = new Usuario('search');
+            $modelUsuarios->unsetAttributes();  // clear any default values
+            if (isset($_GET['Usuario']))
+                $modelUsuarios->attributes = $_GET['Usuario'];
+
+            $this->render('asignarequipos', array(
+                'model' => $model,
+                'usuarios'=>$modelUsuarios,
+            ));
+        }
+    }
+
+    
     
     /**
      * Creates a new model.
@@ -172,9 +223,17 @@ class TorneoController extends Controller {
 
     public function actionInscripcion($idTorneo) {
         $torneo=$this->loadModel($idTorneo);
+                /*
+         * si no es administrador y es un torneo cerrado y no está inscripto no pasa
+         */
+        if(!Yii::app()->user->checkAccess('Administrador')&&$torneo->idTipo==TipoTorneo::CERRADO && !$torneo->getUsuarioInscripcion()){
+            throw new CHttpException('Es un torneo Cerrado ');
+        }
+        
         if($torneo->idEstado==EstadoTorneo::TERMINADO){
             throw new CHttpException('El torneo está terminado');
         }
+        
  
         $idUsuario = Yii::app()->user->idUsuario;
         $model = TorneoUsuario::model()->find('idTorneo=:idTorneo and idUsuario=:idUsuario', array(':idTorneo' => $idTorneo, ':idUsuario' => $idUsuario));
@@ -187,6 +246,7 @@ class TorneoController extends Controller {
              * TODO: Ver que se pueden repetir tokens
              */
             $model->Token = md5(Yii::app()->user->name . microtime());
+
             if (!$model->save())
                 throw new CHttpException('no se pudo inscribir');
         }
@@ -201,6 +261,21 @@ class TorneoController extends Controller {
             throw new CHttpException('El torneo está terminado');
         }
         $idUsuario = Yii::app()->user->idUsuario;
+        $this->borrarequipo($idTorneo,$idUsuario);
+        $this->redirect(array('/bandeja'));
+        // Uncomment the following line if AJAX validation is needed
+        // $this->performAjaxValidation($model);
+    }
+    
+    public function actionBorrarequipo($idTorneo,$idUsuario) {
+        $this->borrarequipo($idTorneo,$idUsuario);
+        if (!isset($_GET['ajax']))
+            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('view','id'=>$idTorneo));
+        // Uncomment the following line if AJAX validation is needed
+        // $this->performAjaxValidation($model);
+    }
+    
+    protected function borrarequipo($idTorneo,$idUsuario){
         $model = TorneoUsuario::model()->find('idTorneo=:idTorneo and idUsuario=:idUsuario', array(':idTorneo' => $idTorneo, ':idUsuario' => $idUsuario));
         
         if (!is_null($model)) {
@@ -208,9 +283,6 @@ class TorneoController extends Controller {
                 throw new CHttpException('no se pudo borrar Inscripcion');
             Resolucion::model()->deleteAll('idTorneo=:idTorneo and idUsuario=:idUsuario', array(':idTorneo' => $idTorneo, ':idUsuario' => $idUsuario));
         }
-        $this->redirect(array('/bandeja'));
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
     }
     
     

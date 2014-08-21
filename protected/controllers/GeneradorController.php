@@ -74,22 +74,28 @@ class GeneradorController extends Controller {
                 throw new Exception('Error al insertar');
             }
         }*/
-        for ($index = 0; $index < 100; $index++) {
-            $x=array();
-            $suma=0;
+        for ($index = 1; $index < 366; $index++) {
+            
+            /*$suma=0;
             for($i=0;$i<5;$i++){
                 $x[$i] = rand(-10000, 10000);
                 $suma+=$x[$i];
-            }
+            }*/
+            
+            echo $index.' '. $this->diaAnno($index).'<br/>';
+            
+            
             $solucion = new Solucion();
-            $solucion->ParametrosEntrada = implode(',', $x);
+            $solucion->ParametrosEntrada = $this->diaAnno($index);
 
-            $solucion->Salida = $suma;
+            $solucion->Salida = $index;
 
-            $solucion->idProblema = 9;
+            $solucion->idProblema = 13;
             if (!$solucion->insert()) {
                 throw new Exception('Error al insertar');
             }
+             
+             
         }
         
         
@@ -129,6 +135,13 @@ class GeneradorController extends Controller {
 
         return $suma;
     }
+    
+    private function diaAnno($dia){
+        $date = DateTime::createFromFormat('z Y', strval($dia-1) . ' 2014' );
+        /*@var $date DateTime */
+        //print_r ($date);
+        return $date->format("n,j");
+    }   
 
 // Uncomment the following methods and override them if needed
     /*

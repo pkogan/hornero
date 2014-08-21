@@ -4,7 +4,7 @@
 
 $this->breadcrumbs = array(
     'Torneos' => array('index'),
-    $torneo->Nombre => array('view','id'=>$torneo->idTorneo),
+    $torneo->Nombre => array('/torneo/view','id'=>$torneo->idTorneo),
     'Manejar Problemas',
 );
 

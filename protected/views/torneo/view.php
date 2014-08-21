@@ -17,6 +17,7 @@ $this->menu = array(
     array('label' => 'Update Torneo', 'url' => array('update', 'id' => $model->idTorneo), 'visible' => Yii::app()->user->checkAccess('Administrador')),
     array('label' => 'Manejar Problemas', 'url' => array('/torneoProblema/admin', 'id' => $model->idTorneo), 'visible' => Yii::app()->user->checkAccess('Administrador')),
     array('label' => 'Asignar Problemas', 'url' => array('asignarproblema', 'id' => $model->idTorneo), 'visible' => Yii::app()->user->checkAccess('Administrador')),
+    array('label' => 'Asignar Equipos', 'url' => array('asignarequipos', 'id' => $model->idTorneo), 'visible' => Yii::app()->user->checkAccess('Administrador')),
     array('label' => 'Delete Torneo', 'url' => '#', 'linkOptions' => array('submit' => array('delete', 'id' => $model->idTorneo), 'confirm' => 'Are you sure you want to delete this item?'), 'visible' => Yii::app()->user->checkAccess('Administrador')),
     array('label' => 'Manage Torneo', 'url' => array('admin'), 'visible' => Yii::app()->user->checkAccess('Administrador')),
 );
@@ -95,11 +96,23 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array('header' => 'Tiempo Ultimo Ejercicio',
             'value' => '$data->TiempoOK'
         ),
+        array(
+                'visible'=>Yii::app()->user->checkAccess('Administrador'),
+			'class'=>'CButtonColumn',
+                        'template'=>'{delete}',
+                        'buttons'=>array(
+                            'delete'=>array(
+                                'url'=>'Yii::app()->controller->createUrl(\'borrarequipo\', array(\'idTorneo\'=>'.$model->idTorneo.',\'idUsuario\'=>$data["idUsuario"]))',
+                                
+                            )
+                        )
+                    
+		),
         
     ),
 ));
 ?>
-<?php if ($model->idEstado!=1||Yii::app()->user->checkAccess('Administrador')):?>
+<?php if ($model->idEstado!=EstadoTorneo::ANTESCOMIENZO ||Yii::app()->user->checkAccess('Administrador')):?>
 
 <?php
 $this->widget('zii.widgets.grid.CGridView', array(
@@ -155,9 +168,11 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'value' => '$data->idUsuario0->NombreUsuario'
         ),*/
         'FechaSolicitud',
-        array('header' => 'Tiempo Respuesta',
+        array('header' => 'Fecha Respuesta',
             'value' => '$data->FechaRespuestaOK'
         ),
+        array('header'=>'Tiempo',
+            'value'=>'$data->FechaRespuesta-$data->FechaSolicitud'),
         'idSolucion0.ParametrosEntrada',
         'Respuesta',
         array('header'=>'Respuesta Correcta',

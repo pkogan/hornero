@@ -63,6 +63,7 @@ class TorneoUsuario extends CActiveRecord {
             array('idTorneo, idUsuario, Token', 'required'),
             array('idTorneo, idUsuario, Puntos', 'numerical', 'integerOnly' => true),
             array('Token', 'length', 'max' => 32),
+            array('Token', 'unique'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('idTorneoUsuario, idTorneo, idUsuario, Puntos, Token, equipo', 'safe', 'on' => 'search'),

@@ -5,7 +5,7 @@
 
 $this->breadcrumbs = array(
     'Torneos' => array('index'),
-    $model->Nombre => array('/torneo/view','id'=>$model->idTorneo),
+    $model->Nombre => array('view','id'=>$model->idTorneo),
     'Asignar Problema',
 );
 
@@ -15,19 +15,19 @@ $this->menu = array(
 ?>
 
 <h1>Torneo #<?php echo $model->Nombre; ?></h1>
-<h2>Buscar Problemas</h2>
+<h2>Buscar Equipos</h2>
 <hr/>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'problema-grid',
-	'dataProvider'=>$problemas->search(),
-	'filter'=>$problemas,
+	'dataProvider'=>$usuarios->search(),
+	'filter'=>$usuarios,
 	'columns'=>array(
-		'idProblema',
-		'idTipo0.Tipo',
-		'idComplejidad0.Complejidad',
-                'Nombre',
-		'Enunciado',
+		'idUsuario',
+		'NombreUsuario',
+                'Descripcion',
+		'idLenguaje0.Lenguaje',
+                
 		
 		/*
 		'TiempoEjecucionMax',
@@ -37,7 +37,7 @@ $this->menu = array(
                         'template'=>'{asignar}',
                         'buttons'=>array(
                             'asignar'=>array(
-                                'url'=>'Yii::app()->controller->createUrl(\'asignarproblema\', array(\'id\'=>'.$model->idTorneo.',\'idProblema\'=>$data["idProblema"]))',
+                                'url'=>'Yii::app()->controller->createUrl(\'asignarequipos\', array(\'id\'=>'.$model->idTorneo.',\'idUsuario\'=>$data["idUsuario"]))',
                                 
                             )
                         )

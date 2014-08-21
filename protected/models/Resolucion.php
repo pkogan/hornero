@@ -65,6 +65,7 @@ class Resolucion extends CActiveRecord
 			array('idUsuario, idProblema, idSolucion, idTorneo, Token, FechaSolicitud', 'required'),
 			array('idUsuario, idProblema, idSolucion, idTorneo, idEstado', 'numerical', 'integerOnly'=>true),
 			array('Token', 'length', 'max'=>32),
+                        array('Token', 'unique'),
 			array('Respuesta', 'length', 'max'=>2000),
 			array('FechaRespuesta', 'safe'),
 			// The following rule is used by search().

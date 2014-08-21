@@ -12,7 +12,11 @@
  */
 class TipoTorneo extends CActiveRecord
 {
-	/**
+    
+    const ABIERTO=1;
+    const CERRADO=2;
+    const ABIERTOSINLIMITE=3;
+    /**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
 	 * @return TipoTorneo the static model class
