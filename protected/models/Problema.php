@@ -22,7 +22,26 @@
  */
 class Problema extends CActiveRecord
 {
-	/**
+    
+    public $Tipo;
+    public $Complejidad;
+    
+    public function getOrdenAsignado($idTorneo){
+        if(!isset($idTorneo)){
+            return '';
+        }
+        $torneoProblema=  TorneoProblema::model()->find('idTorneo=:idTorneo and idProblema=:idProblema',
+                array(':idTorneo'=>$idTorneo,':idProblema'=>  $this->idProblema));
+        if (is_null($torneoProblema)){
+            return 'No';
+        }else{
+            /** 
+             * @var $torneoProblema TorneoProblema*/
+            return $torneoProblema->Orden;
+        }
+    }
+
+    /**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
 	 * @return Problema the static model class
@@ -54,7 +73,7 @@ class Problema extends CActiveRecord
 			array('Nombre, Archivo', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('idProblema, idTipo, Nombre, Archivo, Enunciado, idComplejidad, TiempoEjecucionMax', 'safe', 'on'=>'search'),
+			array('idProblema, idTipo, Nombre, Archivo, Enunciado, idComplejidad, TiempoEjecucionMax, Complejidad, Tipo', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -101,7 +120,10 @@ class Problema extends CActiveRecord
 		// should not be searched.
 
 		$criteria=new CDbCriteria;
-
+                $criteria->with=array('idComplejidad0','idTipo0');
+                $criteria->compare('idComplejidad0.Complejidad',$this->Complejidad,true);
+                $criteria->compare('idTipo0.Tipo',$this->Tipo,true);
+                
 		$criteria->compare('idProblema',$this->idProblema);
 		$criteria->compare('idTipo',$this->idTipo);
 		$criteria->compare('Nombre',$this->Nombre,true);

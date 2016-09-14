@@ -14,7 +14,7 @@ $this->pageTitle=Yii::app()->name;
 
 <hr/>
 <img style="float: right" alt="logo"  src="<?php echo Yii::app()->request->baseUrl?>/images/lenguajesremolino.jpg" >
-<h3>"Se puede programar/competir con cualquier lenguaje" java, python, php, c, c++, pascal, javascript, c#, ciao-prolog, visual basic, perl, bash, lisp, ruby, smalltalk, PSeInt, ..... cualquier lenguaje.
+<h3>"Se puede programar/competir con cualquier lenguaje" java, python, php, c, c++, pascal, javascript, c#, ciao-prolog, perl, bash, lisp, ruby, smalltalk, PSeInt, ..... cualquier lenguaje.
 </h3>
 <h3>"Puede jugar el que quiera. Está abierto a cualquier programador, de cualquier lugar del mundo, sin límite ni de edad ni de título"
 </h3>

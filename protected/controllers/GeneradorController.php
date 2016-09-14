@@ -22,86 +22,69 @@ class GeneradorController extends Controller {
     }
 
     public function actionIndex() {
-        //suma
-//            for ($index = 0; $index < 100; $index++) {
-//                $x=  rand(-10000, 10000);
-//                $y=  rand(-10000, 10000);
-//                $solucion=new Solucion();
-//                $solucion->ParametrosEntrada=$x.','.$y;
-//                $solucion->Salida=$x+$y;
-//                $solucion->idProblema=1;
-//                if (!$solucion->insert()){
-//                    throw new Exception('Error al insertar');
-//                }
-//            }
-//max            
-//             for ($index = 0; $index < 100; $index++) {
-//                $x=  rand(-10000, 10000);
-//                $y=  rand(-10000, 10000);
-//                $solucion=new Solucion();
-//                $solucion->ParametrosEntrada=$x.','.$y;
-//                $solucion->Salida=  max(array($x,$y));
-//                $solucion->idProblema=2;
-//                if (!$solucion->insert()){
-//                    throw new Exception('Error al insertar');
-//                }
-//            }
-//corona circular
-//Cuál es el área de una vereda en forma de corona circular, si el radio interior es r y el radio exterior R?
-//            for ($index = 0; $index < 100; $index++) {
-//                $x=  rand(1, 10000);
-//                $y=  rand(1, 10000);
-//                if($x>$y){
-//                    $aux=$x;
-//                    $x=$y;
-//                    $y=$aux;
-//                }
-//                $solucion=new Solucion();
-//                $solucion->ParametrosEntrada=$x.','.$y;
-//                
-//                $solucion->Salida=  round((pi()*$y*$y)-(pi()*$x*$x),2);
-//              
-        //suma de múltiplos
-        /*for ($index = 0; $index < 100; $index++) {
-            $x = rand(10, 10000);
-            $solucion = new Solucion();
-            $solucion->ParametrosEntrada = $x;
+ 
+echo 'aaaaaaaaaa';
 
-            $solucion->Salida = $this->sumaMultiplos($x);
-
-            $solucion->idProblema = 5;
-            if (!$solucion->insert()) {
-                throw new Exception('Error al insertar');
-            }
-        }*/
-        for ($index = 1; $index < 366; $index++) {
-            
-            /*$suma=0;
-            for($i=0;$i<5;$i++){
-                $x[$i] = rand(-10000, 10000);
-                $suma+=$x[$i];
-            }*/
-            
-            echo $index.' '. $this->diaAnno($index).'<br/>';
-            
-            
-            $solucion = new Solucion();
-            $solucion->ParametrosEntrada = $this->diaAnno($index);
-
-            $solucion->Salida = $index;
-
-            $solucion->idProblema = 13;
-            if (!$solucion->insert()) {
-                throw new Exception('Error al insertar');
-            }
-             
-             
-        }
+        for ($x1 = 1;$x1<=498; $x1++) {
+	  $Solution=$this->to_roman($x1);
+	  echo " $x1--$Solution";
+	  
+              $solucion = new Solucion();
+	      $solucion->ParametrosEntrada=$x1;
+	      $solucion->Salida=$Solution;
+	      $solucion->idProblema=58;
+	      if (!$solucion->insert()) {
+			      throw new Exception('Error al insertar');
+			  }
+           
         
-        
+
+
         //echo '<br>'.$this->sumaDigitosFactorial(10);
-        $this->render('index');
-       
+        
+      }
+    $this->render('index');
+    }
+    
+    
+public function to_roman($num) {
+    if ($num < 0 || $num > 9999) {
+        return -1;
+    }
+    $r_ones = array(1 => "I", 2 => "II", 3 => "III", 4 => "IV", 5 => "V", 6 => "VI", 7 => "VII", 8 => "VIII",
+        9 => "IX");
+    $r_tens = array(1 => "X", 2 => "XX", 3 => "XXX", 4 => "XL", 5 => "L", 6 => "LX", 7 => "LXX",
+        8 => "LXXX", 9 => "XC");
+    $r_hund = array(1 => "C", 2 => "CC", 3 => "CCC", 4 => "CD", 5 => "D", 6 => "DC", 7 => "DCC",
+        8 => "DCCC", 9 => "CM");
+    $r_thou = array(1 => "M", 2 => "MM", 3 => "MMM", 4 => "MMMM", 5 => "MMMMM", 6 => "MMMMMM",
+        7 => "MMMMMMM", 8 => "MMMMMMMM", 9 => "MMMMMMMMM");
+    $ones = $num % 10;
+    $tens = ($num - $ones) % 100;
+    $hundreds = ($num - $tens - $ones) % 1000;
+    $thou = ($num - $hundreds - $tens - $ones) % 10000;
+    $tens = $tens / 10;
+    $hundreds = $hundreds / 100;
+    $thou = $thou / 1000;
+    $rnum = '';
+    if ($thou) {
+        $rnum .= $r_thou[$thou];
+    }
+    if ($hundreds) {
+        $rnum .= $r_hund[$hundreds];
+    }
+    if ($tens) {
+        $rnum .= $r_tens[$tens];
+    }
+    if ($ones) {
+        $rnum .= $r_ones[$ones];
+    }
+    return $rnum;
+}
+    
+    private function cuentavocales($a) {
+        $cantidad=substr_count($a, 'a')+substr_count($a, 'e')+substr_count($a, 'i')+substr_count($a, 'o')+substr_count($a, 'u');
+        return $cantidad;
     }
 
     private function sumaMultiplos($numero) {
@@ -114,34 +97,35 @@ class GeneradorController extends Controller {
         }
         return $suma;
     }
-    
-    private function factorial($n){
-        $resultado=1;
+
+    private function factorial($n) {
+        $resultado = 1;
         for ($index = 2; $index <= $n; $index++) {
-            $resultado=gmp_mul($resultado,$index);
+            $resultado = $resultado * $index;
         }
         return $resultado;
     }
+
     private function sumaDigitosFactorial($numero) {
         $suma = 0;
-        $factorial=$this->factorial($numero);
-        $str= gmp_strval($factorial);
+        $factorial = $this->factorial($numero);
+        $str = gmp_strval($factorial);
         echo $str;
         //var_dump($str); exit();
         for ($index = 0; $index < strlen($str); $index++) {
-             $digito=substr($str,$index,1);
-             $suma+=$digito;
+            $digito = substr($str, $index, 1);
+            $suma+=$digito;
         }
 
         return $suma;
     }
-    
-    private function diaAnno($dia){
-        $date = DateTime::createFromFormat('z Y', strval($dia-1) . ' 2014' );
-        /*@var $date DateTime */
+
+    private function diaAnno($dia) {
+        $date = DateTime::createFromFormat('z Y', strval($dia - 1) . ' 2014');
+        /* @var $date DateTime */
         //print_r ($date);
         return $date->format("n,j");
-    }   
+    }
 
 // Uncomment the following methods and override them if needed
     /*

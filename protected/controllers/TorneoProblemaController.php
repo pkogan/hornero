@@ -36,7 +36,7 @@ class TorneoProblemaController extends Controller
 				'roles'=>array('Administrador'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
+				'actions'=>array('admin','delete','delete2'),
 				'roles'=>array('Administrador'),
 			),
 			array('deny',  // deny all users
@@ -117,6 +117,27 @@ class TorneoProblemaController extends Controller
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 	}
 
+        
+        /**
+	 * Deletes a particular model.
+	 * If deletion is successful, the browser will be redirected to the 'admin' page.
+	 * @param integer $id the ID of the model to be deleted
+	 */
+	public function actionDelete2($idTorneo,$idProblema)
+	{
+		$model= TorneoProblema::model()->find('idTorneo=:idTorneo and idProblema=:idProblema',
+                array(':idTorneo'=>$idTorneo,':idProblema'=>  $idProblema));
+                
+                if(is_null($model)){
+                    throw new CHttpException(404,'No existe el Problema para el Torneo');
+                }
+                
+                $model->delete();
+
+		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+		if(!isset($_GET['ajax']))
+			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('/torneo/asignarproblema','id'=>$idTorneo));
+	}
 	/**
 	 * Lists all models.
 	 */

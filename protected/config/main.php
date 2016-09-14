@@ -39,6 +39,17 @@ return array(
             'class' => 'WebUser',
             'allowAutoLogin' => true,
         ),
+         'Smtpmail'=>array(
+            'class'=>'application.extensions.smtpmail.PHPMailer',
+            'Host'=>"smtp.gmail.com",
+            'Username'=>'mail@fi.uncoma.edu.ar',
+            'Password'=>'mail',
+            'Mailer'=>'smtp',
+            'Port'=>465,
+            'SMTPAuth'=>true,
+            'SMTPSecure' => "ssl"
+        ),
+        
          /* 'booster' => array(
           'class' => 'booster.components.Bootstrap'
           ),
@@ -64,7 +75,7 @@ return array(
             'connectionString' => 'mysql:host=localhost;dbname=hornero',
             'emulatePrepare' => true,
             'username' => 'root',
-            'password' => 'pass',
+            'password' => 'shera',
             'charset' => 'utf8',
         ),
         'errorHandler' => array(
@@ -90,6 +101,6 @@ return array(
     // using Yii::app()->params['paramName']
     'params' => array(
         // this is used in contact page
-        'adminEmail' => 'webmaster@example.com',
+        'adminEmail' => 'pablo.kogan@fi.uncoma.edu.ar',
     ),
 );

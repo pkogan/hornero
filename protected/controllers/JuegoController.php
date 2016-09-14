@@ -21,7 +21,10 @@ class JuegoController extends Controller {
         $Usuario = TorneoUsuario::model()->find('token=:token', array(':token' => $token));
         if (is_null($Usuario)) {
             $respuesta['error'] = 'NO ES UN TOKEN VALIDO';
-        } else {
+        }elseif($Usuario->idTorneo0->idEstado==EstadoTorneo::ANTESCOMIENZO){
+            $respuesta['error'] = 'EL TORNEO NO HA EMPEZADO';
+        }else {
+            
             /* @var $Usuario TorneoUsuario */
             $idTorneo = $Usuario->idTorneo;
             //busca el problema del torneo
@@ -54,7 +57,7 @@ class JuegoController extends Controller {
                     $tablaResolucion->FechaSolicitud = $tiempoActual;
                     if ($tablaResolucion->insert()) {
                         $respuesta['nombreProblema'] = $Problema->idProblema0->Nombre;
-                        $respuesta['enunciado'] = $Problema->idProblema0->Enunciado;
+                        //$respuesta['enunciado'] = $Problema->idProblema0->Enunciado;
                         $respuesta['parametrosEntrada'] = $solucion->ParametrosEntrada;
                         $respuesta['token'] = $token;
                     } else {

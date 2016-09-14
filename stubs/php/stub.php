@@ -8,9 +8,10 @@ require_once './hornero.php';
 modificar el token que le corresponde al equipo para el torneo
 y el numero de Problema a Trabajar
 */
-$token='f053daab9855fe42942624aef382729d';
-$problema=1;
+$token='85bebdbee1c4159013d7af54f22f3f1e';
+$problema=2;
 $hornero=new Hornero($problema,$token);
+$hornero->host='localhost/yii/hornero';
 $parametros=$hornero->solicitud();
 /*******************************************************************
 Resolver el ejercicio tomando los parámetros del array parametros

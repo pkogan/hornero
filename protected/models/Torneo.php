@@ -64,6 +64,17 @@ class Torneo extends CActiveRecord
              }
              
         }
+        public function getOrdenSiguiente(){
+            $max=0;
+            foreach ($this->torneoProblemas as $torneoProblema){
+                /* @var $torneoProblema TorneoProblema */
+                if($torneoProblema->Orden>$max){
+                    $max=$torneoProblema->Orden;
+                }
+               
+            }
+             return $max+1;
+        }
 
         /**
 	 * @return string the associated database table name
@@ -141,6 +152,8 @@ class Torneo extends CActiveRecord
 		$criteria->compare('FechaFin',$this->FechaFin,true);
 		$criteria->compare('idEstado',$this->idEstado);
 		$criteria->compare('idTipo',$this->idTipo);
+		
+		$criteria->order='idEstado';
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

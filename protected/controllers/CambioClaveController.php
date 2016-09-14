@@ -89,9 +89,19 @@ class CambioClaveController extends Controller {
                         "Reply-To: " . Yii::app()->params['adminEmail'] . "\r\n" .
                         "MIME-Version: 1.0\r\n" .
                         "Content-type: text/plain; charset=UTF-8";
-                $envio=mail($model->email, $subject, 'Su usuario/equipo es: "'.$usuario->NombreUsuario
+                
+                $mail = Yii::app()->Smtpmail;
+               
+                $mail->SetFrom(Yii::app()->params['adminEmail'], 'From Hornero');
+                $mail->Subject = $subject;
+                $mail->MsgHTML('Su usuario/equipo es: "'.$usuario->NombreUsuario
                         .'" y su clave es: "' . $usuario->Clave.'".'
-                        . 'Ingresar a '.Yii::app()->baseUrl.Yii::app()->createUrl("/site/login"), $headers);
+                        . 'Ingresar a http://hornero.fi.uncoma.edu.ar'.Yii::app()->createUrl("/site/login"));
+                $mail->AddAddress($model->email, "");
+                $envio=$mail->send();
+                /*$envio=mail($model->email, $subject, 'Su usuario/equipo es: "'.$usuario->NombreUsuario
+                        .'" y su clave es: "' . $usuario->Clave.'".'
+                        . 'Ingresar a '.Yii::app()->baseUrl.Yii::app()->createUrl("/site/login"), $headers);*/
                 if ($envio) {
 
                     if ($model->save()) {

@@ -11,7 +11,7 @@ $this->breadcrumbs = array(
 <h1 style="text-align: center;font-size: 60px"> <img alt="logo"  src="<?php echo Yii::app()->request->baseUrl ?>/images/logo.jpg" width="150px"><br/>Bienvenido equipo <?php echo CHtml::encode($usuario->NombreUsuario); ?> !!!!! </h1>
 <h2 style="text-align: center">Al torneo de programación <i><?php echo CHtml::encode(Yii::app()->name); ?></i>  </h1>
 <h1 style="text-align: center"><?php
-echo CHtml::button("Incribierse en torneos", array(
+echo CHtml::button("Inscribirse en torneos", array(
     'submit' => $this->createUrl('/torneo', array()),
 ));
 ?>

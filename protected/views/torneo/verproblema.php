@@ -18,7 +18,7 @@ $this->breadcrumbs = array(
 <h2>Problema <?php echo $model->idProblema0->Nombre; ?></h2>
 <hr/>
 <?php  if($model->idProblema0->Archivo!='')
-    echo CHtml::image(Yii::app()->createUrl('/problema/descargar',array('id'=>$model->idProblema0->Archivo)),'detalle',array('height'=>'300px','style'=>'float:right'));?>
+    echo CHtml::image(Yii::app()->createUrl('/problema/descargar',array('id'=>$model->idProblema0->Archivo)),'detalle',array('height'=>'300px','style'=>'float:right','class'=>'imgproblema'));?>
 
 <h3><?php echo $model->idProblema0->Enunciado;?></h3>
 <?php if($model->resuelto!=''):?>

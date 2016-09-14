@@ -60,7 +60,19 @@ class SiteController extends Controller {
                         "MIME-Version: 1.0\r\n" .
                         "Content-type: text/plain; charset=UTF-8";
 
-                mail(Yii::app()->params['adminEmail'], $subject, $model->body, $headers);
+                $mail = Yii::app()->Smtpmail;
+               
+                $mail->SetFrom($model->email, 'From Hornero');
+                $mail->Subject = $subject;
+                $mail->MsgHTML($model->body);
+                $mail->AddAddress(Yii::app()->params['adminEmail'], "");
+                if (!$mail->Send()) {
+                    throw new Exception("Mailer Error: " . $mail->ErrorInfo);
+                }
+
+
+
+                //mail(Yii::app()->params['adminEmail'], $subject, $model->body, $headers);
                 Yii::app()->user->setFlash('contact', 'Gracias por contactarse con nosotros. Le responderemos lo antes posible.');
                 $this->refresh();
             }
@@ -100,7 +112,5 @@ class SiteController extends Controller {
         Yii::app()->user->logout();
         $this->redirect(Yii::app()->homeUrl);
     }
-
-
 
 }

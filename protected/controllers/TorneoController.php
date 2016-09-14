@@ -7,7 +7,7 @@ class TorneoController extends Controller {
      * using two-column layout. See 'protected/views/layouts/column2.php'.
      */
     public $layout = '//layouts/column2';
-
+    public $autorefresh;
     /**
      * @return array action filters
      */
@@ -89,7 +89,8 @@ class TorneoController extends Controller {
             $resoluciones->attributes = $_GET['Resolucion'];
         $resoluciones->idTorneo = $id;
         
-
+        $this->autorefresh=TRUE;
+        
         $this->render('view', array(
             'model' => $model,
             'usuarios' => $torneoUsuario,
@@ -146,14 +147,15 @@ class TorneoController extends Controller {
                 $torneoproblema=new TorneoProblema();
                 $torneoproblema->idProblema=$idProblema;
                 $torneoproblema->idTorneo=$id;
-                $torneoproblema->Orden=$model->problemasCount+1;
+                $torneoproblema->Orden=$model->getOrdenSiguiente();
                 if(!$torneoproblema->save())
                     throw new CHttpException('error al asignar problema');
             }
-            $this->redirect(array('view', 'id' => $id));
+            $this->redirect(array('asignarproblema', 'id' => $id));
         } else {
             $modelProblemas = new Problema('search');
             $modelProblemas->unsetAttributes();  // clear any default values
+            
             if (isset($_GET['Problema']))
                 $modelProblemas->attributes = $_GET['Problema'];
 
@@ -360,8 +362,9 @@ class TorneoController extends Controller {
         $model->unsetAttributes();  // clear any default values
         if (isset($_GET['Torneo']))
             $model->attributes = $_GET['Torneo'];
-
         
+        if(!Yii::app()->user->checkAccess('Administrador'))
+            $model->idTipo='<>'.  TipoTorneo::CERRADO;
         $dataProvider = $model->search();
         $this->render('index', array(
             'dataProvider' => $dataProvider,

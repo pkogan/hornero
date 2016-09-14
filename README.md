@@ -1,8 +1,6 @@
 hornero http://hornero.fi.uncoma.edu.ar
 =======================================
 Aplicación Web para Torneos de Programación
-"Se puede programar/competir con cualquier lenguaje" java, python, php, c, c++, pascal, javascript, c#, ciao-prolog, visual basic, perl, bash, lisp, ruby, smalltalk, PSeInt, ..... cualquier lenguaje.
-"Puede jugar el que quiera. Está abierto a cualquier programador, de cualquier lugar del mundo, sin límite ni de edad ni de título"
 
 Aplicación Basada en YiiFramework
 ================================
