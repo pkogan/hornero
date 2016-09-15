@@ -5,8 +5,6 @@ protected/runtime/*
 protected/data/*.db
 themes/classic/views/
 /nbproject/private/
-protected/archivos/problemas/*
-protected/archivos/stubs/*
 stubs/*.zip
 nbproject
 \#*
