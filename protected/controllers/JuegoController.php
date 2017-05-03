@@ -21,10 +21,10 @@ class JuegoController extends Controller {
         $Usuario = TorneoUsuario::model()->find('token=:token', array(':token' => $token));
         if (is_null($Usuario)) {
             $respuesta['error'] = 'NO ES UN TOKEN VALIDO';
-        }elseif($Usuario->idTorneo0->idEstado==EstadoTorneo::ANTESCOMIENZO){
+        } elseif ($Usuario->idTorneo0->idEstado == EstadoTorneo::ANTESCOMIENZO) {
             $respuesta['error'] = 'EL TORNEO NO HA EMPEZADO';
-        }else {
-            
+        } else {
+
             /* @var $Usuario TorneoUsuario */
             $idTorneo = $Usuario->idTorneo;
             //busca el problema del torneo
@@ -67,11 +67,11 @@ class JuegoController extends Controller {
             }
         }
         header('Content-type: application/json; charset=utf-8');
-        $json=json_encode($respuesta);
+        $json = json_encode($respuesta);
         //header('Content-Length: '.  sizeof($json));
-        
+
         echo $json;
-        $this->layout=FALSE;
+        $this->layout = FALSE;
         //exit;
     }
 
@@ -98,8 +98,8 @@ class JuegoController extends Controller {
             } else {
                 $idEstado = 3; //no ok
             }
-
-            if ($tiempo > $Resolucion->idProblema0->TiempoEjecucionMax) {
+            // si supera el tiempo y el torneo es distindo de proguntados Hornereando
+            if ($tiempo > $Resolucion->idProblema0->TiempoEjecucionMax && $Resolucion->idTorneo0->idTipo!=4) {
                 $idEstado+=2; //supera el tiempo
             }
 
@@ -117,27 +117,64 @@ class JuegoController extends Controller {
                     $idEstado+=8; //problema ya solucionado
                 }
             }
-            
-            /*
-             * Si es la primera vez que se resuelve el problema
-             * Se actualiza la Tabla sumando un punto y
-             * el timestamp de la respuesta en la tabla 
-             */
-            if($idEstado==2){
-                $torneoUsuario=TorneoUsuario::model()->find('idTorneo=:idTorneo 
-                and idUsuario=:idUsuario', array(':idTorneo' => $Resolucion->idTorneo,
-                    ':idUsuario' => $Resolucion->idUsuario));
-                if($torneoUsuario){
-                    $torneoUsuario->Puntos++;
-                    $torneoUsuario->Tiempo=$tiempoActual;
-                    $torneoUsuario->save();
+
+
+            if ($idEstado == 2) {
+                /**
+                 * Busco la última solución resuelta del ejercicio
+                 */
+                $criteria = new CDbCriteria;
+                $criteria->order = 'FechaRespuesta Desc';
+                $criteria->limit = '1';
+                $criteria->compare('idUsuario', $Resolucion->idUsuario);
+                $criteria->compare('idProblema', $Resolucion->idProblema);
+                $criteria->compare('idTorneo', $Resolucion->idTorneo);
+                $row = Resolucion::model()->find($criteria);
+                if (!is_null($row)) {
+                    $idEstadoUltimo = $row->idEstado;
+                } else {
+                    $idEstadoUltimo = NULL;
+                }
+                /*
+                 * Si no existe $idEstado=21 
+                 */
+                if (is_null($idEstadoUltimo) || $idEstadoUltimo < 21) {
+                    $idEstado = 21;
+                } else {
                     /*
-                     * :todo manejar el error
+                     * Si existe $idEstado=$iEstadoEncontrado+1
                      */
-                }else{
-                    /**
-                     * :todo manejar el error
+                    $idEstado = $idEstadoUltimo + 1;
+                }
+
+
+                /*
+                 * Si $idEstado==25 $idEstado=2 y 
+                 */
+                if ($idEstado == 25) {
+                    $idEstado = 2;
+                    /*
+                     * Si es la quinta vez que se resuelve el problema de forma consecutiva
+                     * Se actualiza la Tabla sumando un punto y
+                     * el timestamp de la respuesta en la tabla 
                      */
+
+
+                    $torneoUsuario = TorneoUsuario::model()->find('idTorneo=:idTorneo 
+                and idUsuario=:idUsuario', array(':idTorneo' => $Resolucion->idTorneo,
+                        ':idUsuario' => $Resolucion->idUsuario));
+                    if ($torneoUsuario) {
+                        $torneoUsuario->Puntos++;
+                        $torneoUsuario->Tiempo = $tiempoActual;
+                        $torneoUsuario->save();
+                        /*
+                         * :todo manejar el error
+                         */
+                    } else {
+                        /**
+                         * :todo manejar el error
+                         */
+                    }
                 }
             }
             //TorneoUsuario::model()->find($ResolucionCorrecta, $respuesta);
@@ -157,12 +194,11 @@ class JuegoController extends Controller {
             }
         }
         header('Content-type: application/json; charset=utf-8');
-        $json=json_encode($respuesta);
+        $json = json_encode($respuesta);
         //header('Content-Length: '.  sizeof($json));
         echo $json;
-        $this->layout=FALSE;
+        $this->layout = FALSE;
         //exit;
-        
     }
 
     // Uncomment the following methods and override them if needed

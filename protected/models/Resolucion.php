@@ -88,6 +88,7 @@ class Resolucion extends CActiveRecord
 			'idTorneo0' => array(self::BELONGS_TO, 'Torneo', 'idTorneo'),
 			'idEstado0' => array(self::BELONGS_TO, 'EstadoResolucion', 'idEstado'),
 			'idProblema0' => array(self::BELONGS_TO, 'Problema', 'idProblema'),
+                        'idTorneoProblema0' => array(self::BELONGS_TO, 'TorneoProblema', array('idTorneo','idProblema')),
 		);
 	}
 

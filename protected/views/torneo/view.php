@@ -12,7 +12,9 @@ $this->menu = array(
     array('label' => 'Borrar Inscripcion al Torneo',
         'url' =>'#',
         'linkOptions' => array('submit' => array('borrarinscripcion', 'idTorneo' => $model->idTorneo), 'confirm' => 'Está seguro de borrar la Inscripción a este Torneo? Perderá todas sus soluciones.'),
+        
         'visible' => $model->getUsuarioInscripcion()!=FALSE),
+    array('label' => 'Hornereando', 'url' => array('hornereando', 'idTorneo'=>$model->idTorneo), 'visible' => $model->idTipo==4),//Preguntados
     array('label' => 'Create Torneo', 'url' => array('create'), 'visible' => Yii::app()->user->checkAccess('Administrador')),
     array('label' => 'Update Torneo', 'url' => array('update', 'id' => $model->idTorneo), 'visible' => Yii::app()->user->checkAccess('Administrador')),
     array('label' => 'Manejar Problemas', 'url' => array('/torneoProblema/admin', 'id' => $model->idTorneo), 'visible' => Yii::app()->user->checkAccess('Administrador')),
@@ -20,6 +22,7 @@ $this->menu = array(
     array('label' => 'Asignar Equipos', 'url' => array('asignarequipos', 'id' => $model->idTorneo), 'visible' => Yii::app()->user->checkAccess('Administrador')),
     array('label' => 'Delete Torneo', 'url' => '#', 'linkOptions' => array('submit' => array('delete', 'id' => $model->idTorneo), 'confirm' => 'Are you sure you want to delete this item?'), 'visible' => Yii::app()->user->checkAccess('Administrador')),
     array('label' => 'Manage Torneo', 'url' => array('admin'), 'visible' => Yii::app()->user->checkAccess('Administrador')),
+    
 );
 ?>
 
