@@ -150,11 +150,15 @@ class JuegoController extends Controller {
 
                 /*
                  * Si $idEstado==25 $idEstado=2 y 
+                 * Si es un torneo Común 0
+                 * Si $idEstado==23 si es un torneo Tipo Pregunrados
                  */
-                if ($idEstado == 25) {
+                
+                if ($idEstado == 25 || $idEstado == 23 && $Resolucion->idTorneo0->idTipo==4) {
                     $idEstado = 2;
                     /*
-                     * Si es la quinta vez que se resuelve el problema de forma consecutiva
+                     * Si es la quinta (o tercera si es tipo preguntados) vez que se resuelve el problema
+                     * de forma consecutiva
                      * Se actualiza la Tabla sumando un punto y
                      * el timestamp de la respuesta en la tabla 
                      */

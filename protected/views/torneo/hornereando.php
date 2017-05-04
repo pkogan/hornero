@@ -1,6 +1,7 @@
 <?php
 /* @var $this TorneoController */
 /* @var $model TorneoProblema */
+/* @var $resoluciones  */
 
 
 $this->breadcrumbs = array(
@@ -29,38 +30,19 @@ $this->menu = array(
 <p>Ningún equipo ha resuelto el ejercicio</p>
 <?php endif;?>
 <hr/>
-<h3>Parámetros: <?php echo $proxy->parametros;?></h3>
+<h3>Parámetros: <b style="color:red"><?php echo $proxy->parametros;?></b></h3>
+
 <hr/>
 <?php echo $this->renderPartial('_formrespuesta', array('model'=>$proxy)); ?>
+<hr/>
 
-
-<h1>Resoluciones del Equipo <?php echo Yii::app()->user->name?></h1>
-<?php
-$this->widget('zii.widgets.grid.CGridView', array(
-    'id' => 'usuarios',
-    'dataProvider' => $resoluciones,
-    'columns' => array(
-        //'idTwit',
-        //'idUsuario0.NombreUsuario',
-        array('header' => 'Equipo',
-            'value' => '$data->idUsuario0->NombreUsuario'
-        ),
-        array('header'=>'Problema',
-               'value'=>'isset($data->idTorneoProblema0->Orden)?$data->idTorneoProblema0->Orden:""'),
-        
-        array('header'=>'Fecha Solicitud',
-               'value'=>'$data->FechaSolicitudOK'),
-        //'FechaSolicitud',
-        array('name' => 'Tiempo Respuesta',
-            'value' => '$data->FechaRespuestaOK'
-        ),
-        'idSolucion0.ParametrosEntrada',
-        array('header'=>'Respuesta Enviada',
-            'value'=>'$data->Respuesta'),
-        array('header'=>'Respuesta Correcta',
-            'value'=>'isset($data->idSolucion0->Salida)?$data->idSolucion0->Salida:""'),
-        'idEstado0.Estado'
-        
-    ),
-));
-?>
+<?php if (count($resoluciones)>0):?>
+<h3>Últimas Resoluciones del Equipo <?php echo Yii::app()->user->name?></h3>
+<?php 
+$i=0;
+foreach ($resoluciones as $resolucion) {
+    echo $this->renderPartial('_viewrespuesta', array('data'=>$resolucion));
+    //if (++$i==3) break;
+} ?>
+<hr/>
+<?php endif;?>

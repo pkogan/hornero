@@ -139,6 +139,7 @@ class TorneoController extends Controller {
     public function actionHornereando($idTorneo) {
         
         //si viene por post enviar los parámetros
+        $this->layout = '//layouts/column1';
         if (isset($_POST['Respuesta'])) {
             $proxy=new ProxyHornero('','');
             $proxy->tokenSolicitud=$_POST['TokenSolicitud'];
@@ -184,16 +185,13 @@ class TorneoController extends Controller {
         
         //en el submit enviar los parametros 
         
-        $resoluciones = new Resolucion('search');
-        //$resoluciones->idProblema = $idProblema;
-        $resoluciones->idTorneo = $idTorneo;
-        $resoluciones->idUsuario = Yii::app()->user->idUsuario;
-        $resolucionesProvider = $resoluciones->search();
+        $resoluciones = Resolucion::model()->findAll(array('limit'=>3,'order'=>'idResolucion desc','condition'=>'idEstado<>1 and idTorneo=:idTorneo and idUsuario=:idUsuario', 'params'=>array('idTorneo' => $idTorneo, 'idUsuario' => Yii::app()->user->idUsuario)));
+        
 
         $this->render('hornereando', array(
             'model' => $model,
             'proxy' => $proxy,
-            'resoluciones' => $resolucionesProvider,
+            'resoluciones' => $resoluciones,
         ));
     }
     

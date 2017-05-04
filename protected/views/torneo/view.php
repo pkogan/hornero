@@ -14,8 +14,8 @@ $this->menu = array(
         'linkOptions' => array('submit' => array('borrarinscripcion', 'idTorneo' => $model->idTorneo), 'confirm' => 'Está seguro de borrar la Inscripción a este Torneo? Perderá todas sus soluciones.'),
         
         'visible' => $model->getUsuarioInscripcion()!=FALSE),
-    array('label' => 'Hornereando', 'url' => array('hornereando', 'idTorneo'=>$model->idTorneo),
-        'visible' => $model->idTipo==4 && $model->getUsuarioInscripcion()!=FALSE),//Preguntados
+    //array('label' => 'Hornereando', 'url' => array('hornereando', 'idTorneo'=>$model->idTorneo),
+        //'visible' => $model->idTipo==4 && $model->getUsuarioInscripcion()!=FALSE),//Preguntados
     array('label' => 'Create Torneo', 'url' => array('create'), 'visible' => Yii::app()->user->checkAccess('Administrador')),
     array('label' => 'Update Torneo', 'url' => array('update', 'id' => $model->idTorneo), 'visible' => Yii::app()->user->checkAccess('Administrador')),
     array('label' => 'Manejar Problemas', 'url' => array('/torneoProblema/admin', 'id' => $model->idTorneo), 'visible' => Yii::app()->user->checkAccess('Administrador')),
@@ -31,6 +31,12 @@ $this->menu = array(
 <?php if($inscripcion=$model->getUsuarioInscripcion()):?>
 <b>Token: <?php echo $inscripcion->Token;?></b><br>
 <b>Su posicion es: <?php echo $inscripcion->getPosicion();?></b>
+<?php
+if($model->idTipo==4 && $model->getUsuarioInscripcion()!=FALSE)
+echo CHtml::button("Empezar a Jugar", array(
+    'submit' => $this->createUrl('hornereando', array('idTorneo'=>$model->idTorneo)),
+));
+?>
 <?php else:?>
 <?php echo CHtml::button("Inscribirse en el Torneo", array(
                     'submit' => $this->createUrl('/torneo/inscripcion', array('idTorneo' => $model->idTorneo)),
