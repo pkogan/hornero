@@ -127,6 +127,7 @@ class TorneoController extends Controller {
         $resoluciones = new Resolucion('search');
         $resoluciones->idProblema = $idProblema;
         $resoluciones->idTorneo = $idTorneo;
+        
         $resoluciones->idUsuario = Yii::app()->user->idUsuario;
         $resolucionesProvider = $resoluciones->search();
 
@@ -183,6 +184,10 @@ class TorneoController extends Controller {
         $proxy=new ProxyHornero($model->Orden,$model->idTorneo0->getUsuarioInscripcion()->Token);
         $parametros=$proxy->solicitud();
         
+        /**ver como obtener opciones via json o derecho*/
+
+        
+        
         //en el submit enviar los parametros 
         
         $resoluciones = Resolucion::model()->findAll(array('limit'=>3,'order'=>'idResolucion desc','condition'=>'idEstado<>1 and idTorneo=:idTorneo and idUsuario=:idUsuario', 'params'=>array('idTorneo' => $idTorneo, 'idUsuario' => Yii::app()->user->idUsuario)));
@@ -192,6 +197,7 @@ class TorneoController extends Controller {
             'model' => $model,
             'proxy' => $proxy,
             'resoluciones' => $resoluciones,
+            
         ));
     }
     

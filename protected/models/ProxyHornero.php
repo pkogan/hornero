@@ -16,7 +16,8 @@ class ProxyHornero {
     public $tokenSolicitud;
     public $problema = 1;
     public $parametros;
-
+    public $opciones;
+    
     /*
       Se piden los parametros al servidor hornero NO TOCAR!!!! */
     
@@ -40,6 +41,11 @@ class ProxyHornero {
         }
         $this->tokenSolicitud = $solicitud->token;
         $this->parametros=$solicitud->parametrosEntrada;
+        $this->opciones=$solicitud->opciones;
+        $this->opciones=array();
+        foreach ($solicitud->opciones as $opcion) {
+            $this->opciones[$opcion]=$opcion;
+        }
         $parametros = explode(',', $solicitud->parametrosEntrada);
         
         return $parametros;

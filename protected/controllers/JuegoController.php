@@ -44,6 +44,7 @@ class JuegoController extends Controller {
                     $solucionRandom = rand(0, $cantidadSoluciones - 1);
                     $soluciones = $Problema->idProblema0->solucions;
                     $solucion = $soluciones[$solucionRandom];
+                    
                     /* @var $solucion Solucion */
                     $token = md5(microtime() . $token);
                     //se crea un registro en la tabla Resolución esperando por la respuesta
@@ -60,6 +61,7 @@ class JuegoController extends Controller {
                         //$respuesta['enunciado'] = $Problema->idProblema0->Enunciado;
                         $respuesta['parametrosEntrada'] = $solucion->ParametrosEntrada;
                         $respuesta['token'] = $token;
+                        $respuesta['opciones'] = $solucion->getOpciones();
                     } else {
                         $respuesta['error'] = 'AL AGREGAR LA RESOLUCION';
                     }

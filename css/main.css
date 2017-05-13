@@ -241,3 +241,6 @@ div.search-form
     background-color: #f9e700;
 }
 */
+#Respuesta label{
+    display:inline;
+}

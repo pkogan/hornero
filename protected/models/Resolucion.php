@@ -142,4 +142,5 @@ class Resolucion extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+        
 }

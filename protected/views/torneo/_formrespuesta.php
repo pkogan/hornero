@@ -13,8 +13,14 @@
 
 	<div class="row">
 		<?php echo CHtml::hiddenField('TokenSolicitud',$model->tokenSolicitud,array()); ?>
-		<h3>Respuesta: 
-                    <?php echo CHtml::textField('Respuesta','',array('size'=>60,'maxlength'=>2000, 'style'=>'font-size:20px', 'autofocus'=>'autofocus')); ?>
+            <h3>Opciones:<br> 
+                    <?php
+                    //foreach ($model->opciones as $opcion) {
+                     //$radio=array($opcion=>$opcion);
+                     //echo CHtml::radioButton('Respuesta','',$radio,array( 'autofocus'=>'autofocus')). $opcion; 
+                 //} 
+                    echo CHtml::radioButtonList('Respuesta','',$model->opciones,array( 'autofocus'=>'autofocus')); 
+                    ?>
                     </h3>
 	</div>
 

@@ -24,7 +24,33 @@ class Solucion extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+        /**
+         * retorna un array de 4 o menos opciones de soluciones del problema
+         */
+        public function getOpciones(){
+        
+            $opciones=array();
+            $opciones[]=$this->Salida;
+            $soluciones= $this->idProblema0->solucions;
+            $cantSoluciones=count($soluciones);
+            foreach ($soluciones as $value) {
+                $opciones[]=$value->Salida;
+            }
+            $opciones=array_unique($opciones);
+            
+            shuffle($opciones);
+            $opciones=array_slice($opciones, 0,3);
+            $opciones[]=$this->Salida;
+            $opciones=array_unique($opciones);
+            shuffle($opciones);
 
+            return $opciones;
+        
+        } 
+            
+        
+    
+        
 	/**
 	 * @return string the associated database table name
 	 */
