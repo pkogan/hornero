@@ -29,10 +29,10 @@ $this->menu = array(
 <?php else:?>
 <p>Ningún equipo ha resuelto el ejercicio</p>
 <?php endif;?>
-<hr/>
+<!--<hr/>-->
 <h3>Parámetros: <b style="color:red"><?php echo $proxy->parametros;?></b></h3>
 
-<hr/>
+<!--<hr/>-->
 <?php echo $this->renderPartial('_formrespuesta', array('model'=>$proxy)); ?>
 <hr/>
 
