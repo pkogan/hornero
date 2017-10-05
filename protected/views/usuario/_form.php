@@ -14,7 +14,12 @@
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
 	<?php echo $form->errorSummary($model); ?>
-
+	<div class="row">
+            <label for="Registro_Institucion">Institución, Escuela, Universidad, ...</label>
+		<?php //echo $form->labelEx($model,'Institucion'); ?>
+		<?php echo $form->textField($model,'Institucion',array('size'=>60,'maxlength'=>100)); ?>
+		<?php echo $form->error($model,'Institucion'); ?>
+	</div>
 	<div class="row">
 		<?php echo $form->labelEx($model,'NombreUsuario'); ?>
 		<?php echo $form->textField($model,'NombreUsuario',array('size'=>60,'maxlength'=>100)); ?>
@@ -22,7 +27,8 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'Descripcion'); ?>
+                <label for="Registro_Descripcion">Nombre y Apellido de cada uno de los Participantes del equipo</label>
+		<?php //echo $form->labelEx($model,'Descripcion'); ?>
 		<?php echo $form->textField($model,'Descripcion',array('size'=>60,'maxlength'=>1000)); ?>
 		<?php echo $form->error($model,'Descripcion'); ?>
 	</div>

@@ -73,6 +73,8 @@ class UsuarioController extends Controller {
                 $LoginFrom->password = $model->Clave;
                 $LoginFrom->username = $model->NombreUsuario;
                 if ($LoginFrom->login())
+                    // provisoriamente lo inscribe al torneo programate para hacegurar el registro
+                    //$this->redirect(array('/torneo/inscripcion','idTorneo'=>1));
                     $this->redirect(array('/bandeja'));
                 else
                     $this->redirect(array('/site/login'));

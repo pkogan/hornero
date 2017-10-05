@@ -16,13 +16,20 @@
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="row">
+                <label for="Registro_Institucion" class="required">Institución, Escuela, Universidad, ... <span class="required">*</span></label>
+		<?php //echo $form->labelEx($model,'Institucion'); ?>
+		<?php echo $form->textField($model,'Institucion',array('size'=>60,'maxlength'=>100)); ?>
+		<?php echo $form->error($model,'Institucion'); ?>
+	</div>
+        <div class="row">
 		<?php echo $form->labelEx($model,'NombreUsuario'); ?>
 		<?php echo $form->textField($model,'NombreUsuario',array('size'=>60,'maxlength'=>100)); ?>
 		<?php echo $form->error($model,'NombreUsuario'); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'Descripcion'); ?>
+                <label for="Registro_Descripcion" class="required">Nombre y Apellido de cada uno de los Participantes del equipo <span class="required">*</span></label>
+		<?php //echo $form->labelEx($model,'Descripcion'); ?>
 		<?php echo $form->textArea($model,'Descripcion',array('size'=>60,'maxlength'=>1000)); ?>
 		<?php echo $form->error($model,'Descripcion'); ?>
 	</div>

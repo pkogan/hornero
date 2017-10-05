@@ -17,7 +17,8 @@
 class TorneoUsuario extends CActiveRecord {
 
     public $equipo;
-
+    public $institucion;
+    
     public function getPosicion() {
         $idUsuario = $this->idUsuario;
 
@@ -66,7 +67,7 @@ class TorneoUsuario extends CActiveRecord {
             array('Token', 'unique'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('idTorneoUsuario, idTorneo, idUsuario, Puntos, Token, equipo', 'safe', 'on' => 'search'),
+            array('idTorneoUsuario, idTorneo, idUsuario, Puntos, Token, equipo, institucion', 'safe', 'on' => 'search'),
         );
     }
 
@@ -111,6 +112,7 @@ class TorneoUsuario extends CActiveRecord {
         $criteria->compare('Puntos', $this->Puntos);
         $criteria->compare('Token', $this->Token, true);
         $criteria->compare('idUsuario0.NombreUsuario', $this->equipo, true);
+        $criteria->compare('idUsuario0.Institucion', $this->institucion, true);
         $criteria->order = 'Puntos DESC, Tiempo';
 
         return new CActiveDataProvider($this, array(

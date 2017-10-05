@@ -9,6 +9,10 @@
 	<?php echo CHtml::link(CHtml::encode($data->idUsuario), array('view', 'id'=>$data->idUsuario)); ?>
 	<br />
 
+        <b><?php echo CHtml::encode($data->getAttributeLabel('Institucion')); ?>:</b>
+	<?php echo CHtml::encode($data->Institucion); ?>
+	<br />
+        
 	<b><?php echo CHtml::encode($data->getAttributeLabel('NombreUsuario')); ?>:</b>
 	<?php echo CHtml::encode($data->NombreUsuario); ?>
 	<br />

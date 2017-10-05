@@ -5,6 +5,7 @@
  *
  * The followings are the available columns in table 'Usuario':
  * @property integer $idUsuario
+ * @property string $Institucion
  * @property string $NombreUsuario
  * @property string $Clave
  * @property integer $idRol
@@ -45,12 +46,14 @@ class Usuario extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('NombreUsuario, idRol, Descripcion, Email, idLenguaje', 'required'),
+            array('Institucion, NombreUsuario, idRol, Descripcion, Email, idLenguaje', 'required'),
 
             array('idRol, idLenguaje', 'numerical', 'integerOnly' => true),
             array('NombreUsuario, Clave', 'length', 'max' => 15, 'min' =>2),
             array('Email', 'length', 'max' => 255),
             array('Descripcion', 'length', 'max' => 255),
+            array('Institucion', 'length', 'max' => 100),
+            
             array('Email','email'),
 
             array('NombreUsuario','unique', 'attributeName' => 'NombreUsuario', 'className' => 'Usuario'),
@@ -58,7 +61,7 @@ class Usuario extends CActiveRecord {
 
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('idUsuario, NombreUsuario, Clave, idRol, Email, idLenguaje, Descripcion', 'safe', 'on' => 'search'),
+            array('idUsuario, Institucion, NombreUsuario, Clave, idRol, Email, idLenguaje, Descripcion', 'safe', 'on' => 'search'),
         );
     }
 
@@ -83,8 +86,9 @@ class Usuario extends CActiveRecord {
     public function attributeLabels() {
         return array(
             'idUsuario' => 'Id Usuario',
+            'Institucion' => 'Institución',
             'NombreUsuario' => 'Nombre Equipo',
-            'Descripcion'=> 'Descripcion',
+            'Descripcion'=> 'Participantes',
             'Clave' => 'Clave',
             'idRol' => 'Id Rol',
             'Email' => 'Email',
@@ -104,6 +108,7 @@ class Usuario extends CActiveRecord {
         $criteria = new CDbCriteria;
 
         $criteria->compare('idUsuario', $this->idUsuario);
+        $criteria->compare('Institucion', $this->Institucion, true);
         $criteria->compare('NombreUsuario', $this->NombreUsuario, true);
         $criteria->compare('Clave', $this->Clave, true);
         $criteria->compare('idRol', $this->idRol);

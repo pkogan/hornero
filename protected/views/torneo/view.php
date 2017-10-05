@@ -94,6 +94,10 @@ $this->widget('zii.widgets.grid.CGridView', array(
         //'idUsuario0.NombreUsuario',
         array('header'=>'Posición',
             'value'=>'$data->getPosicion()'),
+        array('header' => 'Institución',
+              'name'=>'institucion',
+            'value' => '$data->idUsuario0->Institucion'
+        ),
         array('header' => 'Equipo',
               'name'=>'equipo',
             'value' => '$data->idUsuario0->NombreUsuario'
