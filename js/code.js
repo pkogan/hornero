@@ -513,7 +513,7 @@ Code.runJS = function () {
     console.log(code);
     Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
     try {
-        var host = 'localhost/hornero/';
+        var host = document.getElementById('host').value;//'localhost/hornero/';
         var token = document.getElementById('token').value;//'d3d2b9557a28de20132a112c7034379f';
         var problema = document.getElementById('problema').value;
         var xmlhttp = new XMLHttpRequest();

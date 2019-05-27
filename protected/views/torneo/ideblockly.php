@@ -29,6 +29,8 @@
                     </h1>
                     token=<input type="text" id="token" value="">
                     problema=<input type="text" id="problema" value="">
+<!--                    host=-->
+                    <input type="hidden" id="host" value="hornero.fi.uncoma.edu.ar">
                 </td>
                 <td class="farSide">
                     
