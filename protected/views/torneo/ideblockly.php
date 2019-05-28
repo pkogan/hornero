@@ -51,11 +51,11 @@
                             <td class="tabmin">&nbsp;</td>
                             <td id="tab_javascript" class="taboff">JavaScript</td>
                             <td class="tabmin">&nbsp;</td>
-                            <td id="tab_python" class="taboff">Python</td>
+<!--                            <td id="tab_python" class="taboff">Python</td>
                             <td class="tabmin">&nbsp;</td>
                             <td id="tab_php" class="taboff">PHP</td>
                             <td class="tabmin">&nbsp;</td>
-<!--                            <td id="tab_lua" class="taboff">Lua</td>
+                            <td id="tab_lua" class="taboff">Lua</td>
                             <td class="tabmin">&nbsp;</td>
                             <td id="tab_dart" class="taboff">Dart</td>
                             <td class="tabmin">&nbsp;</td>-->
@@ -67,12 +67,13 @@
                                 <button id="linkButton" class="notext" title="...">
                                     <img src='js/media/1x1.gif' class="link icon21">
                                 </button>
-                                <button id="runHorneroButton" class="notext " title="Guardar">
-                                    <img src='js/media/1x1.gif' class="link icon21">
-                                </button>
                                 <button id="runButton" class="notext primary" title="...">
                                     <img src='js/media/1x1.gif' class="run icon21">
                                 </button>
+                                <button id="runHorneroButton" class="notext primary" title="Ejecuta su Programa sobre Hornero">
+                                    <img src='js/media/1x1.gif' class="link icon21">
+                                </button>
+
                             </td>
                         </tr>
                     </table>
@@ -103,8 +104,14 @@
 
     <xml id="toolbox" style="display: none">
         <category name="hornero" colour="#5b6da5">
-            <block type="parametro"></block>
-            <block type="respuesta"></block>
+            <block type="entrada">
+                <value name="Entrada">
+                    <shadow type="math_number">
+                        <field name="NUM">0</field>
+                    </shadow>
+                </value>
+            </block>
+            <block type="retorna"></block>
         </category>
         <category name="%{BKY_CATLOGIC}" colour="%{BKY_LOGIC_HUE}">
             <block type="controls_if"></block>

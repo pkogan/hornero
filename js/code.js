@@ -225,7 +225,7 @@ Code.LANG = Code.getLang();
  * @private
  */
 //Code.TABS_ = ['blocks', 'pseint','javascript', 'php', 'python', 'dart', 'lua', 'xml'];
-Code.TABS_ = ['blocks', 'pseint','javascript', 'php', 'python',  'xml'];
+Code.TABS_ = ['blocks', 'pseint', 'javascript',  'xml'];
 Code.selected = 'blocks';
 /**
  * Switch the visible pane when a tab is clicked.
@@ -313,7 +313,7 @@ Code.attemptCodeGeneration = function (generator, prettyPrintType) {
         if (typeof PR.prettyPrintOne == 'function') {
             code = content.textContent;
             code = PR.prettyPrintOne(code, prettyPrintType);
-            content.innerHTML =  code;
+            content.innerHTML = code;
         }
     }
 };
@@ -345,8 +345,8 @@ Code.checkAllGeneratorFunctionsDefined = function (generator) {
  * Initialize Blockly.  Called on page load.
  */
 Code.init = function () {
-    document.getElementById('problema').value=location.search.split('problema=')[1] ? location.search.split('problema=')[1].split('&')[0] : '1';
-    document.getElementById('token').value=location.search.split('token=')[1] ? location.search.split('token=')[1].split('&')[0] : 'd3d2b9557a28de20132a112c7034379f';
+    document.getElementById('problema').value = location.search.split('problema=')[1] ? location.search.split('problema=')[1].split('&')[0] : '1';
+    document.getElementById('token').value = location.search.split('token=')[1] ? location.search.split('token=')[1].split('&')[0] : 'd3d2b9557a28de20132a112c7034379f';
     Code.initLanguage();
     var rtl = Code.isRtl();
     var container = document.getElementById('content_area');
@@ -421,6 +421,7 @@ Code.init = function () {
                 Code.renderContent();
             });
     Code.bindClick('runButton', Code.runJS);
+    Code.bindClick('runHorneroButton', Code.runJSHornero);
     // Disable the link button if page isn't backed by App Engine storage.
     var linkButton = document.getElementById('linkButton');
     if ('BlocklyStorage' in window) {
@@ -494,14 +495,14 @@ Code.initLanguage = function () {
     document.getElementById('trashButton').title = MSG['trashTooltip'];
 };
 
-Code.escribirSalida= function(salida){
-    document.getElementById('content_salida').innerHTML = salida+document.getElementById('content_salida').innerHTML;
+Code.escribirSalida = function (salida) {
+    document.getElementById('content_salida').innerHTML = salida + document.getElementById('content_salida').innerHTML;
 };
 /**
  * Execute the user's code.
  * Just a quick and dirty eval.  Catch infinite loops.
  */
-Code.runJS = function () {
+Code.runJSHornero = function () {
     Blockly.JavaScript.INFINITE_LOOP_TRAP = '  checkTimeout();\n';
     var timeouts = 0;
     var checkTimeout = function () {
@@ -524,12 +525,12 @@ Code.runJS = function () {
             if (this.status == 200) {
                 // success!
                 var json = JSON.parse(xmlhttp.responseText);
-                var paramentrosEntrada=json.parametrosEntrada;
+                var paramentrosEntrada = json.parametrosEntrada;
                 var parametros = paramentrosEntrada.split(',');
-                
+
                 console.log(json);
-                
-                var respuesta=0;
+
+                var respuesta = 0;
                 eval(code);
                 /*recibir respuesta*/
                 //
@@ -541,29 +542,115 @@ Code.runJS = function () {
                     if (this.status == 200) {
                         json = JSON.parse(xmlhttp2.responseText);
                         console.log(json);
-                        Code.escribirSalida('<br/>>Problema_'+problema+'('+paramentrosEntrada+') = '+respuesta+'<br/>'+json.mensaje);
-                        
+                        Code.escribirSalida('<br/>>Problema_' + problema + '(' + paramentrosEntrada + ') = ' + respuesta + '<br/>' + json.mensaje);
+
                         //alert(json.)
-                       
+
                     } else {
-                        Code.escribirSalida('<br/>>Problema_'+problema+'('+paramentrosEntrada+') = '+respuesta+'<br/>Error respuesta');
+                        Code.escribirSalida('<br/>>Problema_' + problema + '(' + paramentrosEntrada + ') = ' + respuesta + '<br/>Error respuesta');
                         console.log('error en respuesta');
                     }
                 }
                 xmlhttp2.send();
             } else {
                 // something went wrong
-                Code.escribirSalida('<br/>>Problema_'+problema+'<br/>Error solicitud');
+                Code.escribirSalida('<br/>>Problema_' + problema + '<br/>Error solicitud');
                 console.log('error en solicitud');
             }
 
         };
         xmlhttp.send();
-       
+
     } catch (e) {
+        Code.escribirSalida('<br/>>Problema_' + problema + '<br/>Error solicitud');
         alert(MSG['badCode'].replace('%1', e));
     }
 };
+var parametros;
+
+function entrada(numero) {
+
+    if (typeof parametros[numero] == 'undefined') {
+        parametros[numero] = window.prompt('Entrada ' + numero);
+    }
+    if (isNaN(Number(parametros[numero]))) {
+        return parametros[numero];
+    }else{
+        return Number(parametros[numero]);
+    }
+    
+
+}
+
+Code.runJS = function () {
+    Blockly.JavaScript.INFINITE_LOOP_TRAP = '  checkTimeout();\n';
+    var timeouts = 0;
+    var checkTimeout = function () {
+        if (timeouts++ > 1000000) {
+            throw MSG['timeout'];
+        }
+    };
+    var code = Blockly.JavaScript.workspaceToCode(Code.workspace);
+    console.log(code);
+    Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+    try {
+        /*var host = document.getElementById('host').value;//'localhost/hornero/';
+         var token = document.getElementById('token').value;//'d3d2b9557a28de20132a112c7034379f';*/
+        var problema = document.getElementById('problema').value;
+        /*
+         var xmlhttp = new XMLHttpRequest();
+         var url = 'http://' + host + '/index.php?r=juego/solicitud&token=' + token + '&problema=' + problema;
+         console.log(url);
+         xmlhttp.open('GET', url);
+         xmlhttp.onload = function () {
+         if (this.status == 200) {
+         // success!
+         var json = JSON.parse(xmlhttp.responseText);
+         var paramentrosEntrada=json.parametrosEntrada;
+         var parametros = paramentrosEntrada.split(',');
+         
+         console.log(json);
+         */    parametros = [];
+        var respuesta = 0;
+        eval(code);
+
+        /*recibir respuesta*/
+        //
+        /*      var xmlhttp2 = new XMLHttpRequest();
+         url = 'http://' + host + '/index.php?r=juego/respuesta&&tokenSolicitud=' + json.token + '&solucion=' + respuesta;
+         console.log(url);
+         xmlhttp2.open('GET', url);
+         xmlhttp2.onload = function () {
+         if (this.status == 200) {
+         json = JSON.parse(xmlhttp2.responseText);
+         console.log(json);*/
+        Code.escribirSalida('<br/>>Ejecución Problema_' + problema + '('+parametros.join(',')+') = ' + respuesta + '<br/>');
+        /*
+         //alert(json.)
+         
+         } else {
+         Code.escribirSalida('<br/>>Problema_'+problema+'('+paramentrosEntrada+') = '+respuesta+'<br/>Error respuesta');
+         console.log('error en respuesta');
+         }
+         }
+         xmlhttp2.send();
+         } else {
+         // something went wrong
+         Code.escribirSalida('<br/>>Problema_'+problema+'<br/>Error solicitud');
+         console.log('error en solicitud');
+         }
+         
+         };
+         xmlhttp.send();
+         */
+    } catch (e) {
+        alert(MSG['badCode'].replace('%1', e));
+        Code.escribirSalida(MSG['badCode'].replace('%1', e));
+    }
+};
+
+
+
 /**
  * Discard all blocks from the workspace.
  */

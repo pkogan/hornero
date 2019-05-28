@@ -20,3 +20,27 @@ Blockly.Blocks['respuesta'] = {
  this.setHelpUrl("");
   }
 };
+
+Blockly.Blocks['retorna'] = {
+  init: function() {
+    this.appendValueInput("respuesta")
+        .setCheck(null)
+        .appendField("Retorna");
+    this.setPreviousStatement(true, null);
+    this.setColour(230);
+ this.setTooltip("Salida");
+ this.setHelpUrl("Salida");
+  }
+};
+
+Blockly.Blocks['entrada'] = {
+  init: function() {
+    this.appendValueInput("Entrada")
+        .setCheck("Number")
+        .appendField("Entrada");
+    this.setOutput(true, null);
+    this.setColour(230);
+ this.setTooltip("entrada");
+ this.setHelpUrl("entrada");
+  }
+};
