@@ -526,7 +526,7 @@ Code.runJSHornero = function () {
                 // success!
                 var json = JSON.parse(xmlhttp.responseText);
                 var paramentrosEntrada = json.parametrosEntrada;
-                var parametros = paramentrosEntrada.split(',');
+                parametros = paramentrosEntrada.split(',');
 
                 console.log(json);
 
