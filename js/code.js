@@ -265,7 +265,8 @@ Code.tabClick = function (clickedName) {
 
     // Select the active tab.
     Code.selected = clickedName;
-    document.getElementById('tab_' + clickedName).className = 'tabon';
+    document.getElementById('tab_'
+            + clickedName).className = 'tabon';
     // Show the selected pane.
     document.getElementById('content_' + clickedName).style.visibility =
             'visible';
@@ -420,6 +421,7 @@ Code.init = function () {
                 Code.discard();
                 Code.renderContent();
             });
+    Code.bindClick('saveButton', Code.descargarXML);
     Code.bindClick('runButton', Code.runJS);
     Code.bindClick('runHorneroButton', Code.runJSHornero);
     // Disable the link button if page isn't backed by App Engine storage.
@@ -451,6 +453,32 @@ Code.init = function () {
     // Lazy-load the syntax-highlighting.
     window.setTimeout(Code.importPrettify, 1);
 };
+
+Code.descargarXML = function(){
+    console.log(document.getElementById('content_xml').value);
+     
+    var contenidoEnBlob=new Blob([document.getElementById('content_xml').value], {
+        type: 'application/xml',
+    });
+    var nombreArchivo='ej1.xml';
+    var reader = new FileReader();
+    reader.onload = function (event) {
+        var save = document.createElement('a');
+        save.href = event.target.result;
+        save.target = '_blank';
+        save.download = nombreArchivo || 'archivo.dat';
+        var clicEvent = new MouseEvent('click', {
+            'view': window,
+                'bubbles': true,
+                'cancelable': true
+        });
+        save.dispatchEvent(clicEvent);
+        (window.URL || window.webkitURL).revokeObjectURL(save.href);
+    };
+    reader.readAsDataURL(contenidoEnBlob);
+    //console.log('ejecuto');
+};
+
 /**
  * Initialize the page language.
  */

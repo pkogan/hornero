@@ -64,6 +64,9 @@
                                 <button id="trashButton" class="notext" title="...">
                                     <img src='js/media/1x1.gif' class="trash icon21">
                                 </button>
+                                <button id="saveButton" class="notext" title="Guardar">
+                                    <img src='js/media/1x1.gif' class="link icon21">
+                                </button>
                                 <button id="linkButton" class="notext" title="...">
                                     <img src='js/media/1x1.gif' class="link icon21">
                                 </button>

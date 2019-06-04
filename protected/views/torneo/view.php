@@ -36,7 +36,7 @@ if($model->idTipo==4 && $model->getUsuarioInscripcion()!=FALSE)
 echo CHtml::button("Empezar a Jugar", array(
     'submit' => $this->createUrl('hornereando', array('idTorneo'=>$model->idTorneo)),
 ));
-echo CHtml::button("Blockly", array(
+echo CHtml::button("Blockly en desarrollo", array(
     'submit' => $this->createUrl('ideblockly', array('idTorneo'=>$model->idTorneo,'token'=>$inscripcion->Token,'problema'=>1)),
 ));
 ?>
