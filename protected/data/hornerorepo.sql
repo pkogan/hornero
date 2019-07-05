@@ -11154,7 +11154,7 @@ CREATE TABLE IF NOT EXISTS `Usuario` (
 --
 
 INSERT INTO `Usuario` (`idUsuario`, `Institucion`, `NombreUsuario`, `Descripcion`, `Clave`, `idRol`, `Email`, `idLenguaje`) VALUES
-(1, 'UNCOMA', 'admin', 'admin', 'h0rn3r0', 1, 'admin@admin.com', 1);
+(1, 'UNCOMA', 'admin', 'admin', 'admin', 1, 'admin@admin.com', 1);
 
 --
 -- Índices para tablas volcadas
