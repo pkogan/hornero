@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.4
--- https://www.phpmyadmin.net/
+-- version 4.2.12deb2+deb8u2
+-- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 05-10-2017 a las 13:30:50
--- Versión del servidor: 5.5.52-0ubuntu0.14.04.1
--- Versión de PHP: 5.5.9-1ubuntu4.19
+-- Tiempo de generación: 05-07-2019 a las 12:25:43
+-- Versión del servidor: 5.5.60-0+deb8u1
+-- Versión de PHP: 5.6.33-0+deb8u1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,10 +14,10 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
--- Base de datos: `hornero2`
+-- Base de datos: `hornerorepo`
 --
 
 -- --------------------------------------------------------
@@ -26,13 +26,13 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `CambioClave`
 --
 
-CREATE TABLE `CambioClave` (
-  `idCambio` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `CambioClave` (
+`idCambio` int(11) NOT NULL,
   `idUsuario` int(11) NOT NULL,
   `fecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `token` varchar(32) NOT NULL,
   `estado` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=126 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -40,10 +40,10 @@ CREATE TABLE `CambioClave` (
 -- Estructura de tabla para la tabla `Complejidad`
 --
 
-CREATE TABLE `Complejidad` (
-  `idComplejidad` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Complejidad` (
+`idComplejidad` int(11) NOT NULL,
   `Complejidad` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Complejidad de los Problemas';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COMMENT='Complejidad de los Problemas';
 
 --
 -- Volcado de datos para la tabla `Complejidad`
@@ -60,15 +60,15 @@ INSERT INTO `Complejidad` (`idComplejidad`, `Complejidad`) VALUES
 -- Estructura de tabla para la tabla `Cuenta`
 --
 
-CREATE TABLE `Cuenta` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Cuenta` (
+`id` int(11) NOT NULL,
   `idTorneo` int(11) DEFAULT NULL,
   `Nombre` text NOT NULL,
   `Archivo` varchar(255) DEFAULT NULL,
   `Inicio` datetime DEFAULT NULL,
   `Fin` datetime DEFAULT NULL,
   `Tiempo` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `Cuenta`
@@ -88,10 +88,10 @@ INSERT INTO `Cuenta` (`id`, `idTorneo`, `Nombre`, `Archivo`, `Inicio`, `Fin`, `T
 -- Estructura de tabla para la tabla `Equipo`
 --
 
-CREATE TABLE `Equipo` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Equipo` (
+`id` int(11) NOT NULL,
   `Equipo` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `Equipo`
@@ -113,10 +113,10 @@ INSERT INTO `Equipo` (`id`, `Equipo`) VALUES
 -- Estructura de tabla para la tabla `EstadoResolucion`
 --
 
-CREATE TABLE `EstadoResolucion` (
-  `idEstado` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `EstadoResolucion` (
+`idEstado` int(11) NOT NULL,
   `Estado` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Estados de la Resolución';
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1 COMMENT='Estados de la Resolución';
 
 --
 -- Volcado de datos para la tabla `EstadoResolucion`
@@ -136,6 +136,7 @@ INSERT INTO `EstadoResolucion` (`idEstado`, `Estado`) VALUES
 (11, 'Problema Solucionado - Respuesta incorrecta'),
 (12, 'Problema Solucionado - Supera Tiempo máximo del Problema - Respuesta Correcta'),
 (13, 'Problema Solucionado - Supera Tiempo máximo del Problema - Respuesta Incorrecta'),
+(14, 'Penalización por Respuesta Incorrecta 1 minuto'),
 (21, 'Respuesta Correcta 1'),
 (22, 'Respuesta Correcta 2'),
 (23, 'Respuesta Correcta 3'),
@@ -148,10 +149,10 @@ INSERT INTO `EstadoResolucion` (`idEstado`, `Estado`) VALUES
 -- Estructura de tabla para la tabla `EstadoTorneo`
 --
 
-CREATE TABLE `EstadoTorneo` (
-  `idEstado` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `EstadoTorneo` (
+`idEstado` int(11) NOT NULL,
   `Estado` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Estados del Torneo';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COMMENT='Estados del Torneo';
 
 --
 -- Volcado de datos para la tabla `EstadoTorneo`
@@ -168,10 +169,10 @@ INSERT INTO `EstadoTorneo` (`idEstado`, `Estado`) VALUES
 -- Estructura de tabla para la tabla `Lenguaje`
 --
 
-CREATE TABLE `Lenguaje` (
-  `idLenguaje` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Lenguaje` (
+`idLenguaje` int(11) NOT NULL,
   `Lenguaje` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `Lenguaje`
@@ -191,7 +192,9 @@ INSERT INTO `Lenguaje` (`idLenguaje`, `Lenguaje`) VALUES
 (11, 'ruby'),
 (12, 'c/c++'),
 (13, 'Pascal'),
-(14, 'PSeInt');
+(14, 'PSeInt'),
+(15, 'Blockly'),
+(16, 'ADA');
 
 -- --------------------------------------------------------
 
@@ -199,12 +202,12 @@ INSERT INTO `Lenguaje` (`idLenguaje`, `Lenguaje`) VALUES
 -- Estructura de tabla para la tabla `Parcial`
 --
 
-CREATE TABLE `Parcial` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Parcial` (
+`id` int(11) NOT NULL,
   `idCuenta` int(11) NOT NULL,
   `idEquipo` int(11) NOT NULL,
   `Tiempo` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `Parcial`
@@ -248,15 +251,15 @@ INSERT INTO `Parcial` (`id`, `idCuenta`, `idEquipo`, `Tiempo`) VALUES
 -- Estructura de tabla para la tabla `Problema`
 --
 
-CREATE TABLE `Problema` (
-  `idProblema` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Problema` (
+`idProblema` int(11) NOT NULL,
   `idTipo` int(11) NOT NULL,
   `Nombre` varchar(255) NOT NULL,
   `Archivo` varchar(255) DEFAULT NULL,
   `Enunciado` text NOT NULL,
   `idComplejidad` int(11) NOT NULL,
   `TiempoEjecucionMax` double NOT NULL COMMENT 'Tiempo Máximo en Segundos'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Problema a Resolver';
+) ENGINE=InnoDB AUTO_INCREMENT=130 DEFAULT CHARSET=latin1 COMMENT='Problema a Resolver';
 
 --
 -- Volcado de datos para la tabla `Problema`
@@ -265,21 +268,21 @@ CREATE TABLE `Problema` (
 INSERT INTO `Problema` (`idProblema`, `idTipo`, `Nombre`, `Archivo`, `Enunciado`, `idComplejidad`, `TiempoEjecucionMax`) VALUES
 (1, 3, 'Suma de dos números', '7ae1a2c66f28ff205ea890d3e639bc5f.gif', 'Dados dos números enteros se debe devolver el resultado de la suma', 1, 20000),
 (2, 1, 'Máximo', NULL, 'Dados dos números devolver el máximo de ambos', 1, 20000),
-(3, 3, 'Área de Corona ', 'a48fee16262b89aef908eb37ad64adf1.jpeg', '¿Cuál es el área de una vereda en forma de corona circular, si el radio interior es r  y el radio exterior R?\r\nLa respuesta debe ser un número con dos decimales con punto \'.\' como separador decimal.\r\nSe fija la constante pi=3.1415926535898.', 1, 20000),
+(3, 3, 'Área de Corona ', 'a48fee16262b89aef908eb37ad64adf1.jpeg', '¿Cuál es el área de una vereda en forma de corona circular, si el radio interior es r  y el radio exterior R?\r\nLa respuesta debe ser un número con dos decimales con punto ''.'' como separador decimal.\r\nSe fija la constante pi=3.1415926535898.', 1, 20000),
 (4, 1, 'Área de Corazón', NULL, 'Hallar el área del siguiente corazón: diametro D, y diagonal d', 1, 20000),
-(5, 2, 'Suma de múltiplos', NULL, 'Si listamos todos los números naturales menores que 10 que son múltiplos de 3 o 5 tenemos:\r\n3, 5, 6 y 9.  La suma de estos múltiplos es 23.\r\nSe requiere un programa que dado un número natulal N devuelva la suma de todos los múltiplos de 3 y los múltiplos de 5 menores que N.', 2, 20000),
+(5, 2, 'Suma de múltiplos', NULL, 'Si listamos todos los números naturales menores que 10 que son múltiplos de 3 o 5 tenemos:\r\n3, 5, 6 y 9.  La suma de estos múltiplos es 23.\r\nSe requiere un programa que dado un número natural N devuelva la suma de todos los múltiplos de 3 mas todos los múltiplos de 5, menores que N.  Si el numero es múltiplo de 3 y de 5 se debe sumar dos veces.', 2, 20000),
 (6, 2, 'Suma de los dígitos de un Factorial', NULL, 'n! = n × (n - 1) × ... × 3 × 2 × 1\r\n\r\nPor ejemplo, 10! = 10 × 9 × ... × 3 × 2 × 1 = 3628800,\r\ny si sumamos todos los dígitos del número 10! tenemos 3 + 6 + 2 + 8 + 8 + 0 + 0 = 27.\r\n\r\nSe requiere un programa que dado un número N devuelva la suma de los dígitos de N!.', 2, 20000),
 (7, 2, 'Numeración de Perros', '7213dae0aaa61d6a2eb88f9fc2f4f833.jpg', 'Una señora tiene perros, y quiere asignarles como nombres a esos perros distintos enteros para poder identificarlos fácilmente. (Tiene buena memoria para números y mala para los nombres propios). Los perros han expresado sus preferencias a la señora. El i-ésimo perro quiere un entero entre 1 y maxNumber[i], inclusive. La señora debe obedecer las preferencias de todos sus perros. ¿De cuantas maneras distintas puede la señora asignar distintos números a sus perros?\r\n<br/>\r\nEntrada:\r\nLa entrada se dará según el siguiente formato: un número N que definira la cantidad de perros que tiene la señora (1 &le; N &le; 10).\r\nN números enteros, indicando cada uno el máximo número con el que le gustaría tener asignado separados por comas.(1 &le; maxNumber[i] &le; 30)\r\n<br/>\r\nSalida:\r\nImprimir un único número con el número de distintas combinaciones de números que podría usar la señora, tal que todos los perros tengan números distintos y cumpla con las preferencias de cada perro. (Si no hay combinaciones válidas, imprimir 0)<br/>\r\nEj Parametros entrada: 1,6 -> salida:6<br/>\r\nEj Parametros entrada: 2,5,8 -> salida:35<br/>', 3, 20000),
 (8, 2, 'Divisores Comunes', NULL, 'Dados dos enteros A y B, con 0 < A < B < 2147483647 (2³¹), encontrar el número de divisores enteros positivos en común entre A y B.<br/>\r\nEj. parametros entrada: 5,15 -> salida:2<br/>\r\nEj. parametros entrada: 20,30 -> salida:4<br/>\r\n', 3, 20000),
 (9, 3, 'Suma de 5 números', NULL, 'Dados cinco números enteros se debe devolver el resultado de la suma.', 1, 20000),
 (10, 3, 'Promedio de 3 números', NULL, 'Dados tres números enteros se debe devolver el promedio.  En caso de que el resultado de un número con decimales redondear al entero más cercano.', 1, 20000),
-(11, 3, 'Mayor de 3 números', NULL, 'Dados tres números devolver el máximo.', 2, 20000),
+(11, 1, 'Mayor de 3 números', NULL, 'Dados tres números devolver el máximo.', 2, 20000),
 (12, 3, 'Paridad de un número', NULL, 'Dado un numero entero devolver, 0 en caso de ser impar y 1 en caso de ser par.', 2, 20000),
 (13, 2, 'Días del año', NULL, 'Dados dos números enteros que identifican a un mes y un día retornar la cantidad de dias transcurridos en el año.  Asumir que el año no es bisiesto.<br/>\r\nEjemplo: Para (2,1) retorna 32=31+1; Para (3,4) retorna 63=31+28+4.', 2, 20000),
 (14, 3, 'Cuadrado', NULL, 'Dado un valor mostrar el cuadrado de ese número. Por ej. si el número es 7 su cuadrado es 49. ', 1, 20000),
 (15, 3, 'El Tiempo', NULL, 'Leer tres valores correspondientes a una hora, minutos y segundos, mostrar la cantidad de segundos que representan. Por ejemplo si se leyera 2 horas, 36 minutos, 10 segundos, el resultado a mostrar es: 9370', 2, 20000),
 (16, 1, 'Dos Rectángulos', NULL, 'Dados 4 valores correspondientes a la base y altura de dos rectángulos, mostrar el área mayor.  (se ingresa base y altura del primer rectángulo y luego la base y altura del segundo)', 2, 20000),
-(17, 3, 'Triángulo equilátero', NULL, 'Determinar el lado de un triángulo equilátero cuyo perímetro es igual al de un cuadrado de X cm de lado.<br/> Ejemplos. <br/> entrada: 2205 - salida: 2940 <br/> entrada: 1143 - salida: 1524 <br/> entrada 321 - salida 428\r\n', 2, 20000),
+(17, 3, 'Triángulo equilátero', NULL, 'Determinar el lado de un triángulo equilátero cuyo perímetro es igual al de un cuadrado de X cm de lado.<br/> Ejemplos. <br/> Lado del cuadrado: 2205 - Lado del triángulo: 2940 <br/> Lado del cuadrado: 1143 - Lado del triángulo: 1524 <br/> Lado del cuadrado: 321 - Lado del triángulo 428\r\n', 2, 20000),
 (18, 2, 'R01-Factorial', NULL, 'Mostrar el factorial (X!)de un número dado.<br/>\r\n0!=1<br/>\r\n1!=1<br/>\r\n2!=2*1!=2*1=2<br/>\r\n3!=3*2!=6<br/>\r\n...<br/>\r\nX!=X*(X-1)!<br/>\r\n', 1, 20000),
 (19, 3, 'R02-Potencia', NULL, 'Dado dos valores correspondientes a una base y a un exponente, mostrar el valor correspondiente al cálculo de la potencia', 1, 20000),
 (20, 2, 'R06-Fibonacci1', NULL, 'La secuencia 0 1 1 2 3 5 8 …. Se conoce con el nombre de Fibonacci, donde se parte de los valores 0 y 1 y el resto de los valores se calculan como la suma de los dos anteriores. En base a esto, se pide, dado un valor, devolver el número de la sucesión de Fibonacci que ocupa esa posición. Por ejemplo si es numero es 5, debería devolver (escribir)  EL VALOR 3', 2, 20000),
@@ -290,9 +293,9 @@ INSERT INTO `Problema` (`idProblema`, `idTipo`, `Nombre`, `Archivo`, `Enunciado`
 (25, 2, 'Máximo Común divisor - falta', NULL, 'Leer dos números, calcular y mostrar su máximo común diviso. Ejemplo: el máximo común divisor  de 10 y 15 es: 5; es decir:  mcd(10, 15) = 5.', 3, 20000),
 (26, 2, 'Mínimo Común Múltiplo - falta', NULL, 'Leer dos números, calcular y mostrar su mínimo común múltiplo. Ejemplo: el mínimo común múltiplo de 10 y 15 es:  30.\r\n\r\n', 3, 20000),
 (27, 2, 'R09-Números tartamudos', NULL, 'Se dice que un número N es Tartamudo cuando alguna de sus cifras aparece al menos dos veces seguidas. Por ejemplo, son Tartamudos: 1122293, 33310. 40772, etc.\r\nDesarrollar un algoritmo que verifique si un número N es Tartamudo. Devolver, 1 en caso de ser Tartamudo y 0 en caso contrario.', 3, 20000),
-(28, 2, 'R08-Números oblongos', NULL, 'Un número N se llama Oblongo si es el resultado del producto de dos números consecutivos. Por ejemplo    30 y 42 son Oblongos, ya que son el resultado del producto de 5*6 y de 6*7 respectivamente.\r\nDesarrollar un algoritmo que verifique si un número N es Oblongo.  Devolver 1 en caso afirmativo y 0 en caso contrario.', 3, 20000),
-(29, 1, 'R10-Números perfectos', NULL, 'Un número N se llama Perfecto si sumando a sus divisores (sin incluirse a sí mismo) se obtiene N. Por ejemplo 6 es Perfecto, ya que sus divisores son 1, 2 y 3, y la suma da 6.\r\nDesarrollar un algoritmo que verifique si un número N es Perfecto.  Devolver 1 en caso afirmativo y 0 en caso contrario.', 3, 20000),
-(30, 2, 'F15 N y M son Amigos', NULL, 'Dos números N y M son Amigos, si sumando los divisores de N obtenemos M, y sumando los divisores de M obtenemos N. En ambos casos se deben excluir N y M como divisores. Por ejemplo 220 y 284 son Amigos. Los divisores de 220 son 1, 2, 4, 5, 10, 11, 20, 22, 44, 55 y 110, que suman 284. Los divisores de 284 son 1, 2, 4, 71 y 142, que suman 220.\r\nDesarrollar un algoritmo que verifique si dos números N y M son Amigos.  Devolver 1 en caso Afirmativo y 0 en caso Contrario.', 3, 20000),
+(28, 2, 'Números oblongos', NULL, 'Un número N se llama Oblongo si es el resultado del producto de dos números consecutivos. Por ejemplo    30 y 42 son Oblongos, ya que son el resultado del producto de 5*6 y de 6*7 respectivamente.\r\nDesarrollar un algoritmo que verifique si un número N es Oblongo.  Devolver 1 en caso afirmativo y 0 en caso contrario.', 3, 20000),
+(29, 1, 'Números perfectos', NULL, 'Un número N se llama Perfecto si sumando a sus divisores (sin incluirse a sí mismo) se obtiene N. Por ejemplo 6 es Perfecto, ya que sus divisores son 1, 2 y 3, y la suma da 6.\r\nDado un número N, verificar si es Perfecto.  Marcar 1 en caso afirmativo y 0 en caso contrario.', 3, 20000),
+(30, 2, 'Números Amigos', NULL, 'Dos números N y M son Amigos, si sumando los divisores de N obtenemos M, y sumando los divisores de M obtenemos N. En ambos casos se deben excluir N y M como divisores. Por ejemplo 220 y 284 son Amigos. Los divisores de 220 son 1, 2, 4, 5, 10, 11, 20, 22, 44, 55 y 110, que suman 284. Los divisores de 284 son 1, 2, 4, 71 y 142, que suman 220.\r\nVerificar si dos números N y M son Amigos.  Marcar 1 en caso Afirmativo y 0 en caso Contrario.', 3, 20000),
 (31, 3, 'F16 Perímetro 1', '4ac187b386cc18a9499ad4bc730e0da4.jpg', 'Desarrollar un algoritmo que, dados los valores de d y b, calcule el perímetro de un rectángulo.  En caso de que el resultado de con decimales, truncar el número a la parte entera.', 2, 20000),
 (32, 3, 'F208 Poligono regular', 'ec43afdcba68c6d55f3bcc6beca8474a.jpg', 'Desarrollar un algoritmo que, dados los valores de lado y &alpha;, calcule el perímetro de un polígono regular. <br/> Ejemplos: <br/> entrada: 1,  18 - salida: 20  <br/> entrada: 2,   36  - salida: 20 <br/> entrada: 1,  40 - salida: 9', 2, 20000),
 (33, 2, 'R04-Suma de dígitos ', NULL, 'Desarrollar un algoritmo que dado un número, calcule la suma de sus dígitos.', 1, 20000),
@@ -302,8 +305,8 @@ INSERT INTO `Problema` (`idProblema`, `idTipo`, `Nombre`, `Archivo`, `Enunciado`
 (37, 3, 'JO5S Numero invertido', NULL, 'Desarrollar un algoritmo que permita invertir un número de 3 cifras. Por ejemplo, invertir a 492 da como resultado 294. ', 2, 20000),
 (38, 3, 'JO10S Dígito Verificador', NULL, 'Desarrollar un algoritmo que calcule el dígito verificador de un número de cuatro cifras de la siguiente manera: <br>\r\n1. Al mayor entre el primer y último dígito, se le resta el menor.<br>\r\n2. La operación se repite entre el segundo y tercer dígito. <br>\r\n3. Se suman ambos resultados<br> \r\n4. Se obtiene el resto de dividirlo por 9.<br> \r\n<br>\r\nPor ejemplo, para el número 9371 se calcula:<br>\r\n1. Entre el primer y último dígito, el mayor es 9; a 9 se le resta 1. El resultado es 8.<br>\r\n2. Entre el segundo y tercer dígito, el mayor es 7; a 7 se le resta 3. El resultado es 4.<br>\r\n3. Se suman ambos resultados, es decir 8 + 4 = 12.<br>\r\n4. El resto de dividir 12 por 9 es 3.<br>\r\n<br>\r\nO sea, el dígito verificador vale 3.', 2, 20000),
 (39, 2, 'R05-Multiplicación', NULL, 'Desarrollar un algoritmos que dados dos valores, X y N (menor a 10), calcule el producto de los N primeros números naturales a partir de X. Por ejemplo, si X vale 8 y N vale 5, el algoritmo debe devolver el resultado del producto 8*9*10*11*12, es decir, 95040. ', 2, 20000),
-(40, 3, 'F216 Polígono regular ++', '2ebb133a3ec0109c18e6bc8251e223ea.jpg', 'Desarrollar un algoritmo que, dados los valores de lado y &beta;, calcule el perímetro de un polígono regular (la figura es solo para guia, puede ser cualquier poligono). <br/> Ejemplos <br/> entrada: 1, 144 - salida: 10 <br/> entrada: 5,  162 - salida: 100', 3, 20000),
-(41, 3, 'F217 Area de figura', '2ac2a00fa6444919fca2efaa9b4aef83.jpg', 'Desarrollar un algoritmo que, dados los valores de AB, BC y CD, calcule el área de la figura, sabiendo que ABCE es un rectángulo y que CDE es un triángulo isósceles.  El resultado del área debe ser redondeado al entero mas cercano.', 2, 20000),
+(40, 3, 'F216 Polígono regular ++', '2ebb133a3ec0109c18e6bc8251e223ea.jpg', 'Desarrollar un algoritmo que, dados los valores de lado y &beta; (en ese orden), calcule el perímetro de un polígono regular (la figura es solo una guia, puede ser cualquier poligono). <br/> Ejemplos <br/> lado: 1, &beta;: 144 - perímetro: 10 <br/> lado: 5, &beta;: 162 - perímetro: 100', 3, 20000),
+(41, 3, 'F217 Area de figura', '2ac2a00fa6444919fca2efaa9b4aef83.jpg', 'Desarrollar un algoritmo que, dados los valores de AB, BC y CD (en ese orden), calcule el área de la figura, sabiendo que ABCE es un rectángulo y que CDE es un triángulo isósceles.  El resultado del área debe ser redondeado al entero mas cercano.', 2, 20000),
 (42, 3, 'F17 Promedio de 4 números', NULL, 'Dados cuatro números enteros se debe devolver el promedio. En caso de que el resultado de con decimales, truncar el número a la parte entera.', 1, 20000),
 (43, 3, 'Jugando al Chancho con Fosforos', '103f6341351f55549b496415566cf8e4.jpg', 'Un grupo de amigos suele salir de campamento, y para pasar el rato a veces juegan partidas de "chancho", un juego de cartas donde por cada mano que uno pierde,\r\nse le escribe una letra progresivamente formando la palabra chancho, y el primero que llega a tener la palabra completa pierde el partido.\r\nObviamente, gana el último que queda sin perder.\r\n\r\nDado que cuentan con mucho tiempo, y como disfrutan mucho el juego, en vez de anotar la letra completa utilizan fósforos y van anotando fósforo por fósforo hasta formar cada letra, como se ilustra en la imagen.<br/>\r\n\r\nEl problema de esto, es que cuando juegan de a varios necesitan mucha cantidad de fósforos.\r\n\r\nAyuden a estos chicos a determinar cuantos fósforos necesitan para jugar de a N jugadores al "Chancho".<br/>\r\n\r\n\r\nEntrada: Un número entero N de jugadores.<br/>\r\n\r\nSalida: El numero máximo de fósforos que necesitan\r\n', 1, 20000),
 (44, 2, 'Capital en el Banco', NULL, 'Una persona desea invertir su dinero en un banco, el cual le otorga un 2% de interés mensual. Cual será la cantidad de dinero que esta persona tendrá al cabo de un año si la ganancia de cada mes es reinvertida (interés acumulado).\r\nPor ejemplo si el monto inicial es de $100, al cabo de un mes, tendrá una suma de $102. AL siguiente mes el 2% se calcula sobre el nuevo monto ($102) por lo que al cabo del segundo mes pasaría a tener $104,04. Este nuevo monto es el que se considera para calcular el  2% correspondiente al tercer mes, y asi sucesivamente.\r\n\r\nSe desea leer un valor correspondiente al dinero inicial y calcular el dinero de que se dispondrá al cabo de un año. Devolver el resultado redondeado al entero mas cercano.\r\n', 2, 20000),
@@ -320,14 +323,14 @@ INSERT INTO `Problema` (`idProblema`, `idTipo`, `Nombre`, `Archivo`, `Enunciado`
 (55, 2, 'JO11R Reemplaza dígito', NULL, 'Para un número N de 5 cifras y un valor K entre 2 y 5, reemplazar en N el dígito K por 0. Ejemplo: Para N=32415 y K=3, se debe obtener 32015. Para N=32415 y K=5, se debe obtener 32410.', 2, 20000),
 (56, 2, 'JO14C Concatena', NULL, 'Dado un número n, y un caracter c, devolver una cadena formada por n c´s. Si n es negativo o 0 devuelve la cadena vacia. Ejemplos: 1) entrada n=5 y c="*" , salida *****, 2) entrada n= 7 y c="h", salida hhhhhhh. 3) entrada = -3 y c="A", salida "s/cadena"', 2, 20000),
 (57, 2, 'JO15C Reverso', NULL, 'Dada una cadena, devolver la misma invertida. Ejemplo: entrada "abcde" , salida "edcba" - entrada "1ertu9zk" salida "kz9utre1"', 2, 20000),
-(58, 2, 'JO17C Romanos', NULL, 'Dado un numero n menor a 500, devolver el mismo número en notación romana. Ejemplo: entrada 9 salida IX , entrada 417 salida CDXVII- AYUDA: 1- I, 2 - II, 3- III, 4 - IV, 5 - V, 6 - VI, 7 - VII, 8 - VIII, 9 - IX, 10- X, 50 - L, 100 - C, 500 - D', 3, 20000),
+(58, 2, 'Números Romanos', NULL, 'Dado un numero n menor a 500, devolver el mismo número en notación romana. Ejemplo: entrada 9 salida IX , entrada 417 salida CDXVII- AYUDA: 1- I, 2 - II, 3- III, 4 - IV, 5 - V, 6 - VI, 7 - VII, 8 - VIII, 9 - IX, 10- X, 50 - L, 100 - C, 500 - D', 3, 20000),
 (59, 2, 'JO16C Cuenta Palíndromos', NULL, 'Palíndromos son las palabras que se leen igual al derecho que al revés. Dada una oración, determinar cuántas palabras de la misma son palíndromo. Considere que las palabras están separadas por un "_".  <br/>  Ejemplo,\r\nPara la entrada:"sos_un_gran_programador_php" la salida es:2.<br/>\r\nPara la entrada:"sos_de_neuquen_sos_de_la_patagonia", la salida es:3<br/>', 3, 20000),
 (60, 2, 'JO13R Suma multiplos', NULL, 'Si listamos todos los números naturales menores que 15 que son múltiplos de 3 y de 2 tenemos: 6 y 12. La suma de estos múltiplos es 18. Se requiere un programa que dado un número natulal N devuelva la suma de todos los múltiplos de 3 y de 2 menores que N.', 3, 20000),
 (61, 2, 'JOR Oblongo', NULL, 'Un número N se llama Oblongo si es el resultado del producto de dos números consecutivos. Por ejemplo 30 y 42 son Oblongos, ya que son el resultado del producto de 5*6 y de 6*7 respectivamente. Desarrollar un algoritmo que verifique si un número N es Oblongo. Devolver "N1 N2" consecutivos donde N1*N2=N.\r\nEjemplo para la entrada 20 la salida es "4 5". En caso en que N no sea Oblongo, debe devolver 0.', 3, 20000),
 (62, 1, 'Nos vamos de campamento', '49cbe7f4605054ddd5e5819f18794e6b.png', 'COORDENADAS: \r\nUn grupo de amigos suele salir de campamento. La ultima vez salieron divididos en 2 grupos: A y B. \r\nComo deben saber de geografía, cualquier punto del planeta puede ser determinado unívocamente por un par de coordenadas cartesianas que indican la latitud y la longitud del punto: la latitud varía entre -90º (sur) y 90º (norte), y la longitud varia entre -180º (oeste) y 180º (este). Nos interesa averiguar cual es la ubicación relativa del grupo B respecto de A,  esto es:  determinar si B está  al Sur(S), al Norte(N), al Este(E), Oeste(O), Sudeste(SE), Sudoeste(SO), Nordeste(NE), Noroeste(NO) o si A y B están en el mismo campamento (MC). La ubicación del grupo A es -33º de latitud y -69º de longitud.<br/>\r\n\r\nLeer 2 números enteros latB y longB, (que representan latitud y longitud de la ubicación del campamento del grupo B) y devolver la cadena “S”, “N”, “E”, “O”, “SE”, “SO”, “NE”, “NO” o “MC” según corresponda. <br/>\r\nEjemplos <br/>\r\nentrada: -45, -40    /   salida: SE (ver gráfico) <br/>\r\nentrada: 3, -70    /   salida: NO  <br/>\r\nentrada: -3, -69    /   salida: N  <br/>\r\nentrada: 3, 10    /   salida: NE  <br/>\r\n', 2, 20000),
 (63, 2, 'JOC Romanos II', NULL, 'Dado un numero n menor a 500 en números naturales, devolver el mismo número en romano. Ejemplo: entrada IX salida 9 , entrada CDXVII salida 417- AYUDA: 1- I, 2 - II, 3- III, 4 - IV, 5 - V, 6 - VI, 7 - VII, 8 - VIII, 9 - IX, 10- X, 50 - L, 100 - C, 500 - D', 3, 20000),
 (64, 2, 'Juego con cuadrados', '456d8bef1448165d0c2a501d27b2f3b9.jpg', 'Jacinto es un carpintero que construye, entre otras cosas, juegos didácticos. Los docentes del jardin de Infantes “Chiquitines” le han encargado que arme un juego de encastre “cuadrados anidados” que consiste en figuras cuadradas huecas de distinto tamaño que deben ser ordenadas por los niños como lo muestra la figura. <br/><br/>\r\nDebemos ayudar a Jacinto a calcular cuantos cuadrados podra armar con el material que tiene. Considere que Jacinto utilizará varillas de madera para el trabajo, y que puede aprovechar todos los recortes de las varillas que vayan quedando, pudiendo pegarlas. Entonces cuantos cuadrados podrá armar, sabiendo que: <br/>\r\n-  cada cuadrado interno tiene 2 cm menos de lado que el que le sigue, (el lado de B es 2cm menor que el lado de A, y el lado de C es 2 cm menor que el de B)\r\n <br/> -  el cuadrado mas pequeño debe ser de 5 cm de lado <br/> \r\nentrada: cantidad de varillas, longitud de las varillas en cm/\r\nsalida: cantidad de cuadrados <br/>\r\nejemplo: entrada 5, 30 /  salida: 4 <br/>\r\nejemplo: entrada 2, 53 /  salida: 3 <br/>\r\n\r\n', 1, 20000),
-(65, 2, 'Rotar Numero', NULL, 'Para un número N de 5 cifras y un valor K entre 2 y 5 (inclusive) , re requiere rotar N k lugares hacia la derecha. Rotar el número significa que cada dígito se mueva un lugar hacia la derecha, y el último dígito (que se cae del número) pasa a ocupar el primer lúgar, o sea el de la decena de mil. Entonces al aplicar una rotación al número  37854, se obtiene 43785. <br/>   Ejemplo: Para N=32415 y K=3, se debe obtener 41532. Para N=32415 y K=5, se debe obtener 32415', 2, 20000),
+(65, 2, 'Número saltarín', NULL, 'Para un número N de 5 cifras y un valor K entre 1 y 5 (inclusive) , se debe obtener otro número en donde los dígitos salten k lugares hacia la derecha. El último dígito (que se cae del número) pasa a ocupar el primer lugar, o sea el de la decena de mil.<br/>\r\nEjemplos:Para N=37854 y k=1, se obtiene 43785. <br/>Para N=32415 y K=3, se obtiene 41532.<br/> Para N=32415 y K=5, se debe obtener 32415', 2, 20000),
 (66, 2, 'Generar numero', NULL, 'Dado un número N, 0&lt;N&lt;10, generar un número entero cuyo primer dígito sea N, y los digitos siguientes sean los menores que N en orden, hasta 0. Ejemplo, si N=5, debe generar 543210, si N=2, debe generar 210, si N=1, debe generar 10.', 2, 20000),
 (67, 2, 'Generar número creciente', NULL, 'Dado un número N, 0&lt;N&lt;10, generar un número entero cuya unidad sea N, y los digitos siguientes hacia la izquierda (decena, centena, etc.) sean los menores que N en orden, hasta 1. Ejemplo, si N=5, debe generar 12345, si N=2, debe generar 12, si N=1, debe generar 1.', 2, 20000),
 (68, 2, 'Calculo de horas', NULL, 'A partir de un dia, un mes, y una cantidad de horas, calcular el total de horas transcurridas desde el 1 de enero hasta el momento indicado por los datos ingresados. Considere a febrero con 28 dias. Ejemplo <br/> entrada: 12, 3, 5 /salida: 1685 (son 31 dias de enero, 28 dias de febrero, 11 dias de marzo, y 5 horas) <br/> entrada: 10, 1, 15 /salida: 231 ', 2, 20000),
@@ -336,16 +339,16 @@ INSERT INTO `Problema` (`idProblema`, `idTipo`, `Nombre`, `Archivo`, `Enunciado`
 (71, 2, 'Armando una casa con cartas 2', 'a8c9794abf14f28ab63a4444a3245eb8.jpg', 'Julián esta aburrido y decide entretenerse armando casas con cartas. En la figura se muestra una casa de 4 pisos, para la que se utilizaron 26 cartas. Notese que en cada piso se utilizan 3 cartas menos que en el piso de abajo (o en cada piso 3 cartas mas que en el de arriba, aunque la casa se arma de abajo hacia arriba). <br/> Debemos ayudar a Julián a calcular cuantas cartas necesitará para hacer una casa de k pisos <br/> Ejemplos, <br/> Entrada:4, salida: 26 <br/> Entrada: 3, salida: 15 <br/> Entrada: 2, salida: 7', 2, 20000),
 (72, 2, 'Jugando con cartas', '08c4b98413fee113ab39f51cd38d2655.jpg', 'Julián decidio hacer una secuencia de casas con las cartas empezando por una de 2 cartas, como muestra la figura. (Ayuda,para armar solo 1 casa se necesitan 2 cartas, pero para agregar mas casas se necesitan 3 cartas por cada nueva casa, 2 para la casa y 1 para el techo que la une con la casa anterior. Por ejemplo para una casa de 4 pisos, se necesitan 26 cartas). <br/> Se desea ayudar a Julián a decidir cuantas cartas necesitará para llegar a una casa de k pisos. <br/> Ejemplos, para llegar a una casa de 2 pisos necesitará 9 cartas (2 para la primer casa y 7 para la segunda casa) <br/> para llegar a una casa de 3 pisos necesitará 24 cartas (2 para la primera, 7 para la segunda y 15 para la tercera) <br/> para llegar a una casa de 4 pisos necesitará 50 cartas.\r\n', 3, 20000),
 (73, 2, 'Jugando con cartas 2', 'adb57333e40a0be22947b3f05d84f2d4.jpg', 'Julián decidio hacer una secuencia de casas con las cartas empezando por una de 2 cartas, como muestra la figura. (Ayuda,para armar solo 1 casa se necesitan 2 cartas, pero para agregar mas casas se necesitan 3 cartas por cada nueva casa, 2 para la casa y 1 para el techo que la une con la casa anteriro. Por ejemplo para una casa de 4 pisos, se necesitan 26 cartas). <br/> Se desea ayudar a Julián a decidir cuantos pisos podrá tener la última casa de la secuencia si se usan k cartas. <br/> Ejemplo, <br/> con 9 cartas la ultima casa puede tener 2 pisos <br/> con 10 cartas la ultima casa puede tener 2 pisos <br/> con 50 cartas la ultima casa puede tener 4 pisos <br/> con 53 cartas la ultima casa puede tener 4 pisos.', 3, 20000),
-(74, 3, 'El aterrizaje', NULL, 'Calcular la longitud de pista, en metros, que necesita un avión para aterrizar si cuando comienza el movimiento de frenado tiene una velocidad de <em>vel </em> m/s y una aceleración de <em> aa </em> m/s2.\r\nEjemplo, para vel= 90 y aa=-3, la longitud de pista es 1350 m', 1, 20000),
-(75, 3, 'Velocidad', NULL, 'Un coche que se desplaza a <em>vel </em> m/s acelera a razon de <em> aa </em>  m/s2   durante <em> tt </em> seg. Calcular la velocidad final obtenida en ese tiempo.\r\nEntrada: vel, aa, tt <br/> Salida: velocidad final', 1, 20000),
+(74, 3, 'El aterrizaje', NULL, 'Calcular la longitud de la pista de un aeropuerto (en metros) que necesita un avión para aterrizar si cuando comienza el proceso de frenado tiene una velocidad de <em>vel </em> m/s y una aceleración de <em> aa </em> m/s2.\r\nEjemplo, para vel= 90 y aa=-3, la longitud de pista es 1350 m', 2, 20000),
+(75, 3, 'Velocidad', NULL, 'Un coche que se desplaza a <em>vel </em> (en m/s), acelera a razon de <em> aa </em> (en m/s2) durante <em> tt </em> (en seg). <br/> Calcular la velocidad final obtenida en ese tiempo.\r\nEntrada: vel, aa, tt (en ese orden)<br/> Salida: velocidad final', 1, 20000),
 (76, 3, 'Ahí se escucha el tren', NULL, '¡Llegó el tren al alto valle! ...y por esas cosas del azar, salieron sorteados para ser los nuevos encargados de coordinar el sistema ferroviario a nivel local.\r\nClaramente lo más importante de su trabajo es asegurarse de que los trenes no sufran ningún accidente, por fortuna hay una sola formación usando las vías, por lo que mientras el tren no exceda su velocidad máxima no hay ningún riesgo.\r\n<BR/>\r\nComo segundo objetivo, dado un horario de inicio de servicio y uno de fin de servicio, y la espera para bajada y subida de pasajeros, deben tratar de dar la mayor cantidad de servicios por dia.\r\n<BR/>\r\nClaro está que el tren necesita un tiempo para alcanzar su velocidad máxima, como han visto en física:\r\n<BR/>\r\nVelocidadFinal = (Aceleración * Tiempo) - VelocidadInicial\r\n<BR/>y cuando un cuerpo está acelerando, su desplazamiento se calcula:\r\n<BR/>DistanciaRecorrida = 1/2*Aceleración*(TiempoRecorrido²)\r\n<BR/>\r\nSu objetivo es hacer un programa que para los datos indicados, calcule la máxima cantidad de servicios que se pueden dar desde Neuquén a Cipolleti. Sabemos que la distancia entre estaciones del tren es de 7600 metros, y que  el tiempo  requerido para subida y bajada de pasajeros es de 10 minutos.\r\n<BR/>\r\nDeberan leer: \r\n<BR/>horario_inicio = Hora de salida del primer servicio. (en horas)\r\n<BR/>horario_fin = Hora máxima a la que puede llegar el último servicio.(en horas)\r\n<BR/>velocidad_maxima = Velocidad Maxima a la que llega el tren.(metros/seg)\r\n<BR/>acelaración(metros/segundo²) y desaceleración (aceleración de frenado) (metros/segundo²)\r\n<BR/>\r\nY retornar la cantidad máxima de viajes de ida y vuelta que puede completar el tren en 1 día.\r\n<BR/>\r\n\r\nPista: En todos los casos pasará, que el tren en algún tramo alcanzará su velocidad máxima, la mantendrá por un tramo de longitud que deberán calcular y desacelerará con el tiempo ideal para llegar a 0m /segundo exactamente en la otra estación, esperará "tiempo_pasajeros" segundos y regresará hacia la otra estación. ', 3, 20000),
 (77, 2, 'Secuencia de Collatz', NULL, 'El matemático Lothar Collatz en 1937, enunció su famosa conjetura (la conjetura de 3n+1), que hasta el dí­a de hoy no pudo ser demostrada para cualquier valor, pero tampoco se han encontrado contraejemplos.\r\n\r\nLo que dice su conjetura es que aplicando la siguiente función a un número N, en forma reiterada, eventualmente N pasa a valer 1.\r\n\r\nMientras(N <> 1){\r\n    si ( N es par)\r\n        N = N/2;\r\n    sino\r\n        N = (N*3) +1;\r\n}\r\n\r\nDe esta manera si hacemos la traza para N = 11, vemos que N toma como valores:  11 -> 34 -> 17 ->  52 -> 26 -> 13 -> 40 -> 20 -> 10 -> 5 -> 16 -> 8 -> 4 -> 2 -> 1\r\n\r\nLa longitud de la secuencia de Collatz de un número, es la cantidad de veces que se aplica esta función hasta llegar a 1.\r\nAsí  la longitud de la secuencia de un número L(x) queda dada por:\r\nL(1) = 0 <br/>\r\nL(2) = 1 + L(1) = 1 <br/>\r\nL(3) = 1 + L(10) = 1 + 1 + L(5) = 2 + 1 + L(16) = ... = 3 + 4 = 7  <br/>\r\nL(4) = 1 + L(2) = 2 <br/>\r\n...\r\nL(8) = 3\r\n\r\n<br/>\r\nSu desafí­o es escribir un programa que dado un número natural N, calcule la longitud de su secuencia de Collatz.\r\n', 2, 20000),
 (78, 1, 'Resta de dos números', NULL, 'Resta de dos números', 1, 20000),
 (79, 3, 'Producto de dos números', NULL, 'Dados A y B retornar el Producto de ambos números', 1, 20000),
-(80, 2, 'A2017 Sumando posiciones pares.', NULL, 'Dado una lista de enteros donde el primer elemento N es la cantidad de valores siguientes enteros. Sumar sólo los que ocupan posiciones pares y mostrar la suma resultante. Observación: se recibe un arreglo donde la posición 0 corresponde al N, las posiciones restantes corresponden a los elementos del arreglo.', 3, 5000),
-(81, 2, 'A2017 Vocales extraviadas', NULL, 'Se tiene un arreglo de N caracteres y se necesita  verificar si contiene alguna vocal, para ello deberá mostrar como respuesta el valor 1, si existe alguna vocal o cero en el caso contrario.Observación: se recibe un arreglo donde la posición 0 corresponde al N, las posiciones restantes corresponden a los elementos del arreglo.', 3, 50000),
-(82, 2, 'A2017 Problema de iniciales', NULL, 'Se tiene un arreglo de N palabras y se necesita crear y mostrar una nueva palabra concatenando las iniciales de cada una de las palabras contenidas. Por ejemplo si el arreglo contiene:  [“casa”,”automovil”, “día”] el resultado será la palabra “cad” . Observación: se recibe un arreglo donde la posición 0 corresponde al N, las posiciones restantes corresponden a los elementos del arreglo.', 3, 50000),
-(83, 2, 'A2017 Cuadrado Mágico', 'bb241583aee5005ae91b8d1a939c3b2b.png', 'Una matriz NxN es un cuadrado mágico si  la suma de cada fila es igual a la suma de cada columna y a la vez es igual a la suma de cada una de las diagonales. Se deberá mostrar el resultado 1 si la matriz dada es cuadrado mágico o 0 en caso contrario.', 3, 50000),
+(80, 2, 'A2019 Sumando posiciones pares.', NULL, 'Dado una lista de enteros donde el primer elemento N es la cantidad de valores siguientes. Los números restantes corresponden a cada uno de los elementos del arreglo comenzando con la posición 0 (0 par). Sumar sólo los que ocupan posiciones pares y mostrar la suma resultante. ', 3, 5000),
+(81, 2, 'A2019 Vocales extraviadas', NULL, 'Se tiene un arreglo de N caracteres y se necesita  verificar si contiene alguna vocal, para ello deberá mostrar como respuesta el valor 1, si existe alguna vocal o cero en el caso contrario.Observación: se recibe un arreglo donde la posición 0 corresponde al N, las posiciones restantes corresponden a los elementos del arreglo.', 3, 50000),
+(82, 2, 'A2019 Problema de iniciales', NULL, 'Se tiene un arreglo de N palabras y se necesita crear y mostrar una nueva palabra concatenando las iniciales de cada una de las palabras contenidas. Por ejemplo si el arreglo contiene:  [“casa”,”automovil”, “día”] el resultado será la palabra “cad” . Observación: se recibe un arreglo donde la posición 0 corresponde al N, las posiciones restantes corresponden a los elementos del arreglo.', 3, 50000),
+(83, 2, 'A2019 Cuadrado Mágico', 'bb241583aee5005ae91b8d1a939c3b2b.png', 'Una matriz NxN es un cuadrado mágico si  la suma de cada fila es igual a la suma de cada columna y a la vez es igual a la suma de cada una de las diagonales. Se deberá mostrar el resultado 1 si la matriz dada es cuadrado mágico o 0 en caso contrario.', 3, 50000),
 (84, 2, 'A2017 Escalera de números', NULL, 'Dado un arreglo conteniendo N números, se necesita conocer si los mismos están ordenados  en forma creciente, para lo cual deberá mostrar el resultado 1 si están ordenados de manera creciente o 0 en caso contrario.Observación: se recibe un arreglo donde la posición 0 corresponde al N, las posiciones restantes corresponden a los elementos del arreglo.', 3, 50000),
 (85, 2, 'A2017  Recorrido Espiral', 'edcbf01801c3071f665fce7ca753106c.png', 'Dada una matriz NxM de números enteros, diseñe un algoritmo para recorrerla en forma de espiral, guardandolos en una cadena a mostrar como resultado final.', 3, 50000),
 (86, 3, 'P2017 Arañita', NULL, 'Una arañita va y viene sobre una rama. Primero va de una punta a la otra.\r\nSe da vuelta y va hasta la mitad de la rama; allí se da vuelta y va hasta la mitad del camino que recorrió la última vez. Hace esto dos veces más, recorriendo cada vez la mitad del camino anterior. Cuántos centímetros recorrió en total, si la rama mide:', 3, 10000),
@@ -355,12 +358,42 @@ INSERT INTO `Problema` (`idProblema`, `idTipo`, `Nombre`, `Archivo`, `Enunciado`
 (90, 3, 'P2017 Alumnos', NULL, 'De los alumnos inscriptos a un colegio, tres quintos se anotaron en el turno mañana. De ellos, un cuarto van a jardín, dos tercios van a primaria y los demás a secundaria. Cuántos son los alumnos del secundario de turno mañana, si en el colegio entre ambos turnos la cantidad de alumnos es:', 1, 10000),
 (91, 3, 'P2017 Teatro', NULL, 'En un teatro las entradas para adultos cuestan $50 y $20 las de niños. Se sabe que asistieron 326 personas. Cuántos adultos había, si se recaudaron: $', 3, 10000),
 (92, 1, 'P2017 Geografía', '98a276d126b69f11ce54297eb9f6701f.jpg', '¿Cual es la provincia que limita simultaneamente con?', 1, 1),
-(93, 3, 'Valor Absoluto', NULL, 'Diseñar un programa que, dado un número, devuelva su valor absoluto', 1, 20000),
+(93, 1, 'Valor Absoluto', NULL, 'Diseñar un programa que, dado un número, devuelva su valor absoluto', 1, 20000),
 (94, 1, 'Sucesor - Antecesor', NULL, 'Dado un valor, si es positivo, devolver su sucesor, caso contrario, devolver su antecesor', 2, 200000),
 (95, 1, 'Bianca y Brenda', NULL, 'Bianca y Brenda recibieron caramelos de su abuela, pero sin querer, una de las chicas recibió más cantidad que la otra. La que obtuvo mayor cantidad, debe darle la diferencia entre ambas cantidades a su primito Blas. Diseñar un programa que reciba dos valores (cantidad de caramelos para cada una de las chicas), y devuelva la cantidad de caramelos que recibirá Blas.', 2, 20000),
-(96, 3, 'Módulo el Tercero', NULL, 'Dados 3 valores, devolver el tercero si éste equivale al resto de la división del primero y el segundo, y 0 en caso contrario. \r\nEjemplos:\r\n<br>Para los valores 5,3,2 debe devolver 2.\r\n<br>Para los valores 7,4,4 debe devolver 0.', 1, 20000),
+(96, 1, 'Módulo ', NULL, 'Dados 3 valores, devolver el tercero si éste equivale al resto de la división del primero y el segundo, y 0 en caso contrario. \r\nEjemplos:\r\n<br>Para los valores 5,3,2 debe devolver 2.\r\n<br>Para los valores 7,4,4 debe devolver 0.', 1, 20000),
 (97, 1, 'Notas de Física', NULL, 'Aldo, Bruno y Carlos deben rendir un examen de física. El que obtenga la mejor nota queda eximido del trabajo práctico. Desarrollar un programa que dadas las tres notas (de Aldo, de Bruno y de Carlos, en ese orden), devuelva la inicial (en mayúscula) del alumno eximido de la práctica.', 2, 20000),
-(98, 1, 'Tanque de Nafta', NULL, 'El tanque de combustible de un auto tiene una capacidad de 50 litros. El auto recorre en ciudad 8 kilómetros por litro y en ruta 10 kilómetros por litro. Desarrollar un programa que dados dos valores (km en ciudad y km en ruta, en ese orden) evalúe si el auto puede recorrer esas distancias teniendo el tanque lleno. Debe devolver 0 en caso en que no se pueda, o bien la cantidad de litros de combustible que se gastarían.', 2, 200000);
+(98, 1, 'Tanque de Nafta', NULL, 'El tanque de combustible de un auto tiene una capacidad de 50 litros. El auto recorre en ciudad 8 kilómetros por litro y en ruta 10 kilómetros por litro. Desarrollar un programa que dados dos valores (km en ciudad y km en ruta, en ese orden) evalúe si el auto puede recorrer esas distancias teniendo el tanque lleno. Debe devolver 0 en caso en que no se pueda, o bien la cantidad de litros de combustible que se gastarían.', 2, 200000),
+(99, 3, 'P2018 Impares', NULL, 'Cuántos números impares hay entre dos números A y B', 1, 20000),
+(100, 3, 'P2018 Almuerzo', NULL, 'De los alumnos de un curso, la quinta parte vuelve a su casa a almorzar. De los restantes, la mitad come una vianda que trae de su casa. Cuántos alumnos hay en el curso, si los que comen en el comedor son:', 1, 20000),
+(101, 3, 'P2018 Hermanos', NULL, 'En 5° año todos los alumnos tienen hermanos. La tercera parte de los chicos tiene 2 hermanos y el resto sólo 1 hermano. En un encuentro se reúne todo 5° año junto a todos los hermanos. Cuántos alumnos tiene 5° año, si en la reunión hay en total:', 1, 20000),
+(102, 3, 'P2018 Cartuchera', NULL, 'Sobre la mesa hay 10 lápices de distintos colores y 5 gomas de borrar de diferentes tamaños. De cuántas maneras distintas se pueden poner en una cartuchera (lápices, gomas - en ese orden):', 2, 20000),
+(103, 3, 'P2018 Dígitos 1-3-5-8', NULL, 'Cuántos números se pueden formar con los dígitos 1, 3, 5, 8, solamente y sin repetir, que sean mayores que 100 y menores o iguales a:', 2, 20000),
+(104, 3, 'P2018 Areas', '88490da80d7fc799ad629866e0cbb8bb.jpg', 'Calcular el área NO-sombreada,\r\nsabiendo que el área sombreada vale:\r\n', 2, 20000),
+(105, 3, 'Lados de un triángulo equilátero', NULL, 'Determinar el lado de un triángulo equilátero cuyo perímetro es igual al de un cuadrado de área X.<br/> Ejemplos. <br/> área cuadrado: 576 - lado triángulo: 32 <br/> área cuadrado: 1089 - lado triángulo: 44 ', 2, 20000),
+(106, 2, 'Números Prolijos', NULL, 'Se dice que un número es prolijo, si todos sus dígitos están ordenados de menor a mayor. Ejemplo: El número 379 es un número prolijo; el número 51830 no lo es.\r\nDesarrollar un programa que reciba un número y verifique si es prolijo, en cuyo caso debe devolverlo, Si no es prolijo, debe devolver 0.', 2, 20000),
+(107, 2, 'Números Divertidos', NULL, 'Se dice que un número es divertido si todos sus dígitos son distintos. Por ejemplo, el número 4509 es divertido; el número 13185 no lo es.\r\nDesarrollar un programa que reciba un número y verifique si es divertido, en cuyo caso debe devolverlo. Si no es divertido, debe devolver 0.', 3, 20000),
+(108, 2, 'Números mágicos', NULL, 'Se dice que tres números (de tres cifras) son mágicos cuando cumplen las siguientes condiciones de manera simultánea:\r\n* Coinciden en la suma de los dígitos de cada número.\r\n* Las sumas de todas las centenas, de todas las decenas y de todas las unidades también son iguales.\r\nEjemplo: Los números 357, 816 y 492 son mágicos, ya que se cumple:\r\n3+5+7=15; 8+1+6=15; 4+9+2=15, y además\r\n3+8+4=15 (centenas); 5+1+9=15 (decenas); 7+6+2=15 (unidades)\r\nDesarrollar un programa que reciba tres números de tres dígitos y verifique si son mágicos, en cuyo caso se deberá devolver el valor de la suma mágica. En caso contrario se deberá devolver 0.', 3, 20000),
+(109, 3, 'Fracción Equivalente', NULL, 'Indicar la fracción equivalente a:', 1, 20000),
+(110, 3, 'Logaritmos1', '970db9c75d0a409e0a4807bc6fc5790d.jpg', 'Dados los valores de A y de la base B (en ese orden), indicar cuánto vale C.\r\n', 1, 20000),
+(111, 3, 'Logaritmos2', '7d92f544a1c4502ec9f949b9d9a40812.jpg', 'Dados los valores de A y C (en ese orden), indicar cuánto vale la base B', 1, 20000),
+(112, 3, 'Operaciones con Números Racionales -1', NULL, 'Resolver X - Y + Z Indicar la fracción simplificada.', 2, 20000),
+(113, 3, 'Operaciones con Números Racionales - 2', NULL, 'Resolver A * B + C Indicar la fracción simplificada', 2, 20000),
+(115, 3, 'Porcentaje 1', NULL, 'Si el IVA es del 21%, cuál es el valor a pagar por un par de zapatillas, si el precio sin IVA es:', 1, 20000),
+(116, 3, 'Porcentaje 2', NULL, 'Cuál era el precio anterior de un pantalón, si aumentó un 15% y ahora cuesta:', 1, 20000),
+(117, 3, 'Porcentaje 3', NULL, 'Cuál es el porcentaje de recargo que se cobra por pago con tarjeta de crédito, si el valor original es X y el cliente termina pagando Y (en ese orden)', 2, 20000),
+(118, 3, 'Ecuaciones I', 'e697618b286d1ce8e38fa7028dc02900.jpg', 'Dados los valores de a, b y c (en ese orden), cuánto debe valer d para que se cumpla la igualdad?', 1, 20000),
+(119, 3, 'Equipo deportivo', NULL, 'En la última temporada, un equipo deportivo marcó, de local, el triple de puntos que de visitante. Cuántos marcó el visitante si la cantidad total de puntos fueron:', 1, 20000),
+(120, 3, 'Depósito', NULL, 'Indicar cuántas cajas había en un depósito, si luego de acomodar el 27% de ellas, aún quedan', 1, 20000),
+(121, 3, 'Triángulos', '85639d50766d5a9c1535f670ffd093d4.jpg', 'Con cuatro triángulos equiláteros se armó la siguiente figura. El lado del triángulo 2 mide la mitad del lado del triángulo 1, el lado del triángulo 3 mide la mitad del lado del triángulo 2, y el lado del triángulo 4 mide la mitad del lado del triángulo 3. Cuánto mide el lado del triángulo 1, si el perímetro de la figura vale', 2, 20000),
+(122, 3, 'Cuerda', NULL, 'Cuánto mide una cuerda elástica, si al estirarla al 30% mide', 2, 20000),
+(123, 3, 'Padre e hijos', NULL, 'Andrés y Ramiro son hijos de Gabriel. Dadas las edades de Andrés, Ramiro y Gabriel (en ese orden), cuántos años deben transcurrir para que los hijos sumen la edad de su padre?', 2, 20000),
+(124, 3, 'Cuadrados', 'f021afda0b9e2a19c8eace53186e197c.jpg', 'En la figura hay dos cuadrados, C1 y C2. Cuánto vale el área de C2, si el área de C1 es:', 2, 20000),
+(125, 3, 'Número escondido', NULL, 'Cuál es el número, cuya mitad aumentada en tres, da por resultado:', 2, 20000),
+(126, 3, 'Número escondido II', NULL, 'Cuál es el número, si la mitad de la diferencia del triple de ese número y 5, da:', 2, 20000),
+(127, 1, 'Beca comedor', NULL, 'Para acceder a una beca del comedor se debe tener un promedio mayor a 7 y menos de 25 años, o en su defecto vivir en una localidad que se encuentre a más de 30km de la ciudad de Neuquén.\r\nDiseñar un algoritmo que dados los datos de promedio, edad y distancia de residencia (en ese orden), devuelva el promedio si puede acceder a la beca y 0 en caso contrario. ', 1, 20000),
+(128, 1, 'Pintura', 'f48d5f219b9151c07a8dccf0a8567430.jpg', 'Se desea pintar la pared del frente de la casa de la figura. Diseñar un algoritmo que, dados los valores de A, B y C (en ese orden), permita calcular cuánto mide la superficie a pintar.', 2, 20000),
+(129, 1, 'Número de la suerte', NULL, '6. Dada la fecha de nacimiento de una persona (día, mes y año; en ese orden), calcular su número de la suerte de la siguiente manera: se suman día, mes y año. Luego se obtienen los dos últimos dígitos del valor calculado. Si dicho número es menor a 20, ese es el número de la suerte, caso contrario, se deben sumar los dos dígitos obtenidos entre sí y el número resultante es el número de la suerte. <br/> Ejemplos: Si la fecha es 05/10/1999, la suma es 2014, los últimos dos dígitos son 14, luego el número de la suerte es 14.<br/> Pero si la fecha es 27/10/1999, la suma es 2036, los últimos dos dígitos son 36, luego el número de la suerte es 9 (3+6).', 2, 20000);
 
 -- --------------------------------------------------------
 
@@ -368,8 +401,8 @@ INSERT INTO `Problema` (`idProblema`, `idTipo`, `Nombre`, `Archivo`, `Enunciado`
 -- Estructura de tabla para la tabla `Resolucion`
 --
 
-CREATE TABLE `Resolucion` (
-  `idResolucion` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Resolucion` (
+`idResolucion` int(11) NOT NULL,
   `idUsuario` int(11) NOT NULL,
   `idProblema` int(11) NOT NULL,
   `idSolucion` int(11) NOT NULL,
@@ -379,7 +412,7 @@ CREATE TABLE `Resolucion` (
   `FechaRespuesta` bigint(20) DEFAULT NULL,
   `Respuesta` varchar(2000) DEFAULT NULL,
   `idEstado` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Rosolución por parte de un usuario de una Solución de un Pro';
+) ENGINE=InnoDB AUTO_INCREMENT=38342 DEFAULT CHARSET=latin1 COMMENT='Rosolución por parte de un usuario de una Solución de un Pro';
 
 -- --------------------------------------------------------
 
@@ -387,10 +420,10 @@ CREATE TABLE `Resolucion` (
 -- Estructura de tabla para la tabla `Rol`
 --
 
-CREATE TABLE `Rol` (
-  `idRol` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Rol` (
+`idRol` int(11) NOT NULL,
   `Rol` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `Rol`
@@ -407,12 +440,12 @@ INSERT INTO `Rol` (`idRol`, `Rol`) VALUES
 -- Estructura de tabla para la tabla `Solucion`
 --
 
-CREATE TABLE `Solucion` (
-  `idSolucion` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Solucion` (
+`idSolucion` int(11) NOT NULL,
   `idProblema` int(11) NOT NULL,
   `ParametrosEntrada` varchar(2000) NOT NULL,
   `Salida` varchar(2000) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Solución de un Problema dados Parámetros de Entrada';
+) ENGINE=InnoDB AUTO_INCREMENT=10142 DEFAULT CHARSET=latin1 COMMENT='Solución de un Problema dados Parámetros de Entrada';
 
 --
 -- Volcado de datos para la tabla `Solucion`
@@ -2368,7 +2401,7 @@ INSERT INTO `Solucion` (`idSolucion`, `idProblema`, `ParametrosEntrada`, `Salida
 (2146, 17, '321', '428'),
 (2147, 17, '2694', '3592'),
 (2148, 17, '975', '1300'),
-(2149, 17, '975', '1300'),
+(2149, 17, '111', '148'),
 (2150, 17, '1278', '1704'),
 (2151, 17, '183', '244'),
 (2152, 17, '612', '816'),
@@ -4743,16 +4776,16 @@ INSERT INTO `Solucion` (`idSolucion`, `idProblema`, `ParametrosEntrada`, `Salida
 (4525, 30, '284,220', '1'),
 (4526, 30, '1120,1389', '0'),
 (4527, 30, '6232,6368', '1'),
-(4578, 31, '75,75', '150'),
-(4579, 31, '76,51', '214'),
-(4580, 31, '77,17', '184'),
-(4581, 31, '78,43', '216'),
-(4582, 31, '79,55', '223'),
-(4583, 31, '80,45', '222'),
-(4584, 31, '81,14', '187'),
-(4585, 31, '82,21', '200'),
-(4586, 31, '83,58', '234'),
-(4587, 31, '84,21', '204'),
+(4578, 31, '5,3', '14'),
+(4579, 31, '10,6', '28'),
+(4580, 31, '15,9', '42'),
+(4581, 31, '20,12', '56'),
+(4582, 31, '25,15', '70'),
+(4583, 31, '30,18', '84'),
+(4584, 31, '35,21', '98'),
+(4585, 31, '40,24', '112'),
+(4586, 31, '50,30', '140'),
+(4587, 31, '45,27', '126'),
 (4588, 31, '85,25', '212'),
 (4589, 31, '86,55', '242'),
 (4590, 31, '87,19', '207'),
@@ -6702,7 +6735,7 @@ INSERT INTO `Solucion` (`idSolucion`, `idProblema`, `ParametrosEntrada`, `Salida
 (6689, 57, 'hornero', 'orenroh'),
 (6690, 57, 'juegos_olimpicos', 'socipmilo_sogeuj'),
 (6691, 54, '2,50', '650'),
-(6692, 58, '1', 'I'),
+(6692, 58, '111', 'CXI'),
 (6693, 54, '24,15', '0'),
 (6694, 58, '14', 'XIV'),
 (6695, 58, '19', 'XIX'),
@@ -6949,7 +6982,7 @@ INSERT INTO `Solucion` (`idSolucion`, `idProblema`, `ParametrosEntrada`, `Salida
 (6939, 52, '1,-2,2,-1', '1*X-3'),
 (6940, 52, '-1,2,2,2', '0*X+2'),
 (6941, 62, '-40,-71', 'SO'),
-(6942, 58, '1', 'I'),
+(6942, 58, '259', 'CCLIX'),
 (6943, 58, '2', 'II'),
 (6944, 58, '3', 'III'),
 (6945, 58, '4', 'IV'),
@@ -8103,8 +8136,8 @@ INSERT INTO `Solucion` (`idSolucion`, `idProblema`, `ParametrosEntrada`, `Salida
 (8097, 78, '10,4', '6'),
 (8098, 79, '2,2', '4'),
 (8099, 79, '10,5', '50'),
-(8100, 80, '2, 5, 9, 10, 22, 1', '13'),
-(8101, 80, '8, -2, 0, 3, 11, 5, 25, 100, 52', '106'),
+(8100, 80, '5,5,9,10,22,1', '16'),
+(8101, 80, '8,-2,0,3,11,5,25,100,52', '106'),
 (8102, 81, ' 3,n,m,b', '0'),
 (8103, 81, '4,a,n,m,l ', '1'),
 (8104, 81, '5,n,m,b,r,a', '1'),
@@ -9740,7 +9773,408 @@ INSERT INTO `Solucion` (`idSolucion`, `idProblema`, `ParametrosEntrada`, `Salida
 (9733, 98, '400,100', '0'),
 (9734, 98, '168,140', '35'),
 (9735, 98, '144,140', '32'),
-(9736, 98, '248,120', '43');
+(9736, 98, '248,120', '43'),
+(9737, 9, '1,50,734,4,22', '811'),
+(9738, 9, '2,49,248,5,21', '325'),
+(9739, 9, '3,48,86,9,20', '166'),
+(9740, 9, '4,47,32,14,19', '116'),
+(9741, 9, '5,46,14,23,18', '106'),
+(9742, 9, '6,45,8,37,17', '113'),
+(9743, 9, '7,44,6,60,16', '133'),
+(9744, 9, '8,43,2,97,15', '165'),
+(9745, 9, '9,42,977,157,14', '1199'),
+(9746, 9, '10,41,329,254,13', '647'),
+(9747, 9, '11,40,113,411,12', '587'),
+(9748, 9, '12,39,41,665,11', '768'),
+(9749, 9, '13,38,17,2,10', '80'),
+(9750, 9, '14,37,9,5,9', '74'),
+(9751, 9, '15,36,734,7,8', '800'),
+(9752, 9, '16,35,248,12,7', '318'),
+(9753, 9, '17,34,86,19,6', '162'),
+(9754, 9, '18,33,32,31,5', '119'),
+(9755, 9, '19,32,14,50,4', '119'),
+(9756, 9, '20,31,8,81,3', '143'),
+(9757, 9, '21,30,6,131,2', '190'),
+(9758, 9, '22,29,2,212,1', '266'),
+(9759, 9, '23,0,99,9,96', '227'),
+(9760, 9, '24,68,18,75,83', '268'),
+(9761, 9, '25,68,99,98,4', '294'),
+(9762, 9, '26,21,11,15,41', '114'),
+(9763, 9, '27,10,32,19,5', '93'),
+(9764, 9, '28,53,53,86,5', '225'),
+(9765, 9, '29,37,68,54,35', '223'),
+(9766, 9, '30,59,33,48,51', '221'),
+(9767, 9, '31,52,85,81,13', '262'),
+(9768, 9, '32,48,37,83,6', '206'),
+(9769, 9, '33,53,16,86,73', '261'),
+(9770, 9, '34,30,76,69,96', '305'),
+(9771, 9, '35,2,6,76,32', '151'),
+(9772, 9, '36,47,24,83,9', '199'),
+(9773, 9, '37,63,47,32,3', '182'),
+(9774, 9, '38,61,7,19,6', '131'),
+(9775, 9, '39,11,82,85,54', '271'),
+(9776, 9, '40,28,79,4,80', '231'),
+(9777, 9, '41,37,65,59,76', '278'),
+(9778, 9, '42,84,35,9,64', '234'),
+(9779, 9, '43,66,91,73,33', '306'),
+(9780, 9, '44,67,78,65,25', '279'),
+(9781, 9, '45,72,54,57,71', '299'),
+(9782, 9, '46,7,15,9,99', '176'),
+(9783, 9, '47,85,31,25,57', '245'),
+(9784, 9, '48,73,50,67,40', '278'),
+(9785, 9, '49,18,76,93,86', '322'),
+(9786, 9, '50,33,7,32,37', '159'),
+(9787, 104, '157', '78,50'),
+(9788, 104, '314', '157'),
+(9789, 104, '628', '314'),
+(9790, 104, '1256', '628'),
+(9791, 104, '2512', '1256'),
+(9792, 104, '942', '471'),
+(9793, 104, '1884', '942'),
+(9794, 104, '2198', '1099'),
+(9795, 104, '471', '235,50'),
+(9796, 104, '1570', '785'),
+(9797, 100, '14', '35'),
+(9798, 100, '8', '20'),
+(9799, 100, '12', '30'),
+(9800, 100, '6', '15'),
+(9801, 100, '10', '25'),
+(9802, 100, '16', '40'),
+(9803, 100, '4', '10'),
+(9804, 100, '18', '45'),
+(9805, 100, '20', '50'),
+(9806, 100, '2', '5'),
+(9807, 99, '2956,3782', '413'),
+(9808, 99, '7840,9928', '1044'),
+(9809, 99, '5392,6040', '324'),
+(9810, 99, '1542,8934', '3696'),
+(9811, 99, '3682,4458', '388'),
+(9812, 99, '1848,5690', '1921'),
+(9813, 99, '8236,9124', '444'),
+(9814, 99, '4732,6528', '898'),
+(9815, 99, '6186,9340', '1577'),
+(9816, 99, '9258,9672', '207'),
+(9817, 103, '5500', '40'),
+(9818, 103, '835', '22'),
+(9819, 103, '8135', '43'),
+(9820, 103, '1803', '28'),
+(9821, 103, '1583', '28'),
+(9822, 103, '5138', '37'),
+(9823, 103, '3510', '32'),
+(9824, 103, '3800', '34'),
+(9825, 103, '518', '14'),
+(9826, 103, '8500', '46'),
+(9827, 101, '91', '39'),
+(9828, 101, '70', '30'),
+(9829, 101, '84', '36'),
+(9830, 101, '63', '27'),
+(9831, 101, '98', '42'),
+(9832, 101, '49', '21'),
+(9833, 101, '56', '24'),
+(9834, 101, '42', '18'),
+(9835, 101, '105', '45'),
+(9836, 101, '35', '15'),
+(9837, 101, '77', '33'),
+(9838, 102, '5,2', '2520'),
+(9839, 102, '7,4', '600'),
+(9840, 102, '5,3', '2520'),
+(9841, 102, '6,4', '1050'),
+(9842, 102, '8,2', '450'),
+(9843, 102, '6,3', '2100'),
+(9844, 102, '5,4', '1260'),
+(9845, 102, '4,3', '2100'),
+(9846, 102, '7,2', '1200'),
+(9847, 102, '6,2', '2100'),
+(9848, 105, '36', '8'),
+(9849, 105, '9', '4'),
+(9850, 105, '144', '16'),
+(9851, 105, '81', '12'),
+(9852, 105, '225', '20'),
+(9853, 105, '1089', '44'),
+(9854, 105, '576', '32'),
+(9855, 105, '324', '24'),
+(9856, 105, '441', '28'),
+(9857, 105, '729', '36'),
+(9858, 46, '4,9', '1'),
+(9859, 46, '6,4', '2'),
+(9860, 46, '12,15', '3'),
+(9861, 46, '4,5', '1'),
+(9862, 46, '10,4', '2'),
+(9863, 106, '12345', '12345'),
+(9864, 106, '21436', '0'),
+(9865, 106, '345', '345'),
+(9866, 106, '24689', '24689'),
+(9867, 106, '94614', '0'),
+(9868, 106, '2948', '0'),
+(9869, 106, '178', '178'),
+(9870, 106, '5689', '5689'),
+(9871, 106, '4168', '0'),
+(9872, 106, '12567', '12567'),
+(9873, 107, '21436', '21436'),
+(9874, 107, '94614', '0'),
+(9875, 107, '2247', '0'),
+(9876, 107, '9371', '9371'),
+(9877, 107, '61281', '0'),
+(9878, 107, '3106', '3106'),
+(9879, 107, '11932', '0'),
+(9880, 107, '73521', '73521'),
+(9881, 107, '10534', '10534'),
+(9882, 107, '345', '345'),
+(9883, 108, '357,816,492', '15'),
+(9884, 108, '816,357,492', '15'),
+(9885, 108, '111,222,333', '0'),
+(9886, 108, '123,321,222', '6'),
+(9887, 108, '186,537,942', '15'),
+(9888, 108, '321,222,123', '6'),
+(9889, 108, '294,618,753', '15'),
+(9890, 108, '159,753,456', '0'),
+(9891, 108, '862,147,395', '0'),
+(9892, 108, '492,357,816', '15'),
+(9893, 109, '5/3', '25/15'),
+(9894, 109, '3/5', '6/10'),
+(9895, 109, '2/7', '6/21'),
+(9896, 110, '1,10', '0'),
+(9898, 110, '1000,10', '3'),
+(9899, 110, '10000,10', '4'),
+(9902, 110, '64,2', '6'),
+(9903, 110, '256,2', '8'),
+(9904, 110, '25,5', '2'),
+(9905, 110, '16,16', '1'),
+(9906, 110, '243,3', '5'),
+(9907, 110, '128,2', '7'),
+(9908, 110, '512,2', '9'),
+(9909, 111, '100,2', '10'),
+(9910, 111, '81,4', '3'),
+(9911, 111, '81,2', '9'),
+(9912, 111, '125,3', '5'),
+(9913, 111, '343,3', '7'),
+(9914, 111, '256,2', '16'),
+(9915, 111, '144,2', '12'),
+(9916, 111, '64,3', '4'),
+(9917, 111, '64,6', '2'),
+(9918, 111, '64,2', '8'),
+(9919, 112, '17/15,7/10,4/5', '37/30'),
+(9920, 112, '17/10,8/5,4/15', '11/30'),
+(9921, 112, '9/10,1/5,13/15', '47/30'),
+(9922, 112, '11/10,7/15,4/5', '43/30'),
+(9923, 112, '5/2,5/4,3/2', '11/4'),
+(9924, 112, '15/4,5/2,1/2', '7/4'),
+(9925, 112, '13/2,3/4,1/2', '25/4'),
+(9926, 112, '3/4,1/4,13/4', '15/4'),
+(9927, 112, '9/4,5/3,3/2', '25/12'),
+(9928, 112, '5/2,5/3,1/4', '13/12'),
+(9929, 112, '11/3,7/4,7/6', '37/12'),
+(9930, 112, '11/6,3/4,17/6', '47/12'),
+(9931, 113, '1/5,13/5,1/5', '18/25'),
+(9932, 113, '5/3,3/5,11/25', '36/25'),
+(9933, 113, '3/5,2/5,4/5', '26/25'),
+(9934, 113, '1/5,3/5,1/5', '8/25'),
+(9935, 113, '5/4,5/2,1/2', '29/8'),
+(9936, 113, '5/2,5/4,3/2', '37/8'),
+(9937, 113, '3/4,3/2,3/2', '21/8'),
+(9938, 113, '13/2,3/4,1/2', '43/8'),
+(9939, 113, '3/4,5/6,1/12', '17/24'),
+(9940, 113, '5/6,5/4,3/4', '43/24'),
+(9941, 113, '1/3,7/8,7/6', '35/24'),
+(9942, 113, '1/6,3/4,1/6', '7/24'),
+(9944, 109, '3/4', '12/16'),
+(9945, 109, '5/8', '10/16'),
+(9946, 109, '5/6', '15/18'),
+(9947, 109, '7/3', '14/6'),
+(9948, 109, '9/4', '27/12'),
+(9949, 109, '5/4', '15/12'),
+(9950, 109, '4/5', '20/25'),
+(9951, 115, '2000', '2420'),
+(9952, 115, '800', '968'),
+(9953, 115, '1000', '1210'),
+(9954, 115, '1500', '1815'),
+(9955, 115, '3600', '4356'),
+(9956, 115, '2100', '2541'),
+(9957, 115, '3900', '4719'),
+(9958, 115, '1900', '2299'),
+(9959, 115, '2300', '2783'),
+(9960, 115, '2500', '3025'),
+(9961, 116, '920', '800'),
+(9962, 116, '943', '820'),
+(9963, 116, '414', '360'),
+(9964, 116, '552', '480'),
+(9965, 116, '782', '680'),
+(9966, 116, '529', '460'),
+(9967, 116, '1610', '1400'),
+(9968, 116, '1127', '980'),
+(9969, 116, '851', '740'),
+(9970, 116, '644', '560'),
+(9971, 117, '1000,1100', '10'),
+(9972, 117, '820,943', '15'),
+(9973, 117, '360,432', '20'),
+(9974, 117, '400,456', '14'),
+(9975, 117, '350,392', '12'),
+(9976, 117, '500,555', '11'),
+(9977, 117, '200,218', '9'),
+(9978, 117, '300,324', '8'),
+(9979, 117, '600,678', '13'),
+(9980, 117, '1200,1392', '16'),
+(9981, 80, '7,-1,-5,-6,0,10,5,4', '7'),
+(9982, 80, '9,-1,-5,1,6,0,-1,4,1000,500', '504'),
+(9983, 80, '5,2,12,22,32,-24', '0'),
+(9984, 81, '6,d,e,e,p,o,t', '1'),
+(9985, 81, '3,u,u,u', '1'),
+(9986, 81, '3,r,g,h', '0'),
+(9987, 81, '5,n,m,i,o,g', '1'),
+(9988, 82, '3,Arbol,Juan,Pedro', 'AJP'),
+(9989, 82, '1,rey', 'r'),
+(9990, 82, '5,no,me,voy,de,aca', 'nmvda'),
+(9991, 82, '2,tal,v', 'tv'),
+(9992, 83, '3,8,3,4,1,5,9,6,7,2', '1'),
+(9993, 83, '4,16,3,2,13,5,19,11,8,9,6,7,12,4,15,14,2', '0'),
+(9994, 83, '4,16,3,2,13,5,19,11,8,9,6,7,12,4,15,14,1', '1'),
+(9995, 83, '2,1,1,2,2,3,3,4,4', '0'),
+(9996, 84, '9,1,2,3,4,5,6,7,8,9', '1'),
+(9997, 84, '9,9,8,7,6,5,4,3,2,1', '0'),
+(9998, 84, '1', '1'),
+(9999, 84, '5,-1,-2,-3,-4,-5', '0'),
+(10000, 84, '0', '1'),
+(10001, 84, '3,-1,0,1', '1'),
+(10002, 84, '8,1,2,3,4,8,5,6,7', '0'),
+(10003, 85, '5,4,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20', '1234510152019181716116789141312'),
+(10004, 85, '3,4,1,2,3,4,5,6,7,8,9,10,11,12', '123691211107458'),
+(10005, 85, '1,1,1', '1'),
+(10006, 85, '1,2,1,2', '12'),
+(10007, 85, '2,1,1,2', '12'),
+(10008, 118, '6,3,5', '2'),
+(10009, 118, '12,6,10', '4'),
+(10010, 118, '18,9,15', '6'),
+(10011, 118, '30,15,25', '10'),
+(10012, 118, '24,12,20', '8'),
+(10013, 118, '36,18,30', '12'),
+(10014, 118, '42,21,35', '14'),
+(10015, 118, '48,24,40', '16'),
+(10016, 118, '54,27,45', '18'),
+(10017, 118, '60,30,50', '20'),
+(10018, 118, '66,33,55', '22'),
+(10019, 119, '8', '2'),
+(10020, 119, '12', '3'),
+(10021, 119, '4', '1'),
+(10022, 119, '16', '4'),
+(10023, 119, '20', '5'),
+(10024, 119, '84', '21'),
+(10025, 119, '64', '16'),
+(10026, 119, '36', '9'),
+(10027, 119, '24', '6'),
+(10028, 119, '48', '12'),
+(10029, 120, '38690', '53000'),
+(10030, 120, '39274', '53800'),
+(10031, 120, '38325', '52500'),
+(10032, 120, '38982', '53400'),
+(10033, 120, '38033', '52100'),
+(10034, 120, '38252', '52400'),
+(10035, 120, '38471', '52700'),
+(10036, 120, '39128', '53600'),
+(10037, 120, '38909', '53300'),
+(10038, 120, '38617', '52900'),
+(10039, 121, '31', '8'),
+(10040, 121, '62', '16'),
+(10041, 121, '93', '24'),
+(10042, 121, '124', '32'),
+(10043, 121, '155', '40'),
+(10044, 121, '186', '48'),
+(10045, 121, '217', '56'),
+(10046, 121, '248', '64'),
+(10047, 121, '279', '72'),
+(10048, 121, '341', '88'),
+(10049, 121, '372', '96'),
+(10050, 122, '104', '80'),
+(10051, 122, '117', '90'),
+(10052, 122, '78', '60'),
+(10053, 122, '65', '50'),
+(10054, 122, '143', '110'),
+(10055, 122, '52', '40'),
+(10056, 122, '156', '120'),
+(10057, 122, '169', '130'),
+(10058, 122, '195', '150'),
+(10059, 122, '221', '170'),
+(10060, 123, '15,13,43', '15'),
+(10061, 123, '16,12,42', '14'),
+(10062, 123, '17,11,44', '16'),
+(10063, 123, '14,16,43', '13'),
+(10064, 123, '12,13,42', '17'),
+(10065, 123, '13,17,42', '12'),
+(10066, 123, '12,15,45', '18'),
+(10067, 123, '11,17,47', '19'),
+(10068, 123, '14,15,50', '21'),
+(10069, 123, '12,16,51', '23'),
+(10070, 124, '64', '128'),
+(10071, 124, '68', '136'),
+(10072, 124, '62', '124'),
+(10073, 124, '63', '126'),
+(10074, 124, '67', '134'),
+(10075, 124, '69', '138'),
+(10076, 124, '61', '122'),
+(10077, 124, '66', '132'),
+(10078, 124, '71', '142'),
+(10079, 124, '72', '144'),
+(10080, 125, '39', '72'),
+(10081, 125, '37', '68'),
+(10082, 125, '35', '64'),
+(10083, 125, '44', '82'),
+(10084, 125, '42', '78'),
+(10085, 125, '45', '84'),
+(10086, 125, '38', '70'),
+(10087, 125, '36', '66'),
+(10088, 125, '41', '76'),
+(10089, 125, '40', '74'),
+(10090, 125, '43', '80'),
+(10091, 126, '2', '3'),
+(10092, 126, '5', '5'),
+(10093, 126, '11', '9'),
+(10094, 126, '14', '11'),
+(10095, 126, '17', '13'),
+(10096, 126, '20', '15'),
+(10097, 126, '8', '7'),
+(10098, 126, '23', '17'),
+(10099, 126, '26', '19'),
+(10100, 126, '29', '21'),
+(10101, 57, 'aprobarnuevassoluciones', 'senoiculossaveunraborpa'),
+(10102, 57, 'estamosreunidos', 'sodinuersomatse'),
+(10103, 128, '90,50,50', '47100'),
+(10104, 128, '90,80,40', '63700'),
+(10105, 128, '90,90,30', '67500'),
+(10106, 128, '90,120,60', '103500'),
+(10107, 128, '100,50,50', '52500'),
+(10108, 128, '100,80,40', '70000'),
+(10109, 128, '100,90,30', '73900'),
+(10110, 128, '100,120,60', '112000'),
+(10111, 128, '110,50,50', '58100'),
+(10112, 128, '110,80,40', '76500'),
+(10113, 129, '1,1,2000', '2'),
+(10114, 129, '10,2,2002', '14'),
+(10115, 129, '28,4,2010', '6'),
+(10116, 129, '30,1,1996', '9'),
+(10117, 129, '4,2,2019', '7'),
+(10118, 129, '2,9,2004', '15'),
+(10119, 129, '25,5,2009', '12'),
+(10120, 129, '30,11,2013', '9'),
+(10121, 129, '1,6,2004', '11'),
+(10122, 129, '12,1,2005', '18'),
+(10123, 127, '8,18,20', '8'),
+(10124, 127, '6,20,15', '0'),
+(10125, 127, '9,26,10', '0'),
+(10126, 127, '9,20,5', '9'),
+(10127, 127, '9,22,35', '9'),
+(10128, 127, '8,23,3', '8'),
+(10129, 127, '6,18,12', '0'),
+(10130, 127, '8,27,32', '8'),
+(10131, 127, '10,26,5', '0'),
+(10132, 127, '10,21,40', '10'),
+(10133, 11, '20,30,50', '50'),
+(10134, 11, '90,30,10', '90'),
+(10135, 11, '55,32,87', '87'),
+(10136, 11, '64,99,12', '99'),
+(10137, 11, '51,37,79', '79'),
+(10138, 11, '80,43,68', '80'),
+(10139, 11, '31,65,22', '65'),
+(10140, 11, '-24,70,-90', '70'),
+(10141, 11, '62,-62,0', '62');
 
 -- --------------------------------------------------------
 
@@ -9748,12 +10182,12 @@ INSERT INTO `Solucion` (`idSolucion`, `idProblema`, `ParametrosEntrada`, `Salida
 -- Estructura de tabla para la tabla `Stub`
 --
 
-CREATE TABLE `Stub` (
-  `idStubs` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Stub` (
+`idStubs` int(11) NOT NULL,
   `idLenguaje` int(11) NOT NULL,
   `Descripcion` text NOT NULL,
   `Archivo` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `Stub`
@@ -9772,7 +10206,9 @@ INSERT INTO `Stub` (`idStubs`, `idLenguaje`, `Descripcion`, `Archivo`) VALUES
 (11, 1, 'Descargar es Stub en php con libreria. Testeado en Ubuntu 12.4.\r\nO utilizar el wrapper desarrollado por fermino, disponible en github en https://github.com/fermino/Hornero-PHP/tree/master. ', 'stub.php.zip'),
 (12, 2, 'Stub de python en un solo archivo para ejecutar desde consola. En algunos casos pude hacer falta instalar desde consola la libreria httplib2.\r\n> sudo apt-get install python-httplib2', 'stub.py.zip'),
 (13, 11, 'Stub de ruby en un solo archivo para ejecutar desde consola.  Testeado en Ubuntu 12.4.', 'stub.rb.zip'),
-(14, 3, 'Stub para ejecutar desde consola de navegador.  Testeado en Firefox 28 - Ubuntu 12.4.', 'stub.js.zip');
+(14, 3, 'Stub para ejecutar desde consola de navegador.  Testeado en Firefox 28 - Ubuntu 12.4.', 'stub.js.zip'),
+(15, 3, 'nodejs para ejecutar de consola con node v10.15.3\r\nhttps://gitlab.com/walace47/stub-hornero-nodejs', 'node.js.zip'),
+(16, 16, 'https://bitbucket.org/cnngimenez/hornero-stub-ada/src/default/', 'cnngimenez-hornero-stub-ada-2d8c6a771ed7.zip');
 
 -- --------------------------------------------------------
 
@@ -9780,10 +10216,10 @@ INSERT INTO `Stub` (`idStubs`, `idLenguaje`, `Descripcion`, `Archivo`) VALUES
 -- Estructura de tabla para la tabla `TipoProblema`
 --
 
-CREATE TABLE `TipoProblema` (
-  `idTipo` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `TipoProblema` (
+`idTipo` int(11) NOT NULL,
   `Tipo` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `TipoProblema`
@@ -9800,10 +10236,10 @@ INSERT INTO `TipoProblema` (`idTipo`, `Tipo`) VALUES
 -- Estructura de tabla para la tabla `TipoTorneo`
 --
 
-CREATE TABLE `TipoTorneo` (
-  `idTipo` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `TipoTorneo` (
+`idTipo` int(11) NOT NULL,
   `Tipo` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `TipoTorneo`
@@ -9821,15 +10257,15 @@ INSERT INTO `TipoTorneo` (`idTipo`, `Tipo`) VALUES
 -- Estructura de tabla para la tabla `Torneo`
 --
 
-CREATE TABLE `Torneo` (
-  `idTorneo` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Torneo` (
+`idTorneo` int(11) NOT NULL,
   `Nombre` varchar(255) NOT NULL,
   `Descripcion` text NOT NULL,
   `FechaInicio` datetime NOT NULL,
   `FechaFin` datetime NOT NULL,
   `idEstado` int(11) NOT NULL,
   `idTipo` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Torneo';
+) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=latin1 COMMENT='Torneo';
 
 --
 -- Volcado de datos para la tabla `Torneo`
@@ -9876,8 +10312,41 @@ INSERT INTO `Torneo` (`idTorneo`, `Nombre`, `Descripcion`, `FechaInicio`, `Fecha
 (42, 'Recursivo 2017', 'Recursividad', '2017-05-19 00:00:00', '2017-05-25 00:00:00', 3, 1),
 (43, 'Jornadas FAI 2017', 'Resolución de problemas simples', '2017-08-31 09:00:00', '2017-09-07 21:00:00', 3, 4),
 (44, 'Copa Konrad Zuse', 'Torneo en el marco del proyecto de extensión que vincula la FAI con la Escuela Media', '2017-09-08 09:10:00', '2017-09-08 11:00:00', 3, 1),
-(45, 'Entrenamiento Programate 2017', 'Torneo de Entrenamiento para Programate 2017.', '2017-10-05 00:00:00', '2017-10-16 00:00:00', 2, 1),
-(46, 'Programate 2017', 'Torneo Abierto a cualquier estudiante de escuelas secundarias.  El torneo se va a jugar en la modalidad presencial el 17 y 18 de Octubre de 2017 en la Universidad Nacional del Comahue sede Neuquén. Para cualquiera de las categorías es requisito inscribirse en el presente torneo.', '2017-10-17 16:00:00', '2017-10-18 10:00:00', 1, 1);
+(45, 'Entrenamiento Programate 2017', 'Torneo de Entrenamiento para Programate 2017.', '2017-10-05 00:00:00', '2017-10-17 17:00:00', 3, 1),
+(46, 'Programate 2017 Día Uno', 'Torneo Abierto a cualquier estudiante de escuelas secundarias.  El torneo se va a jugar en la modalidad presencial el 17 y 18 de Octubre de 2017 en la Universidad Nacional del Comahue sede Neuquén. Para cualquiera de las categorías es requisito inscribirse en el presente torneo.Los equipos pueden estar conformados por cuatro integrantes como máximo y una máquina.', '2017-10-17 17:00:00', '2017-10-18 08:30:00', 3, 1),
+(48, 'Programate 2017 Día Dos (Nivel 1 Preguntados)', 'Programate Nivel para resolver con Papel, celular, tablet o navegador.', '2017-10-18 08:30:00', '2017-10-18 10:30:00', 3, 4),
+(49, 'Programate 2017 Día Dos (Nivel 2)', 'Problemas de Secuencia y Condicional.', '2017-10-18 08:30:00', '2017-10-18 10:30:00', 3, 1),
+(50, 'Programate 2017 Día Dos (Nivel 3)', 'Secuencial, Condicional, Repetitivas.', '2017-10-18 08:30:00', '2017-10-18 10:30:00', 3, 1),
+(51, 'Abierto 2017', 'Torneo Abierto', '2017-10-31 00:00:00', '2017-12-31 00:00:00', 3, 4),
+(52, 'Preguntados 2018', 'Torneo dentro del proyecto de Extensión "Torneos de Resolución de Problemas y Programación para promover el Apendizaje en Escuela Media"', '2018-05-10 09:20:00', '2018-05-24 11:00:00', 3, 4),
+(53, 'Entrenamiento 2018', 'Preparatorio para el Segundo Encuentro', '2018-05-10 12:20:00', '2018-06-26 09:00:00', 3, 1),
+(54, 'Clementina ', 'Proyecto Extensión', '2018-06-26 09:00:00', '2018-06-26 11:30:00', 3, 1),
+(55, 'Entrenamiento Virtual 2018', 'Proyecto 2018', '2018-08-01 08:00:00', '2018-09-14 10:00:00', 3, 1),
+(57, 'Homero Virtual 2018', 'Encuentro virtual Septiembre 2018.', '2018-09-14 10:05:00', '2018-09-14 12:00:00', 3, 1),
+(58, 'Preguntados Bolson 2018', 'Proyecto Extensión ', '2018-10-11 08:00:00', '2018-10-11 10:35:00', 3, 4),
+(59, 'Secuencia Bolsón 2018', 'Proyecto', '2018-10-11 11:00:00', '2018-10-11 12:30:00', 3, 1),
+(60, 'Abierto 2018', 'Abierto 2018', '2018-10-11 08:00:00', '2018-12-31 09:00:00', 3, 1),
+(61, 'Preguntados Bariloche 2018', 'Proyecto', '2018-10-12 08:00:00', '2018-10-12 09:10:00', 3, 4),
+(62, 'Entrenamiento Programate 2018', 'Torneo Entrenamiento para Categorias 2 y 3.\r\nSecuencia, Condicional y Repetitivas', '2018-10-12 08:00:00', '2018-10-17 10:00:00', 3, 1),
+(63, 'Entrenamiento Preguntados Programate 2018', 'Entrenamiento para Categoría 1.\r\nPreguntados.  Resolución de Problemas en Papel.', '2018-10-12 08:00:00', '2018-10-17 10:00:00', 3, 4),
+(64, 'Programate 2018 (Nivel 1) Preguntados', 'Torneo de Resolución Papel y Opción múltiple', '2018-10-17 10:00:00', '2018-10-17 12:00:00', 3, 4),
+(65, 'Programate 2018 (Nivel 2) Secuencia y Alternativas', 'Torneo de Programación de complejidad hasta Secuencia y Alternativas', '2018-10-17 10:00:00', '2018-10-17 12:00:00', 3, 1),
+(66, 'Programate 2018 (Nivel 3) Alternativas y Repetitivas', 'Torneo de Programación de complejidad hasta Alternativos y Repetitivas', '2018-10-17 10:00:00', '2018-10-17 12:00:00', 3, 1),
+(67, 'EECC 2018 Hornereando', 'Para resolver en Papel', '2018-12-01 10:00:00', '2018-12-01 12:00:00', 3, 4),
+(68, 'Curso de Ingreso 2019', 'Curso de Ingreso 2019', '2019-02-17 10:00:00', '2019-02-20 12:00:00', 3, 4),
+(69, 'Ingreso 2019 Turno Tarde', 'Ingreso 2019 Turno Tarde', '2019-02-20 16:00:00', '2019-03-20 18:00:00', 3, 4),
+(70, 'Pepe', 'pepepe', '2014-06-24 09:45:00', '2018-10-18 10:00:00', 3, 4),
+(71, 'Animate Test', 'Test', '2019-03-20 13:00:00', '2019-04-01 12:00:00', 3, 4),
+(72, 'Desarrollo de Algoritmos 2019', 'Recursado de Desarrollo de Algoritmos', '2019-04-11 11:45:00', '2019-04-11 23:55:00', 3, 3),
+(73, 'Linus Torvalds', 'Primer Encuentro Proyecto Extensión 2019', '2019-05-08 09:56:00', '2019-05-08 12:00:00', 3, 4),
+(74, 'Sistemas Inteligentes', 'materi', '2019-05-09 10:00:00', '2019-07-09 10:00:00', 2, 1),
+(75, 'Ada Lovelace Bariloche', 'Proyecto Bariloche', '2019-05-20 10:00:00', '2019-05-20 12:00:00', 3, 4),
+(76, 'Torneo Recursion 2019', 'Torneo exclusivo para el Recursado de Desarrollo de Algoritmos 2019', '2019-05-26 19:00:00', '2019-06-10 19:00:00', 3, 1),
+(77, 'Pre-Encuentro 2 de Julio 2019', 'Torneo de prueba', '2019-06-21 00:00:00', '2019-07-02 09:30:00', 3, 1),
+(78, 'Pajarraco', '1', '2019-06-25 18:03:00', '2019-06-25 18:09:00', 3, 1),
+(79, 'Torneo Grace Murray Hopper - Nivel 2', 'Torneo correspondiente al 2°encuentro (2/7/19) del Proyecto de Extensión Desafíos para Escuela Media: Resolución de Problemas y Programación. Nivel II', '2019-07-02 09:30:00', '2019-07-02 11:45:00', 3, 1),
+(80, 'Torneo Grace Murray Hopper - Nivel 1', 'Torneo correspondiente al 2°encuentro (2/7/19) del Proyecto de Extensión Desafíos para Escuela Media: Resolución de Problemas y Programación. Nivel I', '2019-07-02 09:30:00', '2019-07-02 11:45:00', 3, 1),
+(81, 'Abierto Grace Murray Hopper - Nivel 1', 'copia 2do encuentro', '2019-06-20 12:00:00', '2019-10-17 12:00:00', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -9885,12 +10354,12 @@ INSERT INTO `Torneo` (`idTorneo`, `Nombre`, `Descripcion`, `FechaInicio`, `Fecha
 -- Estructura de tabla para la tabla `TorneoProblema`
 --
 
-CREATE TABLE `TorneoProblema` (
-  `idTorneoProblema` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `TorneoProblema` (
+`idTorneoProblema` int(11) NOT NULL,
   `idProblema` int(11) NOT NULL,
   `idTorneo` int(11) NOT NULL,
   `Orden` int(11) NOT NULL COMMENT 'Orden de Ejecución del Problema'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Problemas que estan incluidos en el torneo';
+) ENGINE=InnoDB AUTO_INCREMENT=945 DEFAULT CHARSET=latin1 COMMENT='Problemas que estan incluidos en el torneo';
 
 --
 -- Volcado de datos para la tabla `TorneoProblema`
@@ -10313,7 +10782,340 @@ INSERT INTO `TorneoProblema` (`idTorneoProblema`, `idProblema`, `idTorneo`, `Ord
 (489, 38, 45, 7),
 (490, 54, 45, 8),
 (491, 53, 45, 9),
-(492, 60, 45, 10);
+(492, 60, 45, 10),
+(494, 1, 46, 1),
+(495, 17, 46, 2),
+(496, 43, 46, 3),
+(497, 42, 46, 4),
+(498, 36, 46, 5),
+(499, 41, 46, 6),
+(500, 39, 46, 7),
+(501, 44, 46, 8),
+(502, 46, 46, 9),
+(503, 47, 46, 10),
+(504, 1, 48, 1),
+(505, 18, 48, 2),
+(507, 19, 48, 3),
+(508, 9, 48, 4),
+(509, 21, 48, 5),
+(510, 15, 48, 6),
+(512, 16, 48, 7),
+(513, 13, 48, 8),
+(514, 37, 48, 9),
+(515, 20, 48, 10),
+(516, 92, 48, 12),
+(518, 33, 48, 13),
+(519, 22, 48, 16),
+(520, 27, 48, 17),
+(521, 53, 48, 14),
+(522, 32, 48, 15),
+(523, 48, 48, 18),
+(524, 1, 49, 1),
+(528, 1, 50, 1),
+(529, 19, 49, 4),
+(530, 15, 49, 5),
+(531, 31, 49, 6),
+(532, 37, 49, 7),
+(533, 74, 49, 8),
+(534, 35, 49, 9),
+(535, 65, 49, 10),
+(536, 32, 49, 11),
+(537, 40, 49, 12),
+(538, 23, 49, 2),
+(539, 9, 49, 3),
+(540, 19, 50, 2),
+(541, 18, 50, 3),
+(542, 21, 50, 4),
+(543, 35, 50, 5),
+(544, 33, 50, 6),
+(545, 5, 50, 13),
+(546, 20, 50, 8),
+(547, 29, 50, 9),
+(548, 28, 50, 10),
+(549, 27, 50, 14),
+(550, 65, 50, 12),
+(551, 32, 50, 7),
+(552, 40, 50, 11),
+(553, 1, 51, 1),
+(554, 2, 51, 2),
+(555, 9, 51, 3),
+(556, 10, 51, 4),
+(557, 11, 51, 5),
+(558, 12, 51, 6),
+(559, 13, 51, 7),
+(560, 1, 52, 1),
+(568, 100, 52, 2),
+(569, 99, 52, 3),
+(570, 87, 52, 4),
+(571, 101, 52, 5),
+(572, 74, 52, 6),
+(574, 104, 52, 7),
+(578, 88, 52, 8),
+(579, 103, 52, 9),
+(580, 92, 52, 10),
+(581, 91, 52, 11),
+(582, 86, 52, 12),
+(583, 1, 53, 1),
+(584, 100, 53, 2),
+(585, 99, 53, 3),
+(586, 87, 53, 4),
+(587, 101, 53, 5),
+(588, 74, 53, 6),
+(589, 104, 53, 7),
+(590, 88, 53, 8),
+(591, 103, 53, 9),
+(592, 92, 53, 10),
+(593, 91, 53, 11),
+(594, 86, 53, 12),
+(598, 1, 54, 1),
+(610, 42, 54, 2),
+(611, 15, 54, 3),
+(612, 12, 54, 4),
+(613, 36, 54, 5),
+(614, 23, 54, 6),
+(615, 32, 54, 7),
+(616, 105, 54, 8),
+(617, 31, 54, 9),
+(618, 11, 54, 10),
+(619, 16, 54, 11),
+(620, 35, 54, 12),
+(634, 1, 57, 1),
+(639, 18, 57, 2),
+(640, 19, 57, 3),
+(641, 21, 57, 4),
+(642, 66, 57, 5),
+(643, 20, 57, 6),
+(644, 54, 57, 7),
+(645, 39, 57, 8),
+(646, 33, 57, 9),
+(647, 46, 57, 10),
+(648, 22, 57, 11),
+(649, 1, 55, 1),
+(662, 2, 55, 2),
+(663, 3, 55, 3),
+(664, 5, 55, 4),
+(665, 6, 55, 5),
+(666, 7, 55, 6),
+(667, 9, 55, 7),
+(668, 10, 55, 8),
+(669, 8, 55, 9),
+(670, 4, 55, 10),
+(671, 1, 58, 1),
+(672, 100, 58, 2),
+(673, 99, 58, 3),
+(674, 87, 58, 4),
+(675, 101, 58, 5),
+(676, 74, 58, 6),
+(677, 104, 58, 7),
+(678, 88, 58, 8),
+(679, 103, 58, 9),
+(680, 92, 58, 10),
+(681, 91, 58, 11),
+(682, 86, 58, 12),
+(686, 1, 59, 1),
+(687, 42, 59, 2),
+(688, 15, 59, 3),
+(689, 12, 59, 4),
+(690, 36, 59, 5),
+(691, 23, 59, 6),
+(692, 32, 59, 7),
+(693, 105, 59, 8),
+(694, 31, 59, 9),
+(695, 11, 59, 10),
+(696, 16, 59, 11),
+(697, 35, 59, 12),
+(701, 1, 60, 1),
+(702, 18, 60, 2),
+(703, 19, 60, 3),
+(704, 21, 60, 4),
+(705, 66, 60, 5),
+(706, 20, 60, 6),
+(707, 54, 60, 7),
+(708, 39, 60, 8),
+(709, 33, 60, 9),
+(710, 46, 60, 10),
+(711, 22, 60, 11),
+(712, 1, 61, 1),
+(713, 100, 61, 2),
+(714, 99, 61, 3),
+(715, 87, 61, 4),
+(716, 101, 61, 5),
+(717, 74, 61, 6),
+(718, 104, 61, 7),
+(719, 88, 61, 8),
+(720, 103, 61, 9),
+(721, 92, 61, 10),
+(722, 91, 61, 11),
+(723, 86, 61, 12),
+(724, 1, 62, 1),
+(725, 49, 62, 2),
+(726, 45, 62, 3),
+(727, 48, 62, 4),
+(728, 37, 62, 5),
+(729, 51, 62, 6),
+(730, 38, 62, 7),
+(731, 54, 62, 8),
+(732, 53, 62, 9),
+(733, 60, 62, 10),
+(739, 1, 63, 1),
+(740, 18, 63, 2),
+(741, 19, 63, 3),
+(742, 21, 63, 4),
+(743, 66, 63, 5),
+(744, 20, 63, 6),
+(745, 54, 63, 7),
+(746, 39, 63, 8),
+(747, 33, 63, 9),
+(748, 46, 63, 10),
+(749, 22, 63, 11),
+(754, 1, 66, 1),
+(756, 99, 66, 2),
+(757, 66, 66, 3),
+(758, 70, 66, 4),
+(759, 106, 66, 5),
+(760, 65, 66, 6),
+(761, 28, 66, 7),
+(762, 29, 66, 8),
+(763, 107, 66, 9),
+(764, 30, 66, 10),
+(765, 108, 66, 11),
+(766, 1, 64, 1),
+(767, 90, 64, 2),
+(768, 89, 64, 3),
+(769, 16, 64, 4),
+(770, 17, 64, 5),
+(771, 98, 64, 6),
+(772, 58, 64, 7),
+(773, 70, 64, 9),
+(774, 71, 64, 10),
+(775, 28, 64, 11),
+(776, 108, 64, 12),
+(778, 1, 65, 1),
+(779, 17, 65, 2),
+(780, 89, 65, 3),
+(781, 74, 65, 4),
+(782, 40, 65, 5),
+(784, 97, 65, 6),
+(785, 98, 65, 7),
+(786, 69, 65, 8),
+(787, 13, 65, 9),
+(788, 95, 65, 10),
+(789, 68, 65, 11),
+(790, 55, 65, 12),
+(791, 95, 64, 8),
+(792, 1, 67, 1),
+(793, 100, 67, 2),
+(794, 99, 67, 3),
+(795, 87, 67, 4),
+(796, 101, 67, 5),
+(797, 74, 67, 6),
+(798, 104, 67, 7),
+(799, 88, 67, 8),
+(800, 103, 67, 9),
+(801, 92, 67, 10),
+(802, 91, 67, 11),
+(803, 86, 67, 12),
+(807, 1, 68, 1),
+(808, 109, 68, 2),
+(809, 112, 68, 3),
+(810, 113, 68, 4),
+(811, 115, 68, 5),
+(812, 116, 68, 6),
+(813, 117, 68, 7),
+(814, 110, 68, 8),
+(815, 111, 68, 9),
+(816, 29, 68, 10),
+(817, 30, 68, 11),
+(818, 86, 68, 12),
+(819, 91, 68, 13),
+(820, 101, 68, 14),
+(821, 1, 69, 1),
+(822, 109, 69, 2),
+(823, 112, 69, 3),
+(824, 113, 69, 4),
+(825, 115, 69, 5),
+(826, 116, 69, 6),
+(827, 117, 69, 7),
+(828, 110, 69, 8),
+(829, 111, 69, 9),
+(830, 29, 69, 10),
+(831, 86, 69, 11),
+(832, 91, 69, 12),
+(833, 101, 69, 13),
+(834, 30, 69, 14),
+(843, 1, 71, 1),
+(844, 90, 71, 2),
+(845, 89, 71, 3),
+(846, 16, 71, 4),
+(847, 17, 71, 5),
+(848, 98, 71, 6),
+(849, 58, 71, 7),
+(850, 70, 71, 9),
+(851, 71, 71, 10),
+(852, 28, 71, 11),
+(853, 108, 71, 12),
+(854, 95, 71, 8),
+(858, 1, 70, 1),
+(865, 2, 70, 2),
+(867, 4, 70, 4),
+(868, 5, 70, 3),
+(869, 1, 72, 1),
+(870, 80, 72, 2),
+(871, 81, 72, 3),
+(872, 82, 72, 4),
+(876, 1, 73, 1),
+(890, 118, 73, 2),
+(891, 119, 73, 3),
+(892, 120, 73, 4),
+(893, 121, 73, 5),
+(894, 122, 73, 6),
+(895, 123, 73, 7),
+(896, 92, 73, 8),
+(897, 117, 73, 9),
+(898, 98, 73, 10),
+(899, 124, 73, 11),
+(900, 88, 73, 12),
+(901, 125, 73, 13),
+(902, 104, 73, 14),
+(903, 1, 74, 1),
+(904, 2, 74, 2),
+(905, 92, 74, 3),
+(907, 122, 74, 4),
+(908, 123, 74, 5),
+(909, 124, 74, 6),
+(910, 125, 74, 7),
+(911, 18, 76, 1),
+(913, 20, 76, 3),
+(914, 27, 76, 4),
+(915, 53, 76, 5),
+(916, 57, 76, 6),
+(917, 59, 76, 7),
+(918, 1, 77, 1),
+(919, 124, 77, 2),
+(920, 125, 77, 3),
+(921, 2, 77, 4),
+(922, 1, 79, 1),
+(923, 94, 79, 2),
+(924, 16, 79, 3),
+(925, 23, 79, 4),
+(926, 35, 79, 5),
+(927, 34, 79, 6),
+(928, 98, 79, 7),
+(929, 95, 79, 8),
+(930, 11, 79, 9),
+(931, 127, 79, 10),
+(932, 129, 79, 11),
+(933, 1, 80, 1),
+(934, 123, 80, 2),
+(935, 118, 80, 3),
+(936, 117, 80, 5),
+(937, 105, 80, 6),
+(939, 37, 80, 7),
+(940, 41, 80, 8),
+(941, 75, 80, 9),
+(942, 40, 80, 10),
+(943, 128, 80, 11),
+(944, 36, 80, 4);
 
 -- --------------------------------------------------------
 
@@ -10321,14 +11123,14 @@ INSERT INTO `TorneoProblema` (`idTorneoProblema`, `idProblema`, `idTorneo`, `Ord
 -- Estructura de tabla para la tabla `TorneoUsuario`
 --
 
-CREATE TABLE `TorneoUsuario` (
-  `idTorneoUsuario` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `TorneoUsuario` (
+`idTorneoUsuario` int(11) NOT NULL,
   `idTorneo` int(11) NOT NULL,
   `idUsuario` int(11) NOT NULL,
   `Puntos` int(11) NOT NULL DEFAULT '0',
   `Tiempo` bigint(20) NOT NULL,
   `Token` varchar(32) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Usuario Participantes del Torneo';
+) ENGINE=InnoDB AUTO_INCREMENT=1250 DEFAULT CHARSET=latin1 COMMENT='Usuario Participantes del Torneo';
 
 -- --------------------------------------------------------
 
@@ -10336,8 +11138,8 @@ CREATE TABLE `TorneoUsuario` (
 -- Estructura de tabla para la tabla `Usuario`
 --
 
-CREATE TABLE `Usuario` (
-  `idUsuario` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `Usuario` (
+`idUsuario` int(11) NOT NULL,
   `Institucion` varchar(100) NOT NULL,
   `NombreUsuario` varchar(100) NOT NULL,
   `Descripcion` varchar(1000) NOT NULL,
@@ -10345,15 +11147,14 @@ CREATE TABLE `Usuario` (
   `idRol` int(11) NOT NULL,
   `Email` varchar(255) NOT NULL,
   `idLenguaje` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=740 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `Usuario`
 --
 
 INSERT INTO `Usuario` (`idUsuario`, `Institucion`, `NombreUsuario`, `Descripcion`, `Clave`, `idRol`, `Email`, `idLenguaje`) VALUES
-(1, '', 'admin', 'admin', 'admin', 1, 'admin@admin.com', 1),
-(22, '', 'tete', 'Equipo de Test', 't3t3', 2, 'tete@tete.com', 1);
+(1, 'UNCOMA', 'admin', 'admin', 'h0rn3r0', 1, 'admin@admin.com', 1);
 
 --
 -- Índices para tablas volcadas
@@ -10363,141 +11164,115 @@ INSERT INTO `Usuario` (`idUsuario`, `Institucion`, `NombreUsuario`, `Descripcion
 -- Indices de la tabla `CambioClave`
 --
 ALTER TABLE `CambioClave`
-  ADD PRIMARY KEY (`idCambio`),
-  ADD KEY `idUsuario` (`idUsuario`);
+ ADD PRIMARY KEY (`idCambio`), ADD KEY `idUsuario` (`idUsuario`);
 
 --
 -- Indices de la tabla `Complejidad`
 --
 ALTER TABLE `Complejidad`
-  ADD PRIMARY KEY (`idComplejidad`);
+ ADD PRIMARY KEY (`idComplejidad`);
 
 --
 -- Indices de la tabla `Cuenta`
 --
 ALTER TABLE `Cuenta`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `idTorneo` (`idTorneo`);
+ ADD PRIMARY KEY (`id`), ADD KEY `idTorneo` (`idTorneo`);
 
 --
 -- Indices de la tabla `Equipo`
 --
 ALTER TABLE `Equipo`
-  ADD PRIMARY KEY (`id`);
+ ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `EstadoResolucion`
 --
 ALTER TABLE `EstadoResolucion`
-  ADD PRIMARY KEY (`idEstado`);
+ ADD PRIMARY KEY (`idEstado`);
 
 --
 -- Indices de la tabla `EstadoTorneo`
 --
 ALTER TABLE `EstadoTorneo`
-  ADD PRIMARY KEY (`idEstado`);
+ ADD PRIMARY KEY (`idEstado`);
 
 --
 -- Indices de la tabla `Lenguaje`
 --
 ALTER TABLE `Lenguaje`
-  ADD PRIMARY KEY (`idLenguaje`);
+ ADD PRIMARY KEY (`idLenguaje`);
 
 --
 -- Indices de la tabla `Parcial`
 --
 ALTER TABLE `Parcial`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `idCuenta` (`idCuenta`),
-  ADD KEY `idEquipo` (`idEquipo`);
+ ADD PRIMARY KEY (`id`), ADD KEY `idCuenta` (`idCuenta`), ADD KEY `idEquipo` (`idEquipo`);
 
 --
 -- Indices de la tabla `Problema`
 --
 ALTER TABLE `Problema`
-  ADD PRIMARY KEY (`idProblema`),
-  ADD KEY `idComplejidad` (`idComplejidad`),
-  ADD KEY `idTipo` (`idTipo`);
+ ADD PRIMARY KEY (`idProblema`), ADD KEY `idComplejidad` (`idComplejidad`), ADD KEY `idTipo` (`idTipo`);
 
 --
 -- Indices de la tabla `Resolucion`
 --
 ALTER TABLE `Resolucion`
-  ADD PRIMARY KEY (`idResolucion`),
-  ADD UNIQUE KEY `Token` (`Token`),
-  ADD KEY `idUsuario` (`idUsuario`,`idSolucion`,`idTorneo`),
-  ADD KEY `idSolucion` (`idSolucion`),
-  ADD KEY `idTorneo` (`idTorneo`),
-  ADD KEY `idEstado` (`idEstado`),
-  ADD KEY `idProblema` (`idProblema`);
+ ADD PRIMARY KEY (`idResolucion`), ADD UNIQUE KEY `Token` (`Token`), ADD KEY `idUsuario` (`idUsuario`,`idSolucion`,`idTorneo`), ADD KEY `idSolucion` (`idSolucion`), ADD KEY `idTorneo` (`idTorneo`), ADD KEY `idEstado` (`idEstado`), ADD KEY `idProblema` (`idProblema`);
 
 --
 -- Indices de la tabla `Rol`
 --
 ALTER TABLE `Rol`
-  ADD PRIMARY KEY (`idRol`);
+ ADD PRIMARY KEY (`idRol`);
 
 --
 -- Indices de la tabla `Solucion`
 --
 ALTER TABLE `Solucion`
-  ADD PRIMARY KEY (`idSolucion`),
-  ADD KEY `idProblema` (`idProblema`);
+ ADD PRIMARY KEY (`idSolucion`), ADD KEY `idProblema` (`idProblema`);
 
 --
 -- Indices de la tabla `Stub`
 --
 ALTER TABLE `Stub`
-  ADD PRIMARY KEY (`idStubs`),
-  ADD KEY `idLenguaje` (`idLenguaje`);
+ ADD PRIMARY KEY (`idStubs`), ADD KEY `idLenguaje` (`idLenguaje`);
 
 --
 -- Indices de la tabla `TipoProblema`
 --
 ALTER TABLE `TipoProblema`
-  ADD PRIMARY KEY (`idTipo`);
+ ADD PRIMARY KEY (`idTipo`);
 
 --
 -- Indices de la tabla `TipoTorneo`
 --
 ALTER TABLE `TipoTorneo`
-  ADD PRIMARY KEY (`idTipo`);
+ ADD PRIMARY KEY (`idTipo`);
 
 --
 -- Indices de la tabla `Torneo`
 --
 ALTER TABLE `Torneo`
-  ADD PRIMARY KEY (`idTorneo`),
-  ADD KEY `idEstado` (`idEstado`),
-  ADD KEY `idTipo` (`idTipo`);
+ ADD PRIMARY KEY (`idTorneo`), ADD KEY `idEstado` (`idEstado`), ADD KEY `idTipo` (`idTipo`);
 
 --
 -- Indices de la tabla `TorneoProblema`
 --
 ALTER TABLE `TorneoProblema`
-  ADD PRIMARY KEY (`idTorneoProblema`),
-  ADD KEY `idProblema` (`idProblema`,`idTorneo`),
-  ADD KEY `idTorneo` (`idTorneo`);
+ ADD PRIMARY KEY (`idTorneoProblema`), ADD KEY `idProblema` (`idProblema`,`idTorneo`), ADD KEY `idTorneo` (`idTorneo`);
 
 --
 -- Indices de la tabla `TorneoUsuario`
 --
 ALTER TABLE `TorneoUsuario`
-  ADD PRIMARY KEY (`idTorneoUsuario`),
-  ADD KEY `idTorneo` (`idTorneo`,`idUsuario`),
-  ADD KEY `idUsuario` (`idUsuario`);
+ ADD PRIMARY KEY (`idTorneoUsuario`), ADD KEY `idTorneo` (`idTorneo`,`idUsuario`), ADD KEY `idUsuario` (`idUsuario`);
 
 --
 -- Indices de la tabla `Usuario`
 --
 ALTER TABLE `Usuario`
-  ADD PRIMARY KEY (`idUsuario`),
-  ADD UNIQUE KEY `NombreUsuario` (`NombreUsuario`),
-  ADD UNIQUE KEY `NombreUsuario_2` (`NombreUsuario`),
-  ADD UNIQUE KEY `NombreUsuario_3` (`NombreUsuario`),
-  ADD UNIQUE KEY `NombreUsuario_4` (`NombreUsuario`),
-  ADD KEY `idRol` (`idRol`),
-  ADD KEY `idLenguaje` (`idLenguaje`);
+ ADD PRIMARY KEY (`idUsuario`), ADD UNIQUE KEY `NombreUsuario` (`NombreUsuario`), ADD UNIQUE KEY `NombreUsuario_2` (`NombreUsuario`), ADD UNIQUE KEY `NombreUsuario_3` (`NombreUsuario`), ADD UNIQUE KEY `NombreUsuario_4` (`NombreUsuario`), ADD KEY `idRol` (`idRol`), ADD KEY `idLenguaje` (`idLenguaje`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -10507,97 +11282,97 @@ ALTER TABLE `Usuario`
 -- AUTO_INCREMENT de la tabla `CambioClave`
 --
 ALTER TABLE `CambioClave`
-  MODIFY `idCambio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+MODIFY `idCambio` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=126;
 --
 -- AUTO_INCREMENT de la tabla `Complejidad`
 --
 ALTER TABLE `Complejidad`
-  MODIFY `idComplejidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+MODIFY `idComplejidad` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `Cuenta`
 --
 ALTER TABLE `Cuenta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `Equipo`
 --
 ALTER TABLE `Equipo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT de la tabla `EstadoResolucion`
 --
 ALTER TABLE `EstadoResolucion`
-  MODIFY `idEstado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+MODIFY `idEstado` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=26;
 --
 -- AUTO_INCREMENT de la tabla `EstadoTorneo`
 --
 ALTER TABLE `EstadoTorneo`
-  MODIFY `idEstado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+MODIFY `idEstado` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `Lenguaje`
 --
 ALTER TABLE `Lenguaje`
-  MODIFY `idLenguaje` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+MODIFY `idLenguaje` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT de la tabla `Parcial`
 --
 ALTER TABLE `Parcial`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=31;
 --
 -- AUTO_INCREMENT de la tabla `Problema`
 --
 ALTER TABLE `Problema`
-  MODIFY `idProblema` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
+MODIFY `idProblema` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=130;
 --
 -- AUTO_INCREMENT de la tabla `Resolucion`
 --
 ALTER TABLE `Resolucion`
-  MODIFY `idResolucion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18374;
+MODIFY `idResolucion` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=38342;
 --
 -- AUTO_INCREMENT de la tabla `Rol`
 --
 ALTER TABLE `Rol`
-  MODIFY `idRol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+MODIFY `idRol` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `Solucion`
 --
 ALTER TABLE `Solucion`
-  MODIFY `idSolucion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9737;
+MODIFY `idSolucion` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10142;
 --
 -- AUTO_INCREMENT de la tabla `Stub`
 --
 ALTER TABLE `Stub`
-  MODIFY `idStubs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+MODIFY `idStubs` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT de la tabla `TipoProblema`
 --
 ALTER TABLE `TipoProblema`
-  MODIFY `idTipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+MODIFY `idTipo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `TipoTorneo`
 --
 ALTER TABLE `TipoTorneo`
-  MODIFY `idTipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+MODIFY `idTipo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `Torneo`
 --
 ALTER TABLE `Torneo`
-  MODIFY `idTorneo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+MODIFY `idTorneo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=82;
 --
 -- AUTO_INCREMENT de la tabla `TorneoProblema`
 --
 ALTER TABLE `TorneoProblema`
-  MODIFY `idTorneoProblema` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=493;
+MODIFY `idTorneoProblema` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=945;
 --
 -- AUTO_INCREMENT de la tabla `TorneoUsuario`
 --
 ALTER TABLE `TorneoUsuario`
-  MODIFY `idTorneoUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=695;
+MODIFY `idTorneoUsuario` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1250;
 --
 -- AUTO_INCREMENT de la tabla `Usuario`
 --
 ALTER TABLE `Usuario`
-  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=483;
+MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=740;
 --
 -- Restricciones para tablas volcadas
 --
@@ -10606,71 +11381,71 @@ ALTER TABLE `Usuario`
 -- Filtros para la tabla `CambioClave`
 --
 ALTER TABLE `CambioClave`
-  ADD CONSTRAINT `CambioClave_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `Usuario` (`idUsuario`);
+ADD CONSTRAINT `CambioClave_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `Usuario` (`idUsuario`);
 
 --
 -- Filtros para la tabla `Parcial`
 --
 ALTER TABLE `Parcial`
-  ADD CONSTRAINT `Parcial_ibfk_1` FOREIGN KEY (`idCuenta`) REFERENCES `Cuenta` (`id`),
-  ADD CONSTRAINT `Parcial_ibfk_2` FOREIGN KEY (`idEquipo`) REFERENCES `Equipo` (`id`);
+ADD CONSTRAINT `Parcial_ibfk_1` FOREIGN KEY (`idCuenta`) REFERENCES `Cuenta` (`id`),
+ADD CONSTRAINT `Parcial_ibfk_2` FOREIGN KEY (`idEquipo`) REFERENCES `Equipo` (`id`);
 
 --
 -- Filtros para la tabla `Problema`
 --
 ALTER TABLE `Problema`
-  ADD CONSTRAINT `Problema_ibfk_1` FOREIGN KEY (`idComplejidad`) REFERENCES `Complejidad` (`idComplejidad`),
-  ADD CONSTRAINT `Problema_ibfk_2` FOREIGN KEY (`idTipo`) REFERENCES `TipoProblema` (`idTipo`);
+ADD CONSTRAINT `Problema_ibfk_1` FOREIGN KEY (`idComplejidad`) REFERENCES `Complejidad` (`idComplejidad`),
+ADD CONSTRAINT `Problema_ibfk_2` FOREIGN KEY (`idTipo`) REFERENCES `TipoProblema` (`idTipo`);
 
 --
 -- Filtros para la tabla `Resolucion`
 --
 ALTER TABLE `Resolucion`
-  ADD CONSTRAINT `Resolucion_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `Usuario` (`idUsuario`),
-  ADD CONSTRAINT `Resolucion_ibfk_2` FOREIGN KEY (`idSolucion`) REFERENCES `Solucion` (`idSolucion`),
-  ADD CONSTRAINT `Resolucion_ibfk_3` FOREIGN KEY (`idTorneo`) REFERENCES `Torneo` (`idTorneo`),
-  ADD CONSTRAINT `Resolucion_ibfk_4` FOREIGN KEY (`idEstado`) REFERENCES `EstadoResolucion` (`idEstado`),
-  ADD CONSTRAINT `Resolucion_ibfk_5` FOREIGN KEY (`idProblema`) REFERENCES `Problema` (`idProblema`);
+ADD CONSTRAINT `Resolucion_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `Usuario` (`idUsuario`),
+ADD CONSTRAINT `Resolucion_ibfk_2` FOREIGN KEY (`idSolucion`) REFERENCES `Solucion` (`idSolucion`),
+ADD CONSTRAINT `Resolucion_ibfk_3` FOREIGN KEY (`idTorneo`) REFERENCES `Torneo` (`idTorneo`),
+ADD CONSTRAINT `Resolucion_ibfk_4` FOREIGN KEY (`idEstado`) REFERENCES `EstadoResolucion` (`idEstado`),
+ADD CONSTRAINT `Resolucion_ibfk_5` FOREIGN KEY (`idProblema`) REFERENCES `Problema` (`idProblema`);
 
 --
 -- Filtros para la tabla `Solucion`
 --
 ALTER TABLE `Solucion`
-  ADD CONSTRAINT `Solucion_ibfk_1` FOREIGN KEY (`idProblema`) REFERENCES `Problema` (`idProblema`);
+ADD CONSTRAINT `Solucion_ibfk_1` FOREIGN KEY (`idProblema`) REFERENCES `Problema` (`idProblema`);
 
 --
 -- Filtros para la tabla `Stub`
 --
 ALTER TABLE `Stub`
-  ADD CONSTRAINT `Stub_ibfk_1` FOREIGN KEY (`idLenguaje`) REFERENCES `Lenguaje` (`idLenguaje`);
+ADD CONSTRAINT `Stub_ibfk_1` FOREIGN KEY (`idLenguaje`) REFERENCES `Lenguaje` (`idLenguaje`);
 
 --
 -- Filtros para la tabla `Torneo`
 --
 ALTER TABLE `Torneo`
-  ADD CONSTRAINT `Torneo_ibfk_1` FOREIGN KEY (`idEstado`) REFERENCES `EstadoTorneo` (`idEstado`),
-  ADD CONSTRAINT `Torneo_ibfk_2` FOREIGN KEY (`idTipo`) REFERENCES `TipoTorneo` (`idTipo`);
+ADD CONSTRAINT `Torneo_ibfk_1` FOREIGN KEY (`idEstado`) REFERENCES `EstadoTorneo` (`idEstado`),
+ADD CONSTRAINT `Torneo_ibfk_2` FOREIGN KEY (`idTipo`) REFERENCES `TipoTorneo` (`idTipo`);
 
 --
 -- Filtros para la tabla `TorneoProblema`
 --
 ALTER TABLE `TorneoProblema`
-  ADD CONSTRAINT `TorneoProblema_ibfk_1` FOREIGN KEY (`idTorneo`) REFERENCES `Torneo` (`idTorneo`),
-  ADD CONSTRAINT `TorneoProblema_ibfk_2` FOREIGN KEY (`idProblema`) REFERENCES `Problema` (`idProblema`);
+ADD CONSTRAINT `TorneoProblema_ibfk_1` FOREIGN KEY (`idTorneo`) REFERENCES `Torneo` (`idTorneo`),
+ADD CONSTRAINT `TorneoProblema_ibfk_2` FOREIGN KEY (`idProblema`) REFERENCES `Problema` (`idProblema`);
 
 --
 -- Filtros para la tabla `TorneoUsuario`
 --
 ALTER TABLE `TorneoUsuario`
-  ADD CONSTRAINT `TorneoUsuario_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `Usuario` (`idUsuario`),
-  ADD CONSTRAINT `TorneoUsuario_ibfk_2` FOREIGN KEY (`idTorneo`) REFERENCES `Torneo` (`idTorneo`);
+ADD CONSTRAINT `TorneoUsuario_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `Usuario` (`idUsuario`),
+ADD CONSTRAINT `TorneoUsuario_ibfk_2` FOREIGN KEY (`idTorneo`) REFERENCES `Torneo` (`idTorneo`);
 
 --
 -- Filtros para la tabla `Usuario`
 --
 ALTER TABLE `Usuario`
-  ADD CONSTRAINT `Usuario_ibfk_1` FOREIGN KEY (`idRol`) REFERENCES `Rol` (`idRol`),
-  ADD CONSTRAINT `Usuario_ibfk_2` FOREIGN KEY (`idLenguaje`) REFERENCES `Lenguaje` (`idLenguaje`);
+ADD CONSTRAINT `Usuario_ibfk_1` FOREIGN KEY (`idRol`) REFERENCES `Rol` (`idRol`),
+ADD CONSTRAINT `Usuario_ibfk_2` FOREIGN KEY (`idLenguaje`) REFERENCES `Lenguaje` (`idLenguaje`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
