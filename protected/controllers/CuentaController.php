@@ -6,7 +6,8 @@ class CuentaController extends Controller {
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
      */
-    public $layout = '//layouts/columntabla';
+    public $layout = '//layouts/column2';
+    public $autorefresh;
 
     /**
      * @return array action filters
@@ -26,7 +27,7 @@ class CuentaController extends Controller {
     public function accessRules() {
         return array(
             array('allow', // allow all users to perform 'index' and 'view' actions
-                'actions' => array('index', 'view','descargar'),
+                'actions' => array('index', 'view', 'viewtorneo', 'descargar'),
                 'users' => array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -51,8 +52,13 @@ class CuentaController extends Controller {
         $fecha->add($interval);
 
         $model->Fin = $fecha->format('Y-m-d H:i:s');
-        if ($model->update())
-            $this->redirect(array('view', 'id' => $model->id));
+        if ($model->update()) {
+
+            if (!isset($_GET['ajax']))
+                $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+            else
+                $this->redirect(array('view', 'id' => $model->id));
+        }
         /* $this->render('view',array(
           'model'=>$model,
           )); */
@@ -67,11 +73,56 @@ class CuentaController extends Controller {
         $modelnuevoParcial = $this->nuevoParcial($model);
         $modelParcial = new Parcial('search');
         $modelParcial->idCuenta = $id;
+        $this->layout = '//layouts/columntabla';
+
 
         $this->render('view', array(
             'model' => $model,
             'modelParcial' => $modelParcial,
             'modelnuevoParcial' => $modelnuevoParcial
+        ));
+    }
+
+    /**
+     * Displays a particular model.
+     * @param integer $id the ID of the model to be displayed
+     */
+    public function actionViewtorneo($idTorneo) {
+        $this->autorefresh = TRUE;
+        $this->layout = '//layouts/cuenta';
+        /**
+         * Buscar la ùltima Cuenta Regresiva del $idTorneo y mostrarla
+         */
+        $modelTorneo = Torneo::model()->findByPk($idTorneo);
+        if ($modelTorneo === null)
+            throw new CHttpException(404, 'No se encuentra el Torneo;');
+
+        $criteria = new CDbCriteria;
+        $criteria->order = 'Inicio Desc';
+        $criteria->limit = '1';
+        $criteria->compare('idTorneo', $idTorneo);
+
+        $model = Cuenta::model()->find($criteria);
+
+        //$model = Cuenta::model()->find() $this->loadModel($id);
+        /* $modelnuevoParcial = $this->nuevoParcial($model);
+          $modelParcial = new Parcial('search');
+          $modelParcial->idCuenta = $id;
+         */
+        $connection = Yii::app()->db;
+        $sql = "select Equipo.id,Equipo, sum(Parcial.`Tiempo`) as `Puntos` from Equipo inner join Parcial on  Equipo.id=Parcial.idEquipo"
+                . " inner join Cuenta on Parcial.idCuenta=Cuenta.id and Cuenta.idTorneo=$idTorneo group by Equipo.id,Equipo order by Puntos desc";
+        $command = $connection->createCommand($sql);
+
+        $equipos = $command->queryAll();
+
+
+        $this->render('viewtorneo', array(
+            'modelTorneo' => $modelTorneo,
+            'model' => $model,
+            'equipos' => $equipos
+                /* 'modelParcial' => $modelParcial,
+                  'modelnuevoParcial' => $modelnuevoParcial */
         ));
     }
 
@@ -125,7 +176,7 @@ class CuentaController extends Controller {
 // $this->performAjaxValidation($model);
 
         if (isset($_POST['Cuenta'])) {
-            
+
             $this->guardarArchivo($model);
             if ($model->save())
                 $this->redirect(array('view', 'id' => $model->id));
@@ -148,7 +199,7 @@ class CuentaController extends Controller {
 // $this->performAjaxValidation($model);
 
         if (isset($_POST['Cuenta'])) {
-            
+
             $this->guardarArchivo($model);
             if ($model->save())
                 $this->redirect(array('view', 'id' => $model->id));
@@ -158,68 +209,65 @@ class CuentaController extends Controller {
             'model' => $model,
         ));
     }
-    protected function guardarArchivo(&$model){
-        $nombreViejo=$model->Archivo;
+
+    protected function guardarArchivo(&$model) {
+        $nombreViejo = $model->Archivo;
         $model->attributes = $_POST['Cuenta'];
         $file = CUploadedFile::getInstance($model, 'Archivo');
 
-            if (is_object($file)&& get_class($file) == 'CUploadedFile') {      //
-                
-                $path = Yii::app()->basePath . DIRECTORY_SEPARATOR . 'archivos' ;
-                if (!is_dir($path))
-                    mkdir($path);
+        if (is_object($file) && get_class($file) == 'CUploadedFile') {      //
+            $path = Yii::app()->basePath . DIRECTORY_SEPARATOR . 'archivos';
+            if (!is_dir($path))
+                mkdir($path);
 
-                /* --------------------------------- */
-                $url = $path . DIRECTORY_SEPARATOR . $file->name; //url definitiva al archivo                                                            
-                $array = pathinfo($url);
-                $ext = $array['extension'];
-                $ext = strtolower($ext);
-                /* --------------------------------- */
+            /* --------------------------------- */
+            $url = $path . DIRECTORY_SEPARATOR . $file->name; //url definitiva al archivo                                                            
+            $array = pathinfo($url);
+            $ext = $array['extension'];
+            $ext = strtolower($ext);
+            /* --------------------------------- */
 
-                if (empty($ext) OR ( $ext != 'pdf' && $ext != 'png' && $ext != 'jpg' && $ext != 'gif')) {
-                    throw new CHttpException(204, " Solo puede subir archivos con extension (.txt, .pdf, .png, .jpg, .gif");
-                } else {
-                    $file->saveAs($url);
-                    $model->Archivo=$file->name;
-                }
-                
+            if (empty($ext) OR ( $ext != 'pdf' && $ext != 'png' && $ext != 'jpg' && $ext != 'gif')) {
+                throw new CHttpException(204, " Solo puede subir archivos con extension (.txt, .pdf, .png, .jpg, .gif");
+            } else {
+                $file->saveAs($url);
+                $model->Archivo = $file->name;
             }
+        }
 
-            if($model->Archivo==''){
-                $model->Archivo=$nombreViejo;
-            }
-            return true;
+        if ($model->Archivo == '') {
+            $model->Archivo = $nombreViejo;
+        }
+        return true;
     }
 
-    public function actionDescargar()
-        {                             
-            if(isset($_GET['id']))
-            {   
-                
-                $path = Yii::app()->basePath.DIRECTORY_SEPARATOR.'archivos'.DIRECTORY_SEPARATOR;                     
-                $file = $path.$_GET['id']                    ;
-                              
-                /* ---------------------------- */
-                header('Content-disposition: attachment; filename='.$file);                   
-                header("Content-Type: application/force-download");                
-                /* ---------------------------- */
-                $dirInfo = pathinfo($file);                
-                $nombre = $dirInfo['basename'];                                            
-                $ext = $dirInfo['extension'];                
-                /* ----------------------------- */                
-                if(strtolower($ext) == 'pdf')
-                    header('Content-type: application/pdf');                                                
-                            
-                header("Content-disposition: attachment; filename=".$nombre);
-                /* ------------------------------ */                
-                $file = file_get_contents($file);
-                echo $file;
-                die;                  
-            }else{
-                throw new CHtppException(204, " No se ah encontrado el archivo solicitado ");
-            }                      
+    public function actionDescargar() {
+        if (isset($_GET['id'])) {
+
+            $path = Yii::app()->basePath . DIRECTORY_SEPARATOR . 'archivos' . DIRECTORY_SEPARATOR;
+            $file = $path . $_GET['id'];
+
+            /* ---------------------------- */
+            header('Content-disposition: attachment; filename=' . $file);
+            header("Content-Type: application/force-download");
+            /* ---------------------------- */
+            $dirInfo = pathinfo($file);
+            $nombre = $dirInfo['basename'];
+            $ext = $dirInfo['extension'];
+            /* ----------------------------- */
+            if (strtolower($ext) == 'pdf')
+                header('Content-type: application/pdf');
+
+            header("Content-disposition: attachment; filename=" . $nombre);
+            /* ------------------------------ */
+            $file = file_get_contents($file);
+            echo $file;
+            die;
+        }else {
+            throw new CHtppException(204, " No se ah encontrado el archivo solicitado ");
         }
-    
+    }
+
     /**
      * Deletes a particular model.
      * If deletion is successful, the browser will be redirected to the 'admin' page.
@@ -237,10 +285,13 @@ class CuentaController extends Controller {
      * Lists all models.
      */
     public function actionIndex() {
-        $dataProvider = new CActiveDataProvider('Cuenta');
-        $this->render('index', array(
-            'dataProvider' => $dataProvider,
-        ));
+        /* $dataProvider = new CActiveDataProvider('Cuenta');
+          $this->render('index', array(
+          'dataProvider' => $dataProvider,
+          ));
+         * 
+         */
+        $this->redirect(array('admin'));
     }
 
     /**

@@ -27,11 +27,11 @@ class TorneoController extends Controller {
     public function accessRules() {
         return array(
             array('allow', // allow all users to perform 'index' and 'view' actions
-                'actions' => array('index', 'view'),
+                'actions' => array('index', 'view','verproblema'),
                 'users' => array('*'),
             ),
             array('allow',
-                'actions' => array('ideblockly','inscripcion', 'actualizartoken', 'verproblema', 'borrarinscripcion', 'hornereando'),
+                'actions' => array('ideblockly','inscripcion', 'actualizartoken',  'borrarinscripcion', 'hornereando'),
                 'users' => array('@')),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
                 'actions' => array('create', 'update', 'asignarproblema', 'asignarequipos', 'borrarequipo'),
@@ -137,9 +137,13 @@ class TorneoController extends Controller {
         $resoluciones = new Resolucion('search');
         $resoluciones->idProblema = $idProblema;
         $resoluciones->idTorneo = $idTorneo;
-
-        $resoluciones->idUsuario = Yii::app()->user->idUsuario;
-        $resolucionesProvider = $resoluciones->search();
+        
+        if (isset(Yii::app()->user->idUsuario)){
+            $resoluciones->idUsuario = Yii::app()->user->idUsuario;
+            $resolucionesProvider = $resoluciones->search();
+        }else{
+            $resolucionesProvider=null;
+        }
 
         $this->render('verproblema', array(
             'model' => $model,

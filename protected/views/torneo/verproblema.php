@@ -27,6 +27,7 @@ $this->breadcrumbs = array(
 <p>Ningún equipo ha resuelto el ejercicio</p>
 <?php endif;?>
 <hr/>
+<?php if($resoluciones!=null):?>
 <h1>Resoluciones del Equipo <?php echo Yii::app()->user->name?></h1>
 <?php
 $this->widget('zii.widgets.grid.CGridView', array(
@@ -54,3 +55,4 @@ $this->widget('zii.widgets.grid.CGridView', array(
     ),
 ));
 ?>
+<?php endif;?>

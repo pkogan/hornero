@@ -46,12 +46,28 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 	'filter'=>$model,
 	'columns'=>array(
 		'id',
+                'idTorneo',
 		'Nombre',
 		'Inicio',
 		'Fin',
 		'Tiempo',
 		array(
 			'class'=>'CButtonColumn',
-		),
+
+            'template' => '{iniciar}{view}{update}{delete}',
+            'buttons' => array(
+                'iniciar' => array(
+                    'url' => 'Yii::app()->controller->createUrl(\'iniciar\', array(\'id\'=> $data["id"]))', //url de la acción nueva
+                    'options' => array(
+                        'ajax' => array(
+                            'url' => "js:$(this).attr('href')",
+                            'success' => "function(){
+                                     $('#problema-grid').yiiGridView('update');
+                                     return true;
+                                     }",
+                        )
+                    ),
+                ),
+		
 	),
-)); ?>
+)))); ?>
